@@ -7,7 +7,7 @@ main project of SWEN-610.
 
 - Cervantes Hernandez
 
-- Rasheshwari Pulle
+- Raseshwari Pulle
 
 - Spoorthy Annapareddy
 
