@@ -43,12 +43,9 @@ public class WebServer {
   //
 
   /**
-   * The URL patterns to request pages
+   * The URL pattern to request the Home page.
    */
   public static final String HOME_URL = "/";
-  public static final String GAME_URL = "/game";
-  public static final String SIGNIN_URL = "/signin";
-  public static final String SIGNOUT_URL = "/signout";
 
   //
   // Attributes
@@ -123,14 +120,6 @@ public class WebServer {
 
     // Shows the Checkers game Home page.
     get(HOME_URL, new HomeController(), templateEngine);
-    get(SIGNIN_URL, new GetSigninRoute(), templateEngine);
-    //get(GAME_URL, new GetGameRoute(), templateEngine);
-    //get(SIGNOUT_URL, new GetSignoutRoute(), templateEngine);
-
-    // Post opponent and name
-    //post("/opponent", new PostOpponentRoute(), templateEngine);
-    post("/name", new PostNameRoute(), templateEngine);
-    //post("/submitMove", new PostMoveRoute(), templateEngine);
 
   }
 

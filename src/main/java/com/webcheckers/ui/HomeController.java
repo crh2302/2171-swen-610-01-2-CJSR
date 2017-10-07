@@ -15,12 +15,10 @@ import spark.TemplateViewRoute;
  */
 public class HomeController implements TemplateViewRoute {
 
-  static final String TITLE_ATTR_MSG = "Welcome!";
-
   @Override
   public ModelAndView handle(Request request, Response response) {
     Map<String, Object> vm = new HashMap<>();
-    vm.put("title", TITLE_ATTR_MSG);
+    vm.put("title", "Welcome!");
     return new ModelAndView(vm , "home.ftl");
   }
 
