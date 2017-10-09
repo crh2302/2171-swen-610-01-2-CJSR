@@ -1,12 +1,16 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.CheckersGame;
+import com.webcheckers.ui.GetGameMenuRoute;
 import spark.Request;
 import spark.Session;;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class CheckersCenter {
 
+    public static List<String> allPlayers;
 
     public CheckersGame get(final Session session) {
         // validation
@@ -27,7 +31,7 @@ public class CheckersCenter {
         session.removeAttribute("checkGame");
         // do some application-wide book-keeping
         synchronized (this) {  // protect the critical code
-             session.removeAttribute("playerNames");
+             allPlayers.remove(GetGameMenuRoute.getNameString(request));
         }
     }
 }
