@@ -11,7 +11,7 @@
     
     <div class="navigation">
       <a href="/game-menu">my home</a>
-        <a href="/signout">logout</a>
+        <a href="/signout?playerName=${playerName}">logout</a>
     </div>
     
     <div class="body">
@@ -21,7 +21,7 @@
       <#if playerNames??>
           <ol>
               <#list playerNames as n>
-                  <li>${n}</li>
+                  <li><a href="/game?opponent=${n}"> ${n} </a></li>
               </#list>
           </ol>
       </#if>

@@ -17,15 +17,6 @@
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
     </div>
-
-      <p> Sign in </p><br />
-          <#if playerNames??>
-              <ol>
-                  <#list playerNames as n>
-                      <li>${n}</li>
-                  </#list>
-              </ol>
-          </#if>
     
   </div>
 </body>
