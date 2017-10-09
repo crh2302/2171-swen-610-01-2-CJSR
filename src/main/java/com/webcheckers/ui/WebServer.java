@@ -1,7 +1,11 @@
 package com.webcheckers.ui;
 
 import static spark.Spark.*;
+
+import com.webcheckers.appl.CheckersCenter;
 import spark.TemplateEngine;
+
+import java.util.Objects;
 
 
 /**
@@ -54,7 +58,7 @@ public class WebServer {
   //
   // Attributes
   //
-
+  private final CheckersCenter checkersCenter;
   private final TemplateEngine templateEngine;
 
   //
@@ -64,11 +68,16 @@ public class WebServer {
   /**
    * The constructor for the Web Server.
    *
+   * @param checkersCenter
+   *    The {@link CheckersCenter} for the application
    * @param templateEngine
    *    The default {@link TemplateEngine} to render views.
    */
-  public WebServer(
+  public WebServer(final CheckersCenter checkersCenter,
       final TemplateEngine templateEngine) {
+    Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
+    Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+    this.checkersCenter = checkersCenter;
     this.templateEngine = templateEngine;
   }
 
