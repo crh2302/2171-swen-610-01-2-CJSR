@@ -230,7 +230,7 @@
 											"containerExtending": false,
 											"left": 173,
 											"top": 71,
-											"width": 129.9873046875,
+											"width": 130,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
@@ -302,7 +302,7 @@
 									"containerExtending": false,
 									"left": 168,
 									"top": 64,
-									"width": 139.9873046875,
+									"width": 140,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -386,7 +386,7 @@
 									"containerExtending": false,
 									"left": 168,
 									"top": 89,
-									"width": 139.9873046875,
+									"width": 140,
 									"height": 0,
 									"autoResize": false
 								}
@@ -402,7 +402,7 @@
 							"containerExtending": false,
 							"left": 168,
 							"top": 64,
-							"width": 139.9873046875,
+							"width": 140,
 							"height": 40,
 							"autoResize": false,
 							"stereotypeDisplay": "label",
@@ -1827,7 +1827,7 @@
 							"containerExtending": false,
 							"left": 800,
 							"top": 136,
-							"width": 133.5634765625,
+							"width": 134,
 							"height": 38,
 							"autoResize": false,
 							"text": "POST \"/name\" [usernameSubmitted]",
@@ -3211,7 +3211,7 @@
 											"containerExtending": false,
 											"left": 165,
 											"top": 471,
-											"width": 108.447265625,
+											"width": 103,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
@@ -3283,7 +3283,7 @@
 									"containerExtending": false,
 									"left": 160,
 									"top": 464,
-									"width": 118.447265625,
+									"width": 113,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -3367,7 +3367,7 @@
 									"containerExtending": false,
 									"left": 160,
 									"top": 489,
-									"width": 118.447265625,
+									"width": 113,
 									"height": 0,
 									"autoResize": false
 								}
@@ -3383,8 +3383,8 @@
 							"containerExtending": false,
 							"left": 160,
 							"top": 464,
-							"width": 118.447265625,
-							"height": 49,
+							"width": 113,
+							"height": 41,
 							"autoResize": false,
 							"stereotypeDisplay": "label",
 							"showVisibility": true,
@@ -3433,8 +3433,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 350,
-									"top": 495,
+									"left": 347,
+									"top": 494,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -3467,8 +3467,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 350,
-									"top": 510,
+									"left": 347,
+									"top": 509,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -3501,8 +3501,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 349,
-									"top": 466,
+									"left": 348,
+									"top": 464,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -3534,7 +3534,7 @@
 								"$ref": "AAAAAAFe+GhNPOpymhQ="
 							},
 							"lineStyle": 1,
-							"points": "423:487;278:488",
+							"points": "423:486;273:485",
 							"stereotypeDisplay": "label",
 							"showVisibility": true,
 							"showProperty": true,
@@ -3565,7 +3565,7 @@
 							"containerExtending": false,
 							"left": 544,
 							"top": 416,
-							"width": 129.97705078125,
+							"width": 130,
 							"height": 41,
 							"autoResize": false,
 							"text": "POST \"/opponent\" [opponentSubmitted]",
@@ -4182,6 +4182,15 @@
 							"_parent": {
 								"$ref": "AAAAAAFe+FWdFuNadzU="
 							},
+							"visibility": "public"
+						},
+						{
+							"_type": "UMLState",
+							"_id": "AAAAAAFfAqIlkg5dmg8=",
+							"_parent": {
+								"$ref": "AAAAAAFe+FWdFuNadzU="
+							},
+							"name": "de",
 							"visibility": "public"
 						}
 					],
