@@ -1,7 +1,7 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.CheckersCenter;
 import spark.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,6 @@ import java.util.Map;
 public class PostNameRoute implements TemplateViewRoute {
 
     public static final String ERROR_ATTR_MSG = "Username already taken. Please enter another.";
-    public static List<String> playerNames;
 
     /**
      * {@inheritDoc}
@@ -31,19 +30,17 @@ public class PostNameRoute implements TemplateViewRoute {
     }
 
     public static ModelAndView storeName(Map<String, Object> vm, Session session, String name){
-        playerNames = session.attribute("playerNames");
-        if(playerNames == null){
-            playerNames = new ArrayList<>();
-            session.attribute("playerNames", playerNames);
-            playerNames.add(name);
+        if(CheckersCenter.allPlayers == null){
+            CheckersCenter.allPlayers = new ArrayList<>();
+            CheckersCenter.allPlayers.add(name);
 
-            return successfulAdd(vm, name, playerNames);
+            return successfulAdd(vm, name, CheckersCenter.allPlayers);
         }
         else{
-            boolean nameAvailable = PostNameRoute.nameAvailable(playerNames,name);
+            boolean nameAvailable = PostNameRoute.nameAvailable(CheckersCenter.allPlayers,name);
             if(!nameAvailable){
-                playerNames.add(name);
-                return successfulAdd(vm, name, playerNames);
+                CheckersCenter.allPlayers.add(name);
+                return successfulAdd(vm, name, CheckersCenter.allPlayers);
             }
             else{
                 return PostNameRoute.error();

@@ -23,7 +23,6 @@ public class HomeController implements TemplateViewRoute {
 
     final Session httpSession = request.session();
     if (httpSession.isNew()){
-      vm.put("playerNames", PostNameRoute.playerNames);
       return new ModelAndView(vm, "home.ftl");
     }
     else {
