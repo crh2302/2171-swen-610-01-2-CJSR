@@ -3,10 +3,9 @@ package com.webcheckers.ui;
 import java.util.HashMap;
 import java.util.Map;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.TemplateViewRoute;
+import spark.*;
+
+import static spark.Spark.halt;
 
 /**
  * The Web Controller for the Home page.
@@ -21,7 +20,19 @@ public class HomeController implements TemplateViewRoute {
   public ModelAndView handle(Request request, Response response) {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", TITLE_ATTR_MSG);
+
+    final Session httpSession = request.session();
+    if (httpSession.isNew()){
+      vm.put("playerNames", PostNameRoute.playerNames);
+      return new ModelAndView(vm, "home.ftl");
+    }
+    else {
+      // there is a game already being played
+      // so redirect the user to the Game view
+      response.redirect(WebServer.GAMEMENU_URL);
+      halt();
+    }
+
     return new ModelAndView(vm , "home.ftl");
   }
-
 }
