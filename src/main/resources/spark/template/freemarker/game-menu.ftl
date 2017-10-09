@@ -10,22 +10,21 @@
     <h1>Web Checkers</h1>
     
     <div class="navigation">
-      <a href="/">my home</a>
-        <a href="/signin">login</a>
+      <a href="/game-menu">my home</a>
+        <a href="/signout">logout</a>
     </div>
     
     <div class="body">
-      <p>Welcome to the world of online Checkers.</p>
+      <p>Welcome to the Game Menu of WebCheckers, <#if playerName??>${playerName}</#if>!</p>
     </div>
 
-      <p> Sign in </p><br />
-          <#if playerNames??>
-              <ol>
-                  <#list playerNames as n>
-                      <li>${n}</li>
-                  </#list>
-              </ol>
-          </#if>
+      <#if playerNames??>
+          <ol>
+              <#list playerNames as n>
+                  <li>${n}</li>
+              </#list>
+          </ol>
+      </#if>
     
   </div>
 </body>

@@ -17,15 +17,19 @@
             <a href="/signin">login</a>
         </div>
 
-        ${loginMessage}<br />
-        ${playerName}
+        ${loginMessage}<br /><br />
 
-        <form action="/name" method="POST">
-            <br/>
-              <input name="playersName" />
-            <br/><br/>
-              <button type="submit">Submit Name</button>
-        </form>
+        <#if errorMessage??>
+            ${errorMessage}
+        </#if>
+
+            <form action="/name" method="POST">
+                <br/>
+                  <input name="playerName" />
+                <br/><br/>
+                  <button type="submit">Submit Name</button>
+            </form>
+
     </div>
 
 
