@@ -8,7 +8,7 @@ import java.util.*;
 
 public class PostNameRoute implements TemplateViewRoute {
 
-    static final String ERROR_ATTR_MSG = "Username already taken. Please enter another.";
+    private static final String ERROR_ATTR_MSG = "Username already taken. Please enter another.";
 
     /**
      * {@inheritDoc}
@@ -51,30 +51,32 @@ public class PostNameRoute implements TemplateViewRoute {
         return storeName(vm, session,name);
     }
 
-    public static boolean nameAvailable(List<String> playerNames, String name){
+    public boolean nameAvailable(List<String> playerNames, String name){
         return playerNames.contains(name);
     }
 
-    public static ModelAndView storeName(Map<String, Object> vm, Session session, String name){
-        if(CheckersCenter.allPlayers == null){
-            CheckersCenter.allPlayers = new ArrayList<>();
-            CheckersCenter.allPlayers.add(name);
-
-            return successfulAdd(vm, name, CheckersCenter.allPlayers);
+    public  ModelAndView storeName(Map<String, Object> vm, Session session, String name){
+        if(this.checkersCenter.isPlayerListEmpty())
+        {
+            checkersCenter.add(name);
+            return successfulAdd(vm, name, this.checkersCenter.getAllPlayers());
         }
-        else{
-            boolean nameAvailable = PostNameRoute.nameAvailable(CheckersCenter.allPlayers,name);
-            if(!nameAvailable){
-                CheckersCenter.allPlayers.add(name);
-                return successfulAdd(vm, name, CheckersCenter.allPlayers);
+        else
+        {
+            boolean nameAvailable = nameAvailable(this.checkersCenter.getAllPlayers(),name);
+            if(!nameAvailable)
+            {
+                checkersCenter.add(name);
+                return successfulAdd(vm, name, this.checkersCenter.getAllPlayers());
             }
-            else{
-                return PostNameRoute.error();
+            else
+            {
+                return error();
             }
         }
     }
 
-    public static synchronized ModelAndView error(){
+    public synchronized ModelAndView error(){
         final Map<String, Object> vm = new HashMap<>();
 
         vm.put("title", HomeController.TITLE_ATTR_MSG);
@@ -83,7 +85,7 @@ public class PostNameRoute implements TemplateViewRoute {
         return new ModelAndView(vm, "signin.ftl");
     }
 
-    public static ModelAndView successfulAdd(Map<String, Object> vm, String name, List<String> playerNames ){
+    public ModelAndView successfulAdd(Map<String, Object> vm, String name, List<String> playerNames ){
         vm.put("title",HomeController.TITLE_ATTR_MSG);
         vm.put("playerName", name);
         vm.put("playerNames",playerNames);

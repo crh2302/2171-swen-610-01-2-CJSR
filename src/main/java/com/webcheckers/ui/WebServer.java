@@ -134,12 +134,12 @@ public class WebServer {
     // Shows the Checkers game Home page.
     get(HOME_URL, new HomeController(), templateEngine);
     get(SIGNIN_URL, new GetSigninRoute(), templateEngine);
-    get(SIGNOUT_URL, new GetSignoutRoute(), templateEngine);
+    get(SIGNOUT_URL, new GetSignoutRoute(checkersCenter), templateEngine);
     get(GAMEMENU_URL, new GetGameMenuRoute(), templateEngine);
     //get(GAME_URL, new GetGameRoute(), templateEngine);
 
     // Post opponent and name
-    post("/name", new PostNameRoute(), templateEngine);
+    post("/name", new PostNameRoute(checkersCenter), templateEngine);
     //post("/opponent", new PostOpponentRoute(), templateEngine);
     //post("/submitMove", new PostMoveRoute(), templateEngine);
 

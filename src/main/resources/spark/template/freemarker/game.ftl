@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-    <meta http-equiv="refresh" content="10">
   <title>${title} | Web Checkers</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/game.css">
@@ -24,7 +23,7 @@
 <body>
   <div class="page">
     <h1>Web Checkers</h1>
-    
+
     <div class="navigation">
     <#if currentPlayer??>
       <a href="/">my home</a> |
@@ -33,10 +32,10 @@
       <a href="/signin">sign in</a>
     </#if>
     </div>
-    
+
     <div class="body">
     <form id="gameForm" action="/submitTurn" method="POST">
-      
+
       <p>
         You are playing a game of checkers with ${opponentName}.
        <#if isMyTurn>
@@ -47,13 +46,13 @@
         and you will be informed when it is your turn.
        </#if>
       </p>
-      
+
       <div>
         <div id="game-controls">
-        
+
           <fieldset id="game-info">
             <legend>Info</legend>
-            
+
             <#if message??>
             <div id="message" class="${message.type}">${message.text}</div>
             <#else>
@@ -61,7 +60,7 @@
               <!-- keep here for Client-side messages -->
             </div>
             </#if>
-            
+
             <div>
               <table data-color='RED'>
                 <tr>
@@ -77,7 +76,7 @@
               </table>
             </div>
           </fieldset>
-          
+
           <fieldset id="game-toolbar">
             <legend>Controls</legend>
             <div class="toolbar">
@@ -99,9 +98,9 @@
               </a>
             </div>
           </fieldset>
-          
+
         </div>
-  
+
         <div class="game-board">
           <table id="game-board">
             <tbody>

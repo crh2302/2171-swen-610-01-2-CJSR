@@ -17,7 +17,6 @@
     <div class="body">
       <p>Welcome to the Game Menu of WebCheckers, <#if playerName??>${playerName}</#if>!</p>
     </div>
-
       <#if playerNames??>
           <ol>
               <#list playerNames as n>
@@ -25,7 +24,6 @@
               </#list>
           </ol>
       </#if>
-    
   </div>
 </body>
 </html>

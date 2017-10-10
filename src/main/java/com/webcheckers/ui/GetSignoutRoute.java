@@ -5,8 +5,17 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class GetSignoutRoute implements TemplateViewRoute {
+    private final CheckersCenter checkersCenter;
+
+    GetSignoutRoute(final CheckersCenter checkersCenter) {
+        // validation
+        Objects.requireNonNull(checkersCenter, "gameCenter must not be null");
+        //
+        this.checkersCenter = checkersCenter;
+    }
 
 
     @Override
@@ -18,9 +27,7 @@ public class GetSignoutRoute implements TemplateViewRoute {
     }
 
     private ModelAndView signout(final Map<String, Object> vm, final Session session, Request request){
-        CheckersCenter game = new CheckersCenter();
-        game.end(session, request);
-
+        checkersCenter.end(session, request);
         vm.put("title", HomeController.TITLE_ATTR_MSG);
         return new ModelAndView(vm, "home.ftl");
     }

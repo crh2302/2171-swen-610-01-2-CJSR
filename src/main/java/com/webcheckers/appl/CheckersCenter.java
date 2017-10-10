@@ -4,13 +4,15 @@ import com.webcheckers.model.CheckersGame;
 import com.webcheckers.ui.GetGameMenuRoute;
 import spark.Request;
 import spark.Session;;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class CheckersCenter {
 
-    public static List<String> allPlayers;
+    public List<String> allPlayers;
+
+    public CheckersCenter() {
+        allPlayers = new ArrayList<>();
+    }
 
     public CheckersGame get(final Session session) {
         // validation
@@ -33,5 +35,25 @@ public class CheckersCenter {
         synchronized (this) {  // protect the critical code
              allPlayers.remove(GetGameMenuRoute.getNameString(request));
         }
+    }
+
+    public boolean isPlayerListEmpty(){
+        return allPlayers.isEmpty();
+    }
+
+    public boolean add(String playerName)
+    {
+        if (allPlayers.contains(playerName))
+        {
+            return  false;
+        }
+        else
+        {
+            return allPlayers.add(playerName);
+        }
+    }
+
+    public List<String> getAllPlayers() {
+        return allPlayers;
     }
 }
