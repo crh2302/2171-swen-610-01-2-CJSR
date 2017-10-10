@@ -2,19 +2,45 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.CheckersCenter;
 import spark.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 
 public class PostNameRoute implements TemplateViewRoute {
 
-    public static final String ERROR_ATTR_MSG = "Username already taken. Please enter another.";
+    static final String ERROR_ATTR_MSG = "Username already taken. Please enter another.";
 
     /**
      * {@inheritDoc}
      */
+
+    //
+    // Attributes
+    //
+
+    private final CheckersCenter checkersCenter;
+
+    //
+    // Constructor
+    //
+
+    /**
+     * The constructor for the {@code POST /name} route handler.
+     *
+     * @param checkersCenter
+     *    The {@link CheckersCenter} for the application.
+     *
+     * @throws NullPointerException
+     *    when the {@code gameCenter} parameter is null
+     */
+    PostNameRoute(final CheckersCenter checkersCenter) {
+        // validation
+        Objects.requireNonNull(checkersCenter, "gameCenter must not be null");
+        //
+        this.checkersCenter = checkersCenter;
+    }
+
+
     @Override
     public ModelAndView handle(Request request, Response response) {
         // start building the View-Model
