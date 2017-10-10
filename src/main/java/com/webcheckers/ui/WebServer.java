@@ -136,7 +136,7 @@ public class WebServer {
     get(SIGNIN_URL, new GetSigninRoute(), templateEngine);
     get(SIGNOUT_URL, new GetSignoutRoute(checkersCenter), templateEngine);
     get(GAMEMENU_URL, new GetGameMenuRoute(), templateEngine);
-    //get(GAME_URL, new GetGameRoute(), templateEngine);
+    get(GAME_URL, new GetGameRoute(checkersCenter), templateEngine);
 
     // Post opponent and name
     post("/name", new PostNameRoute(checkersCenter), templateEngine);

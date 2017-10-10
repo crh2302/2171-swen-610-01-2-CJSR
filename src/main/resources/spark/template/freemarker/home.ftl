@@ -11,7 +11,8 @@
     
     <div class="navigation">
       <a href="/">my home</a>
-        <a href="/signin">login</a>
+      <a href="/signin">login</a>
+      <a href="/game">test-game</a>
     </div>
     
     <div class="body">
