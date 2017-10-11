@@ -14,8 +14,9 @@ public class Piece
   String color;
 
   /**
-  *
+  * Constructs a man piece of a given color.
   * @param color
+  *      Can be RED or WHITE.
   */
   public Piece(String color)
   {
@@ -24,9 +25,11 @@ public class Piece
   }
 
   /**
-  *
+  * Construct a piece with the specified type and color.
   * @param type
+  *         Can be a MAN or a KING.
   * @param color
+   *        Can be RED or WHITE.
   */
   public Piece(String type, String color)
   {
@@ -35,7 +38,7 @@ public class Piece
   }
 
   /**
-   * Set type mutator
+   * Set type mutator.
    *
    * @param type
    */
@@ -45,7 +48,7 @@ public class Piece
   }
 
   /**
-   * Set color mutator
+   * Set color mutator.
    *
    * @param color
    */
@@ -57,7 +60,7 @@ public class Piece
   /**
   *
   * @return
-   *    type of piece
+   *    type of piece.
   */
   public String getType()
   {
@@ -67,7 +70,7 @@ public class Piece
   /**
   *
   * @return
-   *    color of disc
+   *    color of disc.
   */
   public String getColor()
   {
@@ -75,7 +78,7 @@ public class Piece
   }
 
   /**
-  * change disc from MAN to KING
+  * change disc from MAN to KING.
   */
   public void crownPiece()
   {
