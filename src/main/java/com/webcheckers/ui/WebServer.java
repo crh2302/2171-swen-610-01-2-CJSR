@@ -51,7 +51,6 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
   public static final String SIGNIN_URL = "/signin";
-  public static final String SIGNOUT_URL = "/signout";
   public static final String GAMEMENU_URL = "/game-menu";
   public static final String GAME_URL = "/game";
 
@@ -136,9 +135,6 @@ public class WebServer {
 
     //get signin page
     get(SIGNIN_URL, new GetSigninRoute(), templateEngine);
-
-    //get signout
-    get(SIGNOUT_URL, new GetSignoutRoute(checkersCenter), templateEngine);
 
     //get game-menu page
     get(GAMEMENU_URL, new GetGameMenuRoute(), templateEngine);

@@ -34,6 +34,12 @@ public class GetGameMenuRoute implements TemplateViewRoute {
                 break;
             case "noExistence":
                 vm.put("opponentError", PostOpponentRoute.INVALID_OPP_MSG);
+                break;
+            case "leftGame":
+                CheckersCenter.inGamePlayers.remove(request.queryParams(("playerName")));
+                CheckersCenter.inGamePlayers.remove(request.queryParams(("opponent")));
+                break;
+            default:
         }
 
         return new ModelAndView(vm, "game-menu.ftl");
