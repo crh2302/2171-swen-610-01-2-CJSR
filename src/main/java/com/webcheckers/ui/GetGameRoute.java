@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.CheckersCenter;
+import com.webcheckers.model.Board;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -43,6 +44,7 @@ public class GetGameRoute implements TemplateViewRoute {
             CheckersCenter.inGamePlayers.add(opponent);
         }
 
+        //render the game board
         Board newBoard = new Board();
         vm.put("board", newBoard);
 
