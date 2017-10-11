@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta http-equiv="refresh" content="10">
     <title>${title} | Web Checkers</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
@@ -15,8 +16,15 @@
     </div>                                                       
     
     <div class="body">
-      <p>Welcome to the Game Menu of WebCheckers, <#if playerName??>${playerName}</#if>!</p>
-    </div>
+      Welcome to the Game Menu of WebCheckers, <#if playerName??>${playerName}</#if>!
+    </div><br />
+
+      <form action="/opponent?playerName=${playerName}" method="POST">
+          Enter the name of your desired opponent:
+          <br />
+          <input name="opponent" />
+          <button type="submit">Submit Opponent</button>
+      </form>
 
       <div>
           <#if opponentError??>
@@ -25,9 +33,12 @@
       </div>
 
       <#if playerNames??>
+      <br />
+      Online Players:
+      <br />
           <ol>
               <#list playerNames as n>
-                  <#if n != playerName><li><a href="/opponent?opponent=${n}&playerName=${playerName}"> ${n} </a></li>
+                  <#if n != playerName><li> ${n} </li>
                   <#else>
                     <li>${n} [this is you]</li>
                   </#if>
