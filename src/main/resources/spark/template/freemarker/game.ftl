@@ -27,9 +27,9 @@
     <div class="navigation">
     <#if currentPlayer??>
         <a href="/">my home</a> |
-        <a href="/signout">sign out [${playerName}]</a>
+        <a href="/logout">sign out [${playerName}]</a>
     <#else>
-        <a href="/signin">sign in</a>
+        <a href="/login">sign in</a>
     </#if>
     </div>
 
@@ -108,7 +108,7 @@
                         <tr data-row="${row.index}">
                             <#list row.iterator() as space>
                                 <td data-cell="${space.cellIdx}"
-                                    <#if space.isBlack() >
+                                    <#if space.isValid() >
                                     class="Space"
                                     </#if>
                                 >

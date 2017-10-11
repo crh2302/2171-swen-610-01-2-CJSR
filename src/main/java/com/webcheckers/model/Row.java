@@ -87,7 +87,7 @@ public class Row implements Iterable<Space>
       spaces.add(new Space(6,false, null));
       spaces.add(new Space(7,true, new Piece("SINGLE","RED")));
     }
-
+/*
     if(index == 4)
     {
       spaces.add(new Space(0,false, null));
@@ -112,7 +112,7 @@ public class Row implements Iterable<Space>
       spaces.add(new Space(6,true, null));
       spaces.add(new Space(7,false, null));
 
-    }
+    }*/
 
   }
 
