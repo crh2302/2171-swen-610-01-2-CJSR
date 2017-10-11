@@ -11,16 +11,26 @@
     
     <div class="navigation">
       <a href="/game-menu">my home</a>
-        <a href="/signout?playerName=${playerName}">logout</a>
-    </div>
+        <a href="/signout?playerName=${playerName}"> sign out [${playerName}] </a>
+    </div>                                                       
     
     <div class="body">
       <p>Welcome to the Game Menu of WebCheckers, <#if playerName??>${playerName}</#if>!</p>
     </div>
+
+      <div>
+          <#if opponentError??>
+              ${opponentError}
+          </#if>
+      </div>
+
       <#if playerNames??>
           <ol>
               <#list playerNames as n>
-                  <li><a href="/game?opponent=${n}"> ${n} </a></li>
+                  <#if n != playerName><li><a href="/opponent?opponent=${n}&playerName=${playerName}"> ${n} </a></li>
+                  <#else>
+                    <li>${n} [this is you]</li>
+                  </#if>
               </#list>
           </ol>
       </#if>
