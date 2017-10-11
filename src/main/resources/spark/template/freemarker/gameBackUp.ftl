@@ -108,7 +108,7 @@
               <tr data-row="${row.index}">
               <#list row.iterator() as space>
                 <td data-cell="${space.cellIdx}"
-                    <#if space.isValid() >
+                    <#if space.isBlack() >
                     class="Space"
                     </#if>
                     >

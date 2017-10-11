@@ -3,19 +3,18 @@ package com.webcheckers.model;
 public class Space
 {
     private int cellIdx;
-    private Position position;
-    private boolean isValid;
+    private boolean isBlack;
     private Piece piece = null;
-
+    private Position position;
   //
   // Constructor
   //
 
 //TODO javadoc of Space
-  public Space(Position position, boolean isValid)
+  public Space(Position position, boolean isBlack)
   {
     this.position = position;
-    this.isValid = isValid;
+    this.isBlack = isBlack;
     this.piece = null;
   }
 
@@ -24,14 +23,21 @@ public class Space
   *
   * @param cellIdx
   *          The unique identifier for the space.
-  * @param isValid
+  * @param isBlack
   *          If valid a piece will be placeble
   */
-  public Space(int cellIdx, boolean isValid)
+  public Space(int cellIdx, boolean isBlack)
   {
       this.cellIdx = cellIdx;
-      this.isValid = isValid;
+      this.isBlack = isBlack;
       this.piece = null;
+  }
+
+  public Space(int cellIdx, boolean isBlack,Piece piece)
+  {
+    this.cellIdx = cellIdx;
+    this.isBlack = isBlack;
+    this.piece = piece;
   }
 
   /**
@@ -67,7 +73,7 @@ public class Space
    */
   public boolean containsPiece()
   {
-    return this.piece == null;
+    return this.piece != null;
   }
 
   /**
@@ -82,18 +88,20 @@ public class Space
    *
    * @return
    */
-  public boolean isValid()
+  public boolean isBlack()
   {
-      return isValid;
+      return isBlack;
   }
 
   /**
    *
    * @return
    */
-  //public Position getPosition()
-  //{
-  //    return position;
-  //}
+
+  public boolean isValid()
+  {
+    return ((this.piece == null) && isBlack);
+  }
+
 
 }

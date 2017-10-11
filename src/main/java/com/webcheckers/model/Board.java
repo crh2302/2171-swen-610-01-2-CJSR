@@ -5,18 +5,29 @@ import java.util.Iterator;
 
 public class Board implements Iterable<Row>
 {
-    private ArrayList<Row> rows;
+    private ArrayList<Row> row;
 
 
     @Override
     public Iterator<Row> iterator()
     {
-        return this.rows.iterator();
+        return this.row.iterator();
     }
 
     public Board()
     {
-        this.rows = new ArrayList<Row>(Row.ROW_AMMOUT);
+        this.row = new ArrayList<Row>(Row.ROW_AMMOUT);
+
+        for (int i = 0; i < Row.ROW_AMMOUT; i++)
+        {
+            this.row.add(new Row(i));
+        }
+
+    }
+
+    public Row getRow(int index)
+    {
+       return this.row.get(index);
     }
 
 }

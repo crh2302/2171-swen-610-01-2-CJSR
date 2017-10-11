@@ -5,17 +5,17 @@ package com.webcheckers.model;
  */
 public class Piece
 {
-  PieceType type;
-  PieceColor color;
+  String type;
+  String color;
 
   /**
   *
   * @param color
   */
-  public Piece(PieceColor color)
+  public Piece(String color)
   {
       this.color = color;
-      this.type = PieceType.MAN;
+      this.type = "SINGLE";
   }
 
   /**
@@ -23,17 +23,27 @@ public class Piece
   * @param type
   * @param color
   */
-  public Piece(PieceType type, PieceColor color)
+  public Piece(String type, String color)
   {
       this.color = color;
       this.type = type;
+  }
+
+  public void setType(String type)
+  {
+    this.type = type;
+  }
+
+  public void setColor(String color)
+  {
+    this.color = color;
   }
 
   /**
   *
   * @return
   */
-  public PieceType getType()
+  public String getType()
   {
       return type;
   }
@@ -42,7 +52,7 @@ public class Piece
   *
   * @return
   */
-  public PieceColor getColor()
+  public String getColor()
   {
       return color;
   }
@@ -52,6 +62,6 @@ public class Piece
   */
   public void crownPiece()
   {
-      this.type = PieceType.KING;
+      this.type = "KING";
   }
 }

@@ -51,7 +51,6 @@ public class GetGameRoute implements TemplateViewRoute, Route {
     String opponentsColor = "Opponents Color  ";
 
 
-
     Map<String, Object> vm = new HashMap<>();
     vm.put(TITLE_ATTR,title);
     vm.put(PLAYER_NAME_ATTR,playerName);
@@ -59,11 +58,15 @@ public class GetGameRoute implements TemplateViewRoute, Route {
 
     vm.put(IS_MY_TURN_ATTR,true);
     vm.put(CURRENT_PLAYER_ATTR,true);
-    vm.put("message",true);
+    //vm.put("message",true);
 
     vm.put(OPPONENT_NAME_ATTR,opponentsName);
     vm.put(OPPONENT_COLOR_ATTR,opponentsColor);
-    vm.put(BOARD_ATTR,new Board());
+
+
+    Board boar = new Board();
+    vm.put(BOARD_ATTR,boar);
+    vm.put("row.index",0);
 
     return new ModelAndView(vm, GAME_VIEW);
   }

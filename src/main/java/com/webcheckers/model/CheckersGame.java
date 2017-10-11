@@ -6,14 +6,14 @@ package com.webcheckers.model;
  */
 public class CheckersGame
 {
-    PieceColor turnColor;
+    String turnColor;
 
-    public PieceColor getTurnColor()
+    public String getTurnColor()
     {
         return turnColor;
     }
 
-    public void setTurnColor(PieceColor turnColor)
+    public void setTurnColor(String turnColor)
     {
         this.turnColor = turnColor;
     }
