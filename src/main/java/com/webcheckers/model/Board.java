@@ -16,13 +16,6 @@ public class Board implements Iterable<Row>
 
     private ArrayList<Row> row;
 
-
-    @Override
-    public Iterator<Row> iterator()
-    {
-        return this.row.iterator();
-    }
-
     //
     // Constructor
     //
@@ -45,13 +38,19 @@ public class Board implements Iterable<Row>
      * accessor for row
      *
      * @param index
-     *
+     *      Index of the row that wants to be get
      * @return
-     *      row.index
+     *      The row on the specified index
      */
     public Row getRow(int index)
     {
        return this.row.get(index);
+    }
+
+    @Override
+    public Iterator<Row> iterator()
+    {
+        return this.row.iterator();
     }
 
 }
