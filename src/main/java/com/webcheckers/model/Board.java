@@ -3,8 +3,17 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ *
+ * Class to render a game board
+ *
+ */
 public class Board implements Iterable<Row>
 {
+    //
+    // attributes
+    //
+
     private ArrayList<Row> row;
 
 
@@ -13,6 +22,10 @@ public class Board implements Iterable<Row>
     {
         return this.row.iterator();
     }
+
+    //
+    // Constructor
+    //
 
     public Board()
     {
@@ -25,23 +38,17 @@ public class Board implements Iterable<Row>
 
     }
 
+    /**
+     * accessor for row
+     *
+     * @param index
+     *
+     * @return
+     *      row.index
+     */
     public Row getRow(int index)
     {
        return this.row.get(index);
     }
 
 }
-
-
-/*
-for (int row = 0 ; row < Row.ROW_AMMOUT; row++)
-{
-    this.rows.add(new Row(row));
-    for (int cell = 0 ; cell < Row.ROW_AMMOUT;cell++)
-    {
-     if (board[row][cell].getPiece() != null )
-     {
-         //rows.get(row).placePiece(cell,board[row][cell].getPiece());
-     }
-    }
-}*/

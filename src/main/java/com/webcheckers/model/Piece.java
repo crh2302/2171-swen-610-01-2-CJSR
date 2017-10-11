@@ -5,6 +5,11 @@ package com.webcheckers.model;
  */
 public class Piece
 {
+
+  //
+  // Atrributes
+  //
+
   String type;
   String color;
 
@@ -29,11 +34,21 @@ public class Piece
       this.type = type;
   }
 
+  /**
+   * Set type mutator
+   *
+   * @param type
+   */
   public void setType(String type)
   {
     this.type = type;
   }
 
+  /**
+   * Set color mutator
+   *
+   * @param color
+   */
   public void setColor(String color)
   {
     this.color = color;
@@ -42,6 +57,7 @@ public class Piece
   /**
   *
   * @return
+   *    type of piece
   */
   public String getType()
   {
@@ -51,6 +67,7 @@ public class Piece
   /**
   *
   * @return
+   *    color of disc
   */
   public String getColor()
   {
@@ -58,7 +75,7 @@ public class Piece
   }
 
   /**
-  *
+  * change disc from MAN to KING
   */
   public void crownPiece()
   {
