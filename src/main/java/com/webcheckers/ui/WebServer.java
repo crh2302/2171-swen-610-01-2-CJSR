@@ -54,6 +54,7 @@ public class WebServer {
   public static final String SIGNOUT_URL = "/signout";
   public static final String GAMEMENU_URL = "/game-menu";
   public static final String GAME_URL = "/game";
+  public static final String OPPONENT_URL = "/opponent";
 
   //
   // Attributes
@@ -75,10 +76,10 @@ public class WebServer {
    */
   public WebServer(final CheckersCenter checkersCenter,
       final TemplateEngine templateEngine) {
-    Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
-    Objects.requireNonNull(templateEngine, "templateEngine must not be null");
-    this.checkersCenter = checkersCenter;
-    this.templateEngine = templateEngine;
+          Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
+          Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+          this.checkersCenter = checkersCenter;
+          this.templateEngine = templateEngine;
   }
 
   //
@@ -131,16 +132,26 @@ public class WebServer {
     //// Create separate Route classes to handle each route; this keeps your
     //// code clean; using small classes.
 
-    // Shows the Checkers game Home page.
+    // get home page
     get(HOME_URL, new HomeController(), templateEngine);
-    get(SIGNIN_URL, new GetSigninRoute(), templateEngine);
-    get(SIGNOUT_URL, new GetSignoutRoute(checkersCenter), templateEngine);
-    get(GAMEMENU_URL, new GetGameMenuRoute(), templateEngine);
-    get(GAME_URL, new GetGameRoute(checkersCenter), templateEngine);
 
-    // Post opponent and name
+    //get signin page
+    get(SIGNIN_URL, new GetSigninRoute(), templateEngine);
+
+    //get signout
+    get(SIGNOUT_URL, new GetSignoutRoute(checkersCenter), templateEngine);
+
+    //get game-menu page
+    get(GAMEMENU_URL, new GetGameMenuRoute(), templateEngine);
+
+    //get game page
+    get(GAME_URL, new GetGameRoute(), templateEngine);
+
+    //get opponent
+    get(OPPONENT_URL, new GetOpponentRoute(checkersCenter), templateEngine);
+
+    // Post name and move (eventually)
     post("/name", new PostNameRoute(checkersCenter), templateEngine);
-    //post("/opponent", new PostOpponentRoute(), templateEngine);
     //post("/submitMove", new PostMoveRoute(), templateEngine);
 
   }

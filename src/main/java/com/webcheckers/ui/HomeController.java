@@ -8,30 +8,28 @@ import spark.*;
 import static spark.Spark.halt;
 
 /**
- * The Web Controller for the Home page.
  *
- * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
+ * The {@code GET /} route handler, aka the home page
+ *
+ * Landing page for when user first enters application, and when user signs out
+ *
  */
 public class HomeController implements TemplateViewRoute {
 
-  static final String TITLE_ATTR_MSG = "Welcome!";
+    //
+    // Constants
+    //
 
-  @Override
-  public ModelAndView handle(Request request, Response response) {
-    Map<String, Object> vm = new HashMap<>();
-    vm.put("title", TITLE_ATTR_MSG);
+    static final String TITLE_ATTR_MSG = "Welcome!";
 
-    final Session httpSession = request.session();
-    if (httpSession.isNew()){
-      return new ModelAndView(vm, "home.ftl");
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ModelAndView handle(Request request, Response response) {
+        Map<String, Object> vm = new HashMap<>();
+        vm.put("title", TITLE_ATTR_MSG);
+
+        return new ModelAndView(vm , "home.ftl");
     }
-    else {
-      // there is a game already being played
-      // so redirect the user to the Game view
-      response.redirect(WebServer.GAMEMENU_URL);
-      halt();
-    }
-
-    return new ModelAndView(vm , "home.ftl");
-  }
 }
