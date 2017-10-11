@@ -64,8 +64,8 @@ public class CheckersCenter {
         session.removeAttribute("checkGame");
         // do some application-wide book-keeping
         synchronized (this) {  // protect the critical code
-             allPlayers.remove(GetGameMenuRoute.getPlayerNameString(request));
-             inGamePlayers.remove(GetGameMenuRoute.getPlayerNameString(request));
+             allPlayers.remove(request.queryParams("signedOut"));
+             inGamePlayers.remove(request.queryParams("signedOut"));
         }
     }
 
