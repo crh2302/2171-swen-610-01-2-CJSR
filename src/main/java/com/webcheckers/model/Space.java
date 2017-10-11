@@ -10,7 +10,13 @@ public class Space
   // Constructor
   //
 
-//TODO javadoc of Space
+  /**
+   * Is a place holder for a piece. Spaces form part of the rows and the board.
+   * @param position
+   *        Coordinates of the space.
+   * @param isBlack
+   *        True for a black space, false otherwise.
+   */
   public Space(Position position, boolean isBlack)
   {
     this.position = position;
@@ -19,12 +25,12 @@ public class Space
   }
 
   /**
-  * Create a board space
+  * Create a board space.
   *
   * @param cellIdx
-  *          The unique identifier for the space.
+  *          Cell number from left to right.
   * @param isBlack
-  *          If valid a piece will be placeble
+  *          Is true if the space is black.
   */
   public Space(int cellIdx, boolean isBlack)
   {
@@ -33,6 +39,15 @@ public class Space
       this.piece = null;
   }
 
+  /**
+   * Create a board space.
+   * @param cellIdx
+   *        Cell number from left to right.
+   * @param isBlack
+   *        True for black spaces.
+   * @param piece
+   *        The piece to be placed in the space.
+   */
   public Space(int cellIdx, boolean isBlack,Piece piece)
   {
     this.cellIdx = cellIdx;
@@ -41,8 +56,9 @@ public class Space
   }
 
   /**
-   *
+   * Return the cell number of a space.
    * @return
+   *      The cell number.
    */
   public int getCellIdx()
   {
@@ -50,8 +66,9 @@ public class Space
   }
 
   /**
-   *
+   *Return the piece place on a space.
    * @return
+   *      The piece placed on the space.
    */
   public Piece getPiece()
   {
@@ -59,8 +76,9 @@ public class Space
   }
 
   /**
-   *
+   * Place piece in a space
    * @param piece
+   *        Piece to be placed on the space.
    */
   public void placePiece(Piece piece)
   {
@@ -68,8 +86,9 @@ public class Space
   }
 
   /**
-   *
+   * Return true if the space contains a piece.
    * @return
+   *    Return true if the space contains a piece.
    */
   public boolean containsPiece()
   {
@@ -77,7 +96,7 @@ public class Space
   }
 
   /**
-   *
+   * Removes piece from space.
    */
   public void removePiece()
   {
@@ -85,8 +104,9 @@ public class Space
   }
 
   /**
-   *
+   * Returns if the space is black.
    * @return
+   *    Return true if the space is black.
    */
   public boolean isBlack()
   {
@@ -94,8 +114,9 @@ public class Space
   }
 
   /**
-   *
+   * Return if is valid to make a move to the space.
    * @return
+   *    Return true if a piece can be placed in that space.
    */
 
   public boolean isValid()
@@ -103,5 +124,14 @@ public class Space
     return ((this.piece == null) && isBlack);
   }
 
+  /**
+   * Return the position of the space.
+   * @param position
+   *        Return the position of the space.
+   */
+  public void setPosition(Position position)
+  {
+    this.position = position;
+  }
 
 }

@@ -27,6 +27,9 @@ public class Board implements Iterable<Row>
     // Constructor
     //
 
+    /**
+     * Default constructor for board.
+     */
     public Board()
     {
         this.row = new ArrayList<Row>(Row.ROW_AMMOUT);
