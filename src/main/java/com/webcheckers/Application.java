@@ -1,7 +1,12 @@
 package com.webcheckers;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.Objects;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.CheckersCenter;
 import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -32,6 +37,19 @@ public final class Application {
    *    Command line arguments; none expected.
    */
   public static void main(String[] args) {
+    // initialize Logging
+    try {
+      ClassLoader classLoader = Application.class.getClassLoader();
+      final InputStream logConfig = classLoader.getResourceAsStream("log.properties");
+      LogManager.getLogManager().readConfiguration(logConfig);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println("Could not initialize log manager because: " + e.getMessage());
+    }
+
+    // create the one and only checkers center
+
+    final CheckersCenter checkersCenter = new CheckersCenter();
 
     // The application uses FreeMarker templates to generate the HTML
     // responses sent back to the client. This will be the engine processing
@@ -39,7 +57,7 @@ public final class Application {
     final TemplateEngine templateEngine = new FreeMarkerEngine();
 
     // inject the game center and freemarker engine into web server
-    final WebServer webServer = new WebServer(templateEngine);
+    final WebServer webServer = new WebServer(checkersCenter,templateEngine);
 
     // inject web server into application
     final Application app = new Application(webServer);
@@ -59,6 +77,9 @@ public final class Application {
   //
 
   private Application(final WebServer webServer) {
+    // validation
+    Objects.requireNonNull(webServer, "webServer must not be null");
+    //
     this.webServer = webServer;
   }
 

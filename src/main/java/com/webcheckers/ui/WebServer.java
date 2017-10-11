@@ -1,7 +1,11 @@
 package com.webcheckers.ui;
 
 import static spark.Spark.*;
+
+import com.webcheckers.appl.CheckersCenter;
 import spark.TemplateEngine;
+
+import java.util.Objects;
 
 
 /**
@@ -43,14 +47,18 @@ public class WebServer {
   //
 
   /**
-   * The URL pattern to request the Home page.
+   * The URL patterns to request pages
    */
   public static final String HOME_URL = "/";
+  public static final String SIGNIN_URL = "/signin";
+  public static final String SIGNOUT_URL = "/signout";
+  public static final String GAMEMENU_URL = "/game-menu";
+  public static final String GAME_URL = "/game";
 
   //
   // Attributes
   //
-
+  private final CheckersCenter checkersCenter;
   private final TemplateEngine templateEngine;
 
   //
@@ -60,12 +68,17 @@ public class WebServer {
   /**
    * The constructor for the Web Server.
    *
+   * @param checkersCenter
+   *    The {@link CheckersCenter} for the application
    * @param templateEngine
    *    The default {@link TemplateEngine} to render views.
    */
-  public WebServer(
+  public WebServer(final CheckersCenter checkersCenter,
       final TemplateEngine templateEngine) {
-    this.templateEngine = templateEngine;
+          Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
+          Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+          this.checkersCenter = checkersCenter;
+          this.templateEngine = templateEngine;
   }
 
   //
@@ -118,8 +131,26 @@ public class WebServer {
     //// Create separate Route classes to handle each route; this keeps your
     //// code clean; using small classes.
 
-    // Shows the Checkers game Home page.
+    // get home page
     get(HOME_URL, new HomeController(), templateEngine);
+
+    //get signin page
+    get(SIGNIN_URL, new GetSigninRoute(), templateEngine);
+
+    //get signout
+    get(SIGNOUT_URL, new GetSignoutRoute(checkersCenter), templateEngine);
+
+    //get game-menu page
+    get(GAMEMENU_URL, new GetGameMenuRoute(), templateEngine);
+
+    //get game page
+    get(GAME_URL, new GetGameRoute(), templateEngine);
+
+    // Post name
+    post("/name", new PostNameRoute(checkersCenter), templateEngine);
+
+    // Post opponent selection
+    post("/opponent", new PostOpponentRoute(checkersCenter), templateEngine);
 
   }
 
