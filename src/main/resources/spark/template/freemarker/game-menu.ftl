@@ -12,7 +12,7 @@
     
     <div class="navigation">
       <a href="/game-menu?playerName=${playerName}&errorPathType=none">my home</a>
-        <a href="/signout?playerName=${playerName}"> sign out [${playerName}] </a>
+        <a href="/?signedOut=${playerName}"> sign out [${playerName}] </a>
     </div>                                                       
     
     <div class="body">
