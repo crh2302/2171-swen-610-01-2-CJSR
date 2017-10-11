@@ -75,7 +75,7 @@ public class PostNameRoute implements TemplateViewRoute {
         if(this.checkersCenter.isPlayerListEmpty())
         {
             checkersCenter.add(name);
-            return successfulAdd(vm, name, response);
+            return successfulAdd(name, response);
         }
         else
         {
@@ -83,7 +83,7 @@ public class PostNameRoute implements TemplateViewRoute {
             if(!nameAvailable)
             {
                 checkersCenter.add(name);
-                return successfulAdd(vm, name, response);
+                return successfulAdd(name, response);
             }
             else
             {
@@ -104,6 +104,7 @@ public class PostNameRoute implements TemplateViewRoute {
         vm.put("title", HomeController.TITLE_ATTR_MSG);
         vm.put("loginMessage", GetSigninRoute.LOGIN_ATTR_MSG);
         vm.put("errorMessage", ERROR_ATTR_MSG);
+
         return new ModelAndView(vm, "signin.ftl");
     }
 
@@ -113,9 +114,9 @@ public class PostNameRoute implements TemplateViewRoute {
      *
      * playerName and errorPath stored as URL parameters
      */
-    public static ModelAndView successfulAdd(Map<String, Object> vm, String name, Response response)
+    public static ModelAndView successfulAdd(String name, Response response)
     {
-        response.redirect(String.format("/game-menu?playerName=%s&errorPath=false",name));
+        response.redirect(String.format("/game-menu?playerName=%s&%s=none", name, PostOpponentRoute.ERROR_PATH_TYPE));
         return null;
     }
 

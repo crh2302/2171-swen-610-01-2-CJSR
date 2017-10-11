@@ -24,8 +24,16 @@ public class GetGameMenuRoute implements TemplateViewRoute {
         vm.put("playerName", request.queryParams("playerName"));
         vm.put("playerNames", CheckersCenter.allPlayers);
 
-        if(request.queryParams("errorPath").equals("true")){
-            vm.put("opponentError", GetOpponentRoute.OPPONENT_ERROR_MSG);
+        //determining which error to display
+        switch(request.queryParams("errorPathType")){
+            case "inGame":
+                vm.put("opponentError", PostOpponentRoute.OPPONENT_ERROR_MSG);
+                break;
+            case "selfPlay":
+                vm.put("opponentError", PostOpponentRoute.SELF_PLAY_ERROR_MSG);
+                break;
+            case "noExistence":
+                vm.put("opponentError", PostOpponentRoute.INVALID_OPP_MSG);
         }
 
         return new ModelAndView(vm, "game-menu.ftl");

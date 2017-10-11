@@ -54,7 +54,6 @@ public class WebServer {
   public static final String SIGNOUT_URL = "/signout";
   public static final String GAMEMENU_URL = "/game-menu";
   public static final String GAME_URL = "/game";
-  public static final String OPPONENT_URL = "/opponent";
 
   //
   // Attributes
@@ -147,12 +146,11 @@ public class WebServer {
     //get game page
     get(GAME_URL, new GetGameRoute(), templateEngine);
 
-    //get opponent
-    get(OPPONENT_URL, new GetOpponentRoute(checkersCenter), templateEngine);
-
-    // Post name and move (eventually)
+    // Post name
     post("/name", new PostNameRoute(checkersCenter), templateEngine);
-    //post("/submitMove", new PostMoveRoute(), templateEngine);
+
+    // Post opponent selection
+    post("/opponent", new PostOpponentRoute(checkersCenter), templateEngine);
 
   }
 
