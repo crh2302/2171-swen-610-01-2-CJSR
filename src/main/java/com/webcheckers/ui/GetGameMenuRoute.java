@@ -4,6 +4,7 @@ import com.webcheckers.appl.CheckersCenter;
 import spark.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
@@ -12,6 +13,13 @@ import java.util.Map;
  */
 public class GetGameMenuRoute implements TemplateViewRoute {
 
+    private final CheckersCenter checkersCenter;
+
+    public GetGameMenuRoute(final CheckersCenter checkersCenter){
+        // validation
+        Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
+        this.checkersCenter = checkersCenter;
+    }
 
     /**
      * {@inheritDoc}
@@ -22,7 +30,7 @@ public class GetGameMenuRoute implements TemplateViewRoute {
 
         vm.put("title",HomeController.TITLE_ATTR_MSG);
         vm.put("playerName", request.queryParams("playerName"));
-        vm.put("playerNames", CheckersCenter.allPlayers);
+        vm.put("playerNames", checkersCenter.getAllPlayers());
 
         //determining which error to display
         switch(request.queryParams("errorPathType")){
@@ -36,8 +44,8 @@ public class GetGameMenuRoute implements TemplateViewRoute {
                 vm.put("opponentError", PostOpponentRoute.INVALID_OPP_MSG);
                 break;
             case "leftGame":
-                CheckersCenter.inGamePlayers.remove(request.queryParams(("playerName")));
-                CheckersCenter.inGamePlayers.remove(request.queryParams(("opponent")));
+                this.checkersCenter.getInGamePlayers().remove(request.queryParams(("playerName")));
+                this.checkersCenter.getInGamePlayers().remove(request.queryParams(("opponent")));
                 break;
             default:
         }

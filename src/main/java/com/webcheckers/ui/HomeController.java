@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import com.webcheckers.appl.CheckersCenter;
 import spark.*;
@@ -22,7 +23,15 @@ public class HomeController implements TemplateViewRoute {
     //
 
     static final String TITLE_ATTR_MSG = "Welcome!";
-    private final CheckersCenter center = new CheckersCenter();
+    private final CheckersCenter checkersCenter;
+
+    public HomeController(final CheckersCenter checkersCenter){
+        // validation
+        Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
+        this.checkersCenter = checkersCenter;
+    }
+
+
 
     /**
      * {@inheritDoc}
@@ -43,7 +52,7 @@ public class HomeController implements TemplateViewRoute {
     }
 
     private ModelAndView signout(final Map<String, Object> vm, final Session session, Request request){
-        center.end(session, request);
+        checkersCenter.end(session, request);
         vm.put("title", TITLE_ATTR_MSG);
 
         return new ModelAndView(vm, "home.ftl");

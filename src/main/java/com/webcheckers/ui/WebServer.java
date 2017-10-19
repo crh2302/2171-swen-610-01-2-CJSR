@@ -131,16 +131,16 @@ public class WebServer {
     //// code clean; using small classes.
 
     // get home page
-    get(HOME_URL, new HomeController(), templateEngine);
+    get(HOME_URL, new HomeController(checkersCenter), templateEngine);
 
     //get signin page
     get(SIGNIN_URL, new GetSigninRoute(), templateEngine);
 
     //get game-menu page
-    get(GAMEMENU_URL, new GetGameMenuRoute(), templateEngine);
+    get(GAMEMENU_URL, new GetGameMenuRoute(checkersCenter), templateEngine);
 
     //get game page
-    get(GAME_URL, new GetGameRoute(), templateEngine);
+    get(GAME_URL, new GetGameRoute(checkersCenter), templateEngine);
 
     // Post name
     post("/name", new PostNameRoute(checkersCenter), templateEngine);
