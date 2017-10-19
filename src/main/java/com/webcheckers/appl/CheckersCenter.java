@@ -1,7 +1,6 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.CheckersGame;
-import com.webcheckers.ui.GetGameMenuRoute;
 import spark.Request;
 import spark.Session;
 import java.util.*;
@@ -17,8 +16,8 @@ public class CheckersCenter {
     // attributes
     //
 
-    public static List<String> allPlayers;
-    public static List<String> inGamePlayers = new ArrayList<>();
+    private List<String> allPlayers;
+    private List<String> inGamePlayers;
 
     //
     // constructor
@@ -26,6 +25,7 @@ public class CheckersCenter {
 
     public CheckersCenter() {
         allPlayers = new ArrayList<>();
+        inGamePlayers = new ArrayList<>();
     }
 
 
@@ -100,12 +100,19 @@ public class CheckersCenter {
         }
     }
 
+
     /**
      *
      * @return
      *      allPlayer's list
      */
-    public List<String> getAllPlayers() {
+    public List<String> getAllPlayers()
+    {
         return allPlayers;
+    }
+
+    public List<String> getInGamePlayers()
+    {
+        return inGamePlayers;
     }
 }
