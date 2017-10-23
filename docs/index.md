@@ -5,6 +5,8 @@ Welcome to the PROJECT Project!
 ## Team
 
 Jeff Palmerino
+Raseshwari Pulle
+Spoorthy Annapareddy
 
 ## [Design Documentation](DesignDoc)
 
