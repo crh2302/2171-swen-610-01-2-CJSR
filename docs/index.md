@@ -4,6 +4,14 @@ Welcome to the PROJECT Project!
 
 ## Team
 
+Rasheshwari Pulle
+
+Spoorthy Annapareddy
+
+Jeffrey Palmerino 
+
+Cervantes Hernandez
+
 ## [Design Documentation](DesignDoc)
 
 Click above for details of the PROJECT design documentation.
