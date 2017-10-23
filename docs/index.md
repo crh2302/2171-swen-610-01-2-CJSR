@@ -4,10 +4,6 @@ Welcome to the PROJECT Project!
 
 ## Team
 
-Jeff Palmerino/
-Raseshwari Pulle/
-Spoorthy Annapareddy/
-
 ## [Design Documentation](DesignDoc)
 
 Click above for details of the PROJECT design documentation.
