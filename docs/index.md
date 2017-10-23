@@ -4,7 +4,7 @@ Welcome to the PROJECT Project!
 
 ## Team
 
-* MEMBER
+Jeff Palmerino
 
 ## [Design Documentation](DesignDoc)
 
