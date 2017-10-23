@@ -4,7 +4,7 @@ Welcome to the PROJECT Project!
 
 ## Team
 
-Rasheshwari Pulle
+Raseshwari Pulle
 
 Spoorthy Annapareddy
 
