@@ -15,84 +15,82 @@ import static org.junit.Assert.*;
 
 public class PostNameRouteTest
 {
-  private PostNameRoute  CuT;
-  private Request request;
-  private Response response;
-  private CheckersCenter checkersCenter;
-  private final String playerName = "Joseph";
+    private PostNameRoute  CuT;
+    private Request request;
+    private Response response;
+    private CheckersCenter checkersCenter;
+    private final String playerName = "Joseph";
 
-  //private ArrayList allPlayerEmpty;
-  private ArrayList allPlayerNotAvailable;
-  private ArrayList allPlayerAvailable;
+    //private ArrayList allPlayerEmpty;
+    private ArrayList allPlayerNotAvailable;
+    private ArrayList allPlayerAvailable;
 
-
-
-  @Before
-  public void setUp() throws Exception
-  {
-    checkersCenter = mock(CheckersCenter.class);
-    CuT = new PostNameRoute(checkersCenter);
-    request = mock(Request.class);
-    response = mock(Response.class);
+    @Before
+    public void setUp() throws Exception
+    {
+        checkersCenter = mock(CheckersCenter.class);
+        CuT = new PostNameRoute(checkersCenter);
+        request = mock(Request.class);
+        response = mock(Response.class);
 
 //    allPlayerEmpty = new ArrayList();
 
-    allPlayerAvailable = new ArrayList();
-    allPlayerAvailable.add("Peter");
+        allPlayerAvailable = new ArrayList();
+        allPlayerAvailable.add("Peter");
 
-    allPlayerNotAvailable = new ArrayList();
-    allPlayerNotAvailable.add(playerName);
-    allPlayerNotAvailable.add("Peter");
+        allPlayerNotAvailable = new ArrayList();
+        allPlayerNotAvailable.add(playerName);
+        allPlayerNotAvailable.add("Peter");
 
-  }
+    }
 
-  @After
-  public void tearDown() throws Exception
-  {
-  }
+    @After
+    public void tearDown() throws Exception
+    {
+    }
 
-  @Test
-  public void testStoreName_playerListEmpty() //Verify
-  {
-    when(request.queryParams("playerName")).thenReturn(playerName);
-    when(checkersCenter.isPlayerListEmpty()).thenReturn(Boolean.TRUE);
-    final ModelAndView result = CuT.handle(request,response);
-    assertNull(result);
-    verify(response).redirect(String.format("/game-menu?playerName=%s&%s=none", playerName, PostOpponentRoute.ERROR_PATH_TYPE));
-  }
+    @Test
+    public void testStoreName_playerListEmpty() //Verify
+    {
+        when(request.queryParams("playerName")).thenReturn(playerName);
+        when(checkersCenter.isPlayerListEmpty()).thenReturn(Boolean.TRUE);
+        final ModelAndView result = CuT.handle(request,response);
+        assertNull(result);
+        verify(response).redirect(String.format("/game-menu?playerName=%s&%s=none", playerName, PostOpponentRoute.ERROR_PATH_TYPE));
+    }
 
-  @Test
-  public void testStoreName_nameAvailable()
-  {
+    @Test
+    public void testStoreName_nameAvailable()
+    {
 
-    when(request.queryParams("playerName")).thenReturn(playerName);
-    when(checkersCenter.isPlayerListEmpty()).thenReturn(Boolean.FALSE);
-    when(checkersCenter.getAllPlayers()).thenReturn(allPlayerAvailable);
-    final ModelAndView result = CuT.handle(request,response);
-    assertNull(result);
-    assertFalse(checkersCenter.isPlayerListEmpty());
-    verify(response).redirect(String.format("/game-menu?playerName=%s&%s=none", playerName, PostOpponentRoute.ERROR_PATH_TYPE));
-  }
+        when(request.queryParams("playerName")).thenReturn(playerName);
+        when(checkersCenter.isPlayerListEmpty()).thenReturn(Boolean.FALSE);
+        when(checkersCenter.getAllPlayers()).thenReturn(allPlayerAvailable);
+        final ModelAndView result = CuT.handle(request,response);
+        assertNull(result);
+        assertFalse(checkersCenter.isPlayerListEmpty());
+        verify(response).redirect(String.format("/game-menu?playerName=%s&%s=none", playerName, PostOpponentRoute.ERROR_PATH_TYPE));
+    }
 
-  @Test
-  public void testStoreName_nameNotAvailable()
-  {
+    @Test
+    public void testStoreName_nameNotAvailable()
+    {
 
-    when(request.queryParams("playerName")).thenReturn(playerName); //
-    when(checkersCenter.isPlayerListEmpty()).thenReturn(Boolean.FALSE);
-    when(checkersCenter.getAllPlayers()).thenReturn(allPlayerNotAvailable);
-    final ModelAndView result = CuT.handle(request,response);
-    assertNotNull(result);
+        when(request.queryParams("playerName")).thenReturn(playerName); //
+        when(checkersCenter.isPlayerListEmpty()).thenReturn(Boolean.FALSE);
+        when(checkersCenter.getAllPlayers()).thenReturn(allPlayerNotAvailable);
+        final ModelAndView result = CuT.handle(request,response);
+        assertNotNull(result);
 
-    //   * model is a non-null Map
-    final Object model = result.getModel();
-    assertNotNull(model);
-    assertTrue(model instanceof Map);
-    //   * model contains all necessary View-Model data
-    @SuppressWarnings("unchecked")
-    final Map<String, Object> vm = (Map<String, Object>) model;
-    assertEquals(HomeController.TITLE_ATTR_MSG,vm.get("title"));
-    assertEquals(GetSigninRoute.LOGIN_ATTR_MSG,vm.get("loginMessage"));
-    assertEquals(PostNameRoute.ERROR_ATTR_MSG,vm.get("errorMessage"));
-  }
+        //   * model is a non-null Map
+        final Object model = result.getModel();
+        assertNotNull(model);
+        assertTrue(model instanceof Map);
+        //   * model contains all necessary View-Model data
+        @SuppressWarnings("unchecked")
+        final Map<String, Object> vm = (Map<String, Object>) model;
+        assertEquals(HomeController.TITLE_ATTR_MSG,vm.get("title"));
+        assertEquals(GetSigninRoute.LOGIN_ATTR_MSG,vm.get("loginMessage"));
+        assertEquals(PostNameRoute.ERROR_ATTR_MSG,vm.get("errorMessage"));
+    }
 }
