@@ -18,6 +18,4 @@ public class CheckersGame
         this.turnColor = turnColor;
     }
 
-    //TODO Board should be managed by this class.
-
 }

@@ -51,7 +51,6 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
   public static final String SIGNIN_URL = "/signin";
-  public static final String SIGNOUT_URL = "/signout";
   public static final String GAMEMENU_URL = "/game-menu";
   public static final String GAME_URL = "/game";
 
@@ -132,19 +131,16 @@ public class WebServer {
     //// code clean; using small classes.
 
     // get home page
-    get(HOME_URL, new HomeController(), templateEngine);
+    get(HOME_URL, new HomeController(checkersCenter), templateEngine);
 
     //get signin page
     get(SIGNIN_URL, new GetSigninRoute(), templateEngine);
 
-    //get signout
-    get(SIGNOUT_URL, new GetSignoutRoute(checkersCenter), templateEngine);
-
     //get game-menu page
-    get(GAMEMENU_URL, new GetGameMenuRoute(), templateEngine);
+    get(GAMEMENU_URL, new GetGameMenuRoute(checkersCenter), templateEngine);
 
     //get game page
-    get(GAME_URL, new GetGameRoute(), templateEngine);
+    get(GAME_URL, new GetGameRoute(checkersCenter), templateEngine);
 
     // Post name
     post("/name", new PostNameRoute(checkersCenter), templateEngine);

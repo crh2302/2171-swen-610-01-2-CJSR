@@ -7,7 +7,9 @@ import spark.Request;
 import spark.Response;
 import spark.TemplateViewRoute;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -17,6 +19,13 @@ import java.util.Map;
  */
 public class GetGameRoute implements TemplateViewRoute {
 
+    private final CheckersCenter checkersCenter;
+
+    public GetGameRoute(final CheckersCenter checkersCenter){
+        // validation
+        Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
+        this.checkersCenter = checkersCenter;
+    }
 
     /**
      * {@inheritDoc}
@@ -37,11 +46,12 @@ public class GetGameRoute implements TemplateViewRoute {
 
         vm.put("isMyTurn", false);
 
-        if(!CheckersCenter.inGamePlayers.contains(player)) {
-            CheckersCenter.inGamePlayers.add(player);
+        List<String> inGame = checkersCenter.getInGamePlayers();
+        if(!inGame.contains(player)) {
+            checkersCenter.getInGamePlayers().add(player);
         }
-        if(!CheckersCenter.inGamePlayers.contains(opponent)) {
-            CheckersCenter.inGamePlayers.add(opponent);
+        if(!inGame.contains(opponent)) {
+            checkersCenter.getInGamePlayers().add(opponent);
         }
 
         //render the game board

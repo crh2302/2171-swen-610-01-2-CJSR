@@ -26,8 +26,8 @@
     <h1>Web Checkers</h1>
 
     <div class="navigation">
-        <a href="/">my home</a>
-        <a href="/signout?playerName=${playerName}"> sign out [${playerName}] </a>
+        <a href="/game-menu?playerName=${playerName}&opponent=${opponentName}&errorPathType=leftGame">my home</a>
+        <a href="/?signedOut=${playerName}"> sign out [${playerName}] </a>
     </div>
 
     <div class="body">
