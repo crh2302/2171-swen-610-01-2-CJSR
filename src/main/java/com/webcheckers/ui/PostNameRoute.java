@@ -15,7 +15,7 @@ public class PostNameRoute implements TemplateViewRoute {
     // Attributes
     //
 
-    private static final String ERROR_ATTR_MSG = "Username already taken. Please enter another.";
+    static final String ERROR_ATTR_MSG = "Username already taken. Please enter another.";
     private final CheckersCenter checkersCenter;
 
     //
@@ -31,7 +31,7 @@ public class PostNameRoute implements TemplateViewRoute {
      * @throws NullPointerException
      *    when the {@code gameCenter} parameter is null
      */
-    PostNameRoute(final CheckersCenter checkersCenter) {
+    public PostNameRoute(final CheckersCenter checkersCenter) {
         // validation
         Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
         this.checkersCenter = checkersCenter;
@@ -59,7 +59,7 @@ public class PostNameRoute implements TemplateViewRoute {
      */
     public boolean nameAvailable(List<String> playerNames, String name)
     {
-        return playerNames.contains(name);
+        return !playerNames.contains(name);
     }
 
     /**
@@ -72,7 +72,7 @@ public class PostNameRoute implements TemplateViewRoute {
      *      returns a ModelAndView dependent on whether or not the name is available
      */
     public  ModelAndView storeName(Map<String, Object> vm, String name, Response response){
-        if(this.checkersCenter.isPlayerListEmpty())
+        if(checkersCenter.isPlayerListEmpty())
         {
             checkersCenter.add(name);
             return successfulAdd(name, response);
@@ -80,7 +80,7 @@ public class PostNameRoute implements TemplateViewRoute {
         else
         {
             boolean nameAvailable = nameAvailable(this.checkersCenter.getAllPlayers(),name);
-            if(!nameAvailable)
+            if(nameAvailable)
             {
                 checkersCenter.add(name);
                 return successfulAdd(name, response);
