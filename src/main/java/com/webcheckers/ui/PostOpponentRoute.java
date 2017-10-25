@@ -7,7 +7,6 @@ import spark.Response;
 import spark.TemplateViewRoute;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -84,8 +83,7 @@ public class PostOpponentRoute implements TemplateViewRoute {
      *       boolean to distinguish whether or not a chosen opponent is already in a game
      */
     private boolean isInGame(String opponentName){
-        List<String> opponent = checkersCenter.getInGamePlayers();
-        if(opponent.contains(opponentName)){
+        if(checkersCenter.inGamePlayers.contains(opponentName)){
             return true;
         }
         else{
@@ -102,8 +100,7 @@ public class PostOpponentRoute implements TemplateViewRoute {
      *      a boolean to determine whether or not opponent name submitted is in the list
      */
     private boolean isInList(String opponentName){
-        List<String> opponent = checkersCenter.getAllPlayers();
-        return opponent.contains(opponentName);
+        return checkersCenter.allPlayers.contains(opponentName);
     }
 
 

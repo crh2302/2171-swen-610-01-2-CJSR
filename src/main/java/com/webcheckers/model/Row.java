@@ -78,6 +78,7 @@ public class Row implements Iterable<Space>
     this.index = index;
     this.spaces = new ArrayList<Space>(ROW_AMMOUT);
 
+    //todo convert all of this into a loop
     if (index == 0 || index == 2) {
       spaces.add(new Space(0, false, null));
       spaces.add(new Space(1, true, new Piece("SINGLE", "WHITE")));

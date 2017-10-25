@@ -1,6 +1,7 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.CheckersGame;
+import com.webcheckers.ui.GetGameMenuRoute;
 import spark.Request;
 import spark.Session;
 import java.util.*;
@@ -16,8 +17,8 @@ public class CheckersCenter {
     // attributes
     //
 
-    private List<String> allPlayers;
-    private List<String> inGamePlayers;
+    public static List<String> allPlayers;
+    public static List<String> inGamePlayers = new ArrayList<>();
 
     //
     // constructor
@@ -25,7 +26,6 @@ public class CheckersCenter {
 
     public CheckersCenter() {
         allPlayers = new ArrayList<>();
-        inGamePlayers = new ArrayList<>();
     }
 
 
@@ -64,8 +64,8 @@ public class CheckersCenter {
         session.removeAttribute("checkGame");
         // do some application-wide book-keeping
         synchronized (this) {  // protect the critical code
-             allPlayers.remove(request.queryParams("signedOut"));
-             inGamePlayers.remove(request.queryParams("signedOut"));
+             allPlayers.remove(GetGameMenuRoute.getPlayerNameString(request));
+             inGamePlayers.remove(GetGameMenuRoute.getPlayerNameString(request));
         }
     }
 
@@ -100,19 +100,12 @@ public class CheckersCenter {
         }
     }
 
-
     /**
      *
      * @return
      *      allPlayer's list
      */
-    public List<String> getAllPlayers()
-    {
+    public List<String> getAllPlayers() {
         return allPlayers;
-    }
-
-    public List<String> getInGamePlayers()
-    {
-        return inGamePlayers;
     }
 }
