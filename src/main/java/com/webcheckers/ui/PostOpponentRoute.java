@@ -7,6 +7,7 @@ import spark.Response;
 import spark.TemplateViewRoute;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -43,6 +44,9 @@ public class PostOpponentRoute implements TemplateViewRoute {
         // validation
         Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
         this.checkersCenter = checkersCenter;
+
+        //for testing
+        checkersCenter.getInGamePlayers().add("sweet");
     }
 
     /**
@@ -52,27 +56,25 @@ public class PostOpponentRoute implements TemplateViewRoute {
     public ModelAndView handle(Request request, Response response) {
         // start building the View-Model
         final Map<String, Object> vm = new HashMap<>();
+        vm.put(HomeController.TITLE_ATTR, HomeController.TITLE_ATTR_MSG);
 
         String playerName = request.queryParams(("playerName"));
         String opponent = request.queryParams("opponent");
-        boolean playerListCheck = isInList(opponent);
 
-        if(!playerListCheck){
-            return error(response, playerName, false);
+        if(!isInList(opponent)){
+            response.redirect(String.format("/game-menu?playerName=%s&%s=noExistence", playerName, ERROR_PATH_TYPE));
         }
-        else if(playerName.equals(opponent)){
-            return error(response, opponent, true);
+        else if(isSelf(playerName,opponent)){
+            response.redirect(String.format("/game-menu?playerName=%s&%s=selfPlay", playerName, ERROR_PATH_TYPE));
         }
         else {
-            boolean playerGameCheck = isInGame(opponent);
-
-            if (playerGameCheck) {
+            if (isInGame(opponent)) {
                 response.redirect(String.format("/game-menu?playerName=%s&%s=inGame", playerName, ERROR_PATH_TYPE));
             } else {
                 response.redirect(String.format("/game?opponent=%s&playerName=%s", opponent, playerName));
             }
         }
-        return null;
+        return new ModelAndView(vm, GetGameMenuRoute.VIEW_NAME);
     }
 
     /**
@@ -82,13 +84,9 @@ public class PostOpponentRoute implements TemplateViewRoute {
      * @return
      *       boolean to distinguish whether or not a chosen opponent is already in a game
      */
-    private boolean isInGame(String opponentName){
-        if(checkersCenter.inGamePlayers.contains(opponentName)){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public boolean isInGame(String opponentName){
+        List<String> opponents = checkersCenter.getInGamePlayers();
+        return opponents.contains(opponentName);
     }
 
 
@@ -99,31 +97,19 @@ public class PostOpponentRoute implements TemplateViewRoute {
      * @return
      *      a boolean to determine whether or not opponent name submitted is in the list
      */
-    private boolean isInList(String opponentName){
-        return checkersCenter.allPlayers.contains(opponentName);
+    public boolean isInList(String opponentName){
+        List<String> opponents = checkersCenter.getAllPlayers();
+        return opponents.contains(opponentName);
     }
 
-
     /**
-     * Redirects player to game menu with different error path type, dependent on boolean value of selfPlay
      *
-     * @param response
-     * @param playerName
-     * @param selfPlay
+     * @param playerName,opponentName
      *
      * @return
-     *      null
+     *       boolean to distinguish whether or not a chosen opponent is the player themselves
      */
-    public synchronized ModelAndView error(Response response, String playerName, boolean selfPlay)
-    {
-        //if player tried to play against him self equals true
-        if(selfPlay) {
-            response.redirect(String.format("/game-menu?playerName=%s&%s=selfPlay", playerName, ERROR_PATH_TYPE));
-        }
-        else {
-            response.redirect(String.format("/game-menu?playerName=%s&%s=noExistence", playerName, ERROR_PATH_TYPE));
-        }
-
-        return null;
+    public boolean isSelf(String playerName,String opponentName){
+        return playerName.equals(opponentName);
     }
 }
