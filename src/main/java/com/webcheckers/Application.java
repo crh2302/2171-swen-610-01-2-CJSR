@@ -1,6 +1,6 @@
 package com.webcheckers;
 
-import java.io.FileNotFoundException;
+
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.logging.LogManager;
@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import com.webcheckers.appl.CheckersCenter;
 import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
-
 import com.webcheckers.ui.WebServer;
 
 
@@ -38,14 +37,14 @@ public final class Application {
    */
   public static void main(String[] args) {
     // initialize Logging
-    try {
+    /*try {
       ClassLoader classLoader = Application.class.getClassLoader();
       final InputStream logConfig = classLoader.getResourceAsStream("log.properties");
       LogManager.getLogManager().readConfiguration(logConfig);
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println("Could not initialize log manager because: " + e.getMessage());
-    }
+    }*/
 
     // create the one and only checkers center
 

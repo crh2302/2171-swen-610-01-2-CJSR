@@ -21,6 +21,7 @@ public class GetSigninRoute implements TemplateViewRoute {
     //
 
     static final String LOGIN_ATTR_MSG = "Welcome player! Please enter your username below!";
+    static final String VIEW_NAME = "signin.ftl";
 
 
 
@@ -30,10 +31,9 @@ public class GetSigninRoute implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", HomeController.TITLE_ATTR_MSG);
-        vm.put("loginMessage", LOGIN_ATTR_MSG);
-        vm.put("playerName", "  ");
+        vm.put(HomeController.TITLE_ATTR, HomeController.TITLE_ATTR_MSG);
+        vm.put(PostNameRoute.LOGIN_ATTR, LOGIN_ATTR_MSG);
 
-        return new ModelAndView(vm, "signin.ftl");
+        return new ModelAndView(vm, VIEW_NAME);
     }
 }

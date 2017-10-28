@@ -14,6 +14,7 @@ import java.util.Objects;
 public class GetGameMenuRoute implements TemplateViewRoute {
 
     private final CheckersCenter checkersCenter;
+    static final String VIEW_NAME = "game-menu.ftl";
 
     public GetGameMenuRoute(final CheckersCenter checkersCenter){
         // validation
@@ -28,7 +29,7 @@ public class GetGameMenuRoute implements TemplateViewRoute {
     public ModelAndView handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
 
-        vm.put("title",HomeController.TITLE_ATTR_MSG);
+        vm.put(HomeController.TITLE_ATTR,HomeController.TITLE_ATTR_MSG);
         vm.put("playerName", request.queryParams("playerName"));
         vm.put("playerNames", checkersCenter.getAllPlayers());
 
@@ -50,7 +51,7 @@ public class GetGameMenuRoute implements TemplateViewRoute {
             default:
         }
 
-        return new ModelAndView(vm, "game-menu.ftl");
+        return new ModelAndView(vm, VIEW_NAME);
     }
 
     /**

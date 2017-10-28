@@ -20,6 +20,7 @@ import java.util.Objects;
 public class GetGameRoute implements TemplateViewRoute {
 
     private final CheckersCenter checkersCenter;
+    static final String VIEW_NAME = "game.ftl";
 
     public GetGameRoute(final CheckersCenter checkersCenter){
         // validation
@@ -34,7 +35,7 @@ public class GetGameRoute implements TemplateViewRoute {
     public ModelAndView handle(Request request, Response response) {
 
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", HomeController.TITLE_ATTR_MSG);
+        vm.put(HomeController.TITLE_ATTR, HomeController.TITLE_ATTR_MSG);
         final String player = request.queryParams("playerName");
         final String opponent = request.queryParams("opponent");
 
@@ -46,18 +47,14 @@ public class GetGameRoute implements TemplateViewRoute {
 
         vm.put("isMyTurn", false);
 
-        List<String> inGame = checkersCenter.getInGamePlayers();
-        if(!inGame.contains(player)) {
-            checkersCenter.getInGamePlayers().add(player);
-        }
-        if(!inGame.contains(opponent)) {
-            checkersCenter.getInGamePlayers().add(opponent);
-        }
+        //add players to in-game list
+        checkersCenter.getInGamePlayers().add(player);
+        checkersCenter.getInGamePlayers().add(opponent);
 
         //render the game board
         Board newBoard = new Board();
         vm.put("board", newBoard);
 
-        return new ModelAndView(vm , "game.ftl");
+        return new ModelAndView(vm , VIEW_NAME);
     }
 }
