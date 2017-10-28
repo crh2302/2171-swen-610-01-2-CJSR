@@ -121,4 +121,10 @@ public class CheckersCenter {
     {
         return inGamePlayers;
     }
+
+
+    private boolean isInGame(String opponentName)
+    {
+        return inGamePlayers.contains(opponentName);
+    }
 }

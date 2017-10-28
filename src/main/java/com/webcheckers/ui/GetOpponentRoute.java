@@ -72,11 +72,6 @@ public class GetOpponentRoute implements TemplateViewRoute {
      *       boolean to distinguish whether or not a chosen opponent is already in a game
      */
     private boolean isInGame(String opponentName){
-        if(checkersCenter.inGamePlayers.contains(opponentName)){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return isInGame(opponentName);
     }
 }
