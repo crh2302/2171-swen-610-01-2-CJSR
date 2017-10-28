@@ -7,7 +7,9 @@ import spark.Request;
 import spark.Response;
 import spark.TemplateViewRoute;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -17,6 +19,14 @@ import java.util.Map;
  */
 public class GetGameRoute implements TemplateViewRoute {
 
+    private final CheckersCenter checkersCenter;
+    static final String VIEW_NAME = "game.ftl";
+
+    public GetGameRoute(final CheckersCenter checkersCenter){
+        // validation
+        Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
+        this.checkersCenter = checkersCenter;
+    }
 
     /**
      * {@inheritDoc}
@@ -25,7 +35,7 @@ public class GetGameRoute implements TemplateViewRoute {
     public ModelAndView handle(Request request, Response response) {
 
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", HomeController.TITLE_ATTR_MSG);
+        vm.put(HomeController.TITLE_ATTR, HomeController.TITLE_ATTR_MSG);
         final String player = request.queryParams("playerName");
         final String opponent = request.queryParams("opponent");
 
@@ -37,17 +47,14 @@ public class GetGameRoute implements TemplateViewRoute {
 
         vm.put("isMyTurn", false);
 
-        if(!CheckersCenter.inGamePlayers.contains(player)) {
-            CheckersCenter.inGamePlayers.add(player);
-        }
-        if(!CheckersCenter.inGamePlayers.contains(opponent)) {
-            CheckersCenter.inGamePlayers.add(opponent);
-        }
+        //add players to in-game list
+        checkersCenter.getInGamePlayers().add(player);
+        checkersCenter.getInGamePlayers().add(opponent);
 
         //render the game board
         Board newBoard = new Board();
         vm.put("board", newBoard);
 
-        return new ModelAndView(vm , "game.ftl");
+        return new ModelAndView(vm , VIEW_NAME);
     }
 }

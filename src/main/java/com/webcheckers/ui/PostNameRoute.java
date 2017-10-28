@@ -16,6 +16,9 @@ public class PostNameRoute implements TemplateViewRoute {
     //
 
     static final String ERROR_ATTR_MSG = "Username already taken. Please enter another.";
+    static final String LOGIN_ATTR = "loginMessage";
+    static final String ERROR_ATTR = "errorMessage";
+
     private final CheckersCenter checkersCenter;
 
     //
@@ -31,7 +34,7 @@ public class PostNameRoute implements TemplateViewRoute {
      * @throws NullPointerException
      *    when the {@code gameCenter} parameter is null
      */
-    public PostNameRoute(final CheckersCenter checkersCenter) {
+    PostNameRoute(final CheckersCenter checkersCenter) {
         // validation
         Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
         this.checkersCenter = checkersCenter;
@@ -59,7 +62,7 @@ public class PostNameRoute implements TemplateViewRoute {
      */
     public boolean nameAvailable(List<String> playerNames, String name)
     {
-        return !playerNames.contains(name);
+        return playerNames.contains(name);
     }
 
     /**
@@ -72,7 +75,7 @@ public class PostNameRoute implements TemplateViewRoute {
      *      returns a ModelAndView dependent on whether or not the name is available
      */
     public  ModelAndView storeName(Map<String, Object> vm, String name, Response response){
-        if(checkersCenter.isPlayerListEmpty())
+        if(this.checkersCenter.isPlayerListEmpty())
         {
             checkersCenter.add(name);
             return successfulAdd(name, response);
@@ -80,7 +83,7 @@ public class PostNameRoute implements TemplateViewRoute {
         else
         {
             boolean nameAvailable = nameAvailable(this.checkersCenter.getAllPlayers(),name);
-            if(nameAvailable)
+            if(!nameAvailable)
             {
                 checkersCenter.add(name);
                 return successfulAdd(name, response);
@@ -101,11 +104,11 @@ public class PostNameRoute implements TemplateViewRoute {
     {
         final Map<String, Object> vm = new HashMap<>();
 
-        vm.put("title", HomeController.TITLE_ATTR_MSG);
-        vm.put("loginMessage", GetSigninRoute.LOGIN_ATTR_MSG);
-        vm.put("errorMessage", ERROR_ATTR_MSG);
+        vm.put(HomeController.TITLE_ATTR, HomeController.TITLE_ATTR_MSG);
+        vm.put(LOGIN_ATTR, GetSigninRoute.LOGIN_ATTR_MSG);
+        vm.put(ERROR_ATTR, ERROR_ATTR_MSG);
 
-        return new ModelAndView(vm, "signin.ftl");
+        return new ModelAndView(vm, GetSigninRoute.VIEW_NAME);
     }
 
     /**
@@ -114,11 +117,8 @@ public class PostNameRoute implements TemplateViewRoute {
      *
      * playerName and errorPath stored as URL parameters
      */
-    public static ModelAndView successfulAdd(String name, Response response)
-    {
+    public static ModelAndView successfulAdd(String name, Response response) {
         response.redirect(String.format("/game-menu?playerName=%s&%s=none", name, PostOpponentRoute.ERROR_PATH_TYPE));
         return null;
     }
-
-
 }

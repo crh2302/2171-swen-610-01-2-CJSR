@@ -44,9 +44,6 @@ public class PostOpponentRoute implements TemplateViewRoute {
         // validation
         Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
         this.checkersCenter = checkersCenter;
-
-        //for testing
-        checkersCenter.getInGamePlayers().add("sweet");
     }
 
     /**

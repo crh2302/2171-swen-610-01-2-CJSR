@@ -4,6 +4,7 @@ import com.webcheckers.appl.CheckersCenter;
 import spark.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
@@ -12,6 +13,14 @@ import java.util.Map;
  */
 public class GetGameMenuRoute implements TemplateViewRoute {
 
+    private final CheckersCenter checkersCenter;
+    static final String VIEW_NAME = "game-menu.ftl";
+
+    public GetGameMenuRoute(final CheckersCenter checkersCenter){
+        // validation
+        Objects.requireNonNull(checkersCenter, "checkersCenter must not be null");
+        this.checkersCenter = checkersCenter;
+    }
 
     /**
      * {@inheritDoc}
@@ -20,9 +29,9 @@ public class GetGameMenuRoute implements TemplateViewRoute {
     public ModelAndView handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
 
-        vm.put("title",HomeController.TITLE_ATTR_MSG);
+        vm.put(HomeController.TITLE_ATTR,HomeController.TITLE_ATTR_MSG);
         vm.put("playerName", request.queryParams("playerName"));
-        vm.put("playerNames", CheckersCenter.allPlayers);
+        vm.put("playerNames", checkersCenter.getAllPlayers());
 
         //determining which error to display
         switch(request.queryParams("errorPathType")){
@@ -34,9 +43,15 @@ public class GetGameMenuRoute implements TemplateViewRoute {
                 break;
             case "noExistence":
                 vm.put("opponentError", PostOpponentRoute.INVALID_OPP_MSG);
+                break;
+            case "leftGame":
+                this.checkersCenter.getInGamePlayers().remove(request.queryParams(("playerName")));
+                this.checkersCenter.getInGamePlayers().remove(request.queryParams(("opponent")));
+                break;
+            default:
         }
 
-        return new ModelAndView(vm, "game-menu.ftl");
+        return new ModelAndView(vm, VIEW_NAME);
     }
 
     /**
