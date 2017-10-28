@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import com.webcheckers.Application;
@@ -22,6 +23,9 @@ public class PostOpponentRouteTest {
     //attributes
     private PostOpponentRoute CuT = new PostOpponentRoute(new CheckersCenter());
     private final String OPPONENT_STR = "hello";
+	private final String OPPONENT_STR_2 = "dkslfk";
+    private ArrayList inGamePlayerAvailable;
+    private CheckersCenter checkersCenter;
 
     //attributes for holding mock objects
     private Request request;
@@ -33,10 +37,14 @@ public class PostOpponentRouteTest {
      */
     @Before
     public void setup() {
+        checkersCenter = mock(CheckersCenter.class);
         request = mock(Request.class);
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
+
+        inGamePlayerAvailable = new ArrayList();
+        inGamePlayerAvailable.add(OPPONENT_STR);
     }
 
     /**
@@ -53,7 +61,7 @@ public class PostOpponentRouteTest {
         assertNotNull(model);
         assertTrue(model instanceof Map);
 
-        assertEquals(CuT.isInGame(OPPONENT_STR), false);
+        assertEquals(inGamePlayerAvailable.contains(OPPONENT_STR_2), false);
 
         assertEquals(HomeController.TITLE_ATTR_MSG, vm.get(HomeController.TITLE_ATTR));
         assertEquals(GetGameMenuRoute.VIEW_NAME, result.getViewName());
@@ -70,7 +78,7 @@ public class PostOpponentRouteTest {
         assertNotNull(model);
         assertTrue(model instanceof Map);
 
-        assertEquals(CuT.isInGame("sweet"), true);
+        assertEquals(inGamePlayerAvailable.contains(OPPONENT_STR), true);
 
         assertEquals(HomeController.TITLE_ATTR_MSG, vm.get(HomeController.TITLE_ATTR));
         assertEquals(GetGameMenuRoute.VIEW_NAME, result.getViewName());
@@ -130,7 +138,7 @@ public class PostOpponentRouteTest {
         assertNotNull(model);
         assertTrue(model instanceof Map);
 
-        assertEquals(CuT.isSelf(OPPONENT_STR, "glabbidy"), false);
+        assertEquals(CuT.isSelf(OPPONENT_STR, OPPONENT_STR_2), false);
 
         assertEquals(HomeController.TITLE_ATTR_MSG, vm.get(HomeController.TITLE_ATTR));
         assertEquals(GetGameMenuRoute.VIEW_NAME, result.getViewName());
