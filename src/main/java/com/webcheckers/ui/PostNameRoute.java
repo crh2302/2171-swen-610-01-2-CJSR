@@ -75,23 +75,15 @@ public class PostNameRoute implements TemplateViewRoute {
      *      returns a ModelAndView dependent on whether or not the name is available
      */
     public  ModelAndView storeName(Map<String, Object> vm, String name, Response response){
-        if(this.checkersCenter.isPlayerListEmpty())
+        boolean nameAvailable = nameAvailable(this.checkersCenter.getAllPlayers(),name);
+        if(!nameAvailable)
         {
             checkersCenter.add(name);
-            return successfulAdd(name, response);
+            return successfulAdd(vm, name, response);
         }
         else
         {
-            boolean nameAvailable = nameAvailable(this.checkersCenter.getAllPlayers(),name);
-            if(!nameAvailable)
-            {
-                checkersCenter.add(name);
-                return successfulAdd(name, response);
-            }
-            else
-            {
-                return error();
-            }
+            return error();
         }
     }
 
@@ -117,7 +109,7 @@ public class PostNameRoute implements TemplateViewRoute {
      *
      * playerName and errorPath stored as URL parameters
      */
-    public static ModelAndView successfulAdd(String name, Response response) {
+    public static ModelAndView successfulAdd(Map<String, Object> vm, String name, Response response) {
         response.redirect(String.format("/game-menu?playerName=%s&%s=none", name, PostOpponentRoute.ERROR_PATH_TYPE));
         return null;
     }
