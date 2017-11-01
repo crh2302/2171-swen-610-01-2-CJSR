@@ -38,23 +38,33 @@ public class GetGameRoute implements TemplateViewRoute {
         vm.put(HomeController.TITLE_ATTR, HomeController.TITLE_ATTR_MSG);
         final String player = request.queryParams("playerName");
         final String opponent = request.queryParams("opponent");
+        final String turn = request.queryParams("myTurn");
 
         vm.put("playerName", player);
         vm.put("opponentName", opponent);
 
-        vm.put("playerColor", "RED");
-        vm.put("opponentColor", "WHITE");
+        setColor(vm, turn);
 
-        vm.put("isMyTurn", false);
-
-        //add players to in-game list
-        checkersCenter.getInGamePlayers().add(player);
-        checkersCenter.getInGamePlayers().add(opponent);
+        vm.put("isMyTurn", setTurn(turn));
 
         //render the game board
-        Board newBoard = new Board();
-        vm.put("board", newBoard);
+        vm.put("board", new Board());
 
         return new ModelAndView(vm , VIEW_NAME);
+    }
+
+    private boolean setTurn(String turn){
+        return turn.equals("true");
+    }
+
+    private void setColor(Map<String, Object> vm, String turn){
+        if(turn.equals("true")){
+            vm.put("playerColor", "RED");
+            vm.put("opponentColor", "WHITE");
+        }
+        else{
+            vm.put("playerColor", "WHITE");
+            vm.put("opponentColor", "RED");
+        }
     }
 }

@@ -1,10 +1,14 @@
 package com.webcheckers.ui;
 
+
 import com.webcheckers.appl.CheckersCenter;
+import com.webcheckers.model.CheckersGame;
 import spark.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static spark.Spark.halt;
 
 /**
  *
@@ -28,10 +32,29 @@ public class GetGameMenuRoute implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
+        String playerName = request.queryParams("playerName");
 
         vm.put(HomeController.TITLE_ATTR,HomeController.TITLE_ATTR_MSG);
-        vm.put("playerName", request.queryParams("playerName"));
+        vm.put("playerName", playerName);
         vm.put("playerNames", checkersCenter.getAllPlayers());
+
+
+        List<String> opponentList = checkersCenter.getGamesList().stream()
+                .map(CheckersGame::getOpponent)
+                .collect(Collectors.toList());
+        List<String> playerList = checkersCenter.getGamesList().stream()
+                .map(CheckersGame::getPlayer)
+                .collect(Collectors.toList());
+
+        if(opponentList.contains(playerName)){
+            for(int x = 0; x < opponentList.size(); x++){
+                if(opponentList.get(x).equals(playerName)){
+                    String opponent = playerList.get(x);
+                    response.redirect(String.format("/game?opponent=%s&playerName=%s&myTurn=false",opponent,playerName));
+                    halt();
+                }
+            }
+        }
 
         //determining which error to display
         switch(request.queryParams("errorPathType")){

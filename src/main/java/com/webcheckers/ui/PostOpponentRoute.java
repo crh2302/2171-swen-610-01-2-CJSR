@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.CheckersCenter;
+import com.webcheckers.model.CheckersGame;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -10,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import static spark.Spark.halt;
 
 /**
  *
@@ -60,15 +63,22 @@ public class PostOpponentRoute implements TemplateViewRoute {
 
         if(!isInList(opponent)){
             response.redirect(String.format("/game-menu?playerName=%s&%s=noExistence", playerName, ERROR_PATH_TYPE));
+            halt();
         }
         else if(isSelf(playerName,opponent)){
             response.redirect(String.format("/game-menu?playerName=%s&%s=selfPlay", playerName, ERROR_PATH_TYPE));
+            halt();
         }
         else {
             if (isInGame(opponent)) {
                 response.redirect(String.format("/game-menu?playerName=%s&%s=inGame", playerName, ERROR_PATH_TYPE));
+                halt();
             } else {
-                response.redirect(String.format("/game?opponent=%s&playerName=%s", opponent, playerName));
+                checkersCenter.getInGamePlayers().add(opponent);
+                checkersCenter.getInGamePlayers().add(playerName);
+                checkersCenter.getGamesList().add(new CheckersGame(playerName,opponent));
+                response.redirect(String.format("/game?opponent=%s&playerName=%s&myTurn=true", opponent, playerName));
+                halt();
             }
         }
         return new ModelAndView(vm, GetGameMenuRoute.VIEW_NAME);

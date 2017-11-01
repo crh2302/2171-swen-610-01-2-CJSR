@@ -4,6 +4,8 @@ import com.webcheckers.appl.CheckersCenter;
 import spark.*;
 import java.util.*;
 
+import static spark.Spark.halt;
+
 /**
  *
  * The {@code POST /name} route handler.
@@ -111,6 +113,7 @@ public class PostNameRoute implements TemplateViewRoute {
      */
     public static ModelAndView successfulAdd(Map<String, Object> vm, String name, Response response) {
         response.redirect(String.format("/game-menu?playerName=%s&%s=none", name, PostOpponentRoute.ERROR_PATH_TYPE));
+        halt();
         return null;
     }
 }
