@@ -16,6 +16,7 @@ public class CheckersCenter {
     // attributes
     //
 
+    private List<CheckersGame> gameList;
     private List<String> allPlayers;
     private List<String> inGamePlayers;
 
@@ -24,6 +25,7 @@ public class CheckersCenter {
     //
 
     public CheckersCenter() {
+        gameList = new ArrayList<>();
         allPlayers = new ArrayList<>();
         inGamePlayers = new ArrayList<>();
     }
@@ -38,7 +40,7 @@ public class CheckersCenter {
      * @return
      *   A existing or new {@link CheckersGame}
      */
-    public CheckersGame get(final Session session) {
+    /*public CheckersGame get(final Session session) {
         // validation
         Objects.requireNonNull(session, "session must not be null");
         CheckersGame game = session.attribute("checkGame");
@@ -48,7 +50,7 @@ public class CheckersCenter {
             session.attribute("checkGame", game);
         }
         return game;
-    }
+    }*/
 
     /**
      * Ends the user's session, freeing up their name and logging them out
@@ -64,8 +66,8 @@ public class CheckersCenter {
         session.removeAttribute("checkGame");
         // do some application-wide book-keeping
         synchronized (this) {  // protect the critical code
-             allPlayers.remove(request.queryParams("signedOut"));
-             inGamePlayers.remove(request.queryParams("signedOut"));
+            allPlayers.remove(request.queryParams("signedOut"));
+            inGamePlayers.remove(request.queryParams("signedOut"));
         }
     }
 
@@ -120,5 +122,19 @@ public class CheckersCenter {
     public List<String> getInGamePlayers()
     {
         return inGamePlayers;
+    }
+
+    public List<CheckersGame> getGamesList()
+    {
+        return gameList;
+    }
+
+    public CheckersGame getGame(String p1){
+        for (CheckersGame game: gameList) {
+            if(p1.equals("cool")){
+                return game;
+            }
+        }
+        return null;
     }
 }
