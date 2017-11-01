@@ -2,6 +2,8 @@ package com.webcheckers.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,43 +16,99 @@ public class Board implements Iterable<Row>
     // attributes
     //
 
-    private ArrayList<Row> row;
-
-    //
-    // Constructor
-    //
+    private List<Row> rows;
 
     /**
-     * Default constructor for board.
+     * Constructor for a brand new Board
      */
     public Board()
     {
-        this.row = new ArrayList<Row>(Row.ROW_AMMOUT);
-
-        for (int i = 0; i < Row.ROW_AMMOUT; i++)
+        rows = new ArrayList<>();
+        for (int i = 0; i <= 7; i++)
         {
-            this.row.add(new Row(i));
+            rows.add(new Row(i));
         }
-
     }
 
-    /**
-     * accessor for row
-     *
-     * @param index
-     *      Index of the row that wants to be get
-     * @return
-     *      The row on the specified index
-     */
-    public Row getRow(int index)
-    {
-       return this.row.get(index);
+    public List<Row> getRows() {
+        return rows;
     }
 
     @Override
-    public Iterator<Row> iterator()
+    public Iterator<Row> iterator() {
+        return rows.iterator();
+    }
+
+    public boolean moveIsValid(Move move)
     {
-        return this.row.iterator();
+        System.out.println("***********************************");
+
+        int oldRow = move.getStart().getRow();
+        int oldCol = move.getStart().getCell();
+        int newRow = move.getEnd().getRow();
+        int newCol = move.getEnd().getCell();
+
+        Piece piece = getRows().get(oldRow).getSpaces().get(oldCol).getPiece();
+
+        System.out.println("oldPos = " + oldRow + "," + oldCol);
+        System.out.println("newPos = " + newRow + "," + newCol);
+
+        if (piece.getType().equals("SINGLE"))
+        {
+            if (piece.getColor().equals("RED"))
+            {
+                if (oldCol - newCol == 1 || oldCol - newCol == -1)
+                {
+                    if (oldRow - newRow == 1)
+                    {
+                        return true;
+                    }
+                }
+                else if (oldCol - newCol == 2 || oldCol - newCol == -2)
+                {
+                    if (oldRow - newRow == 2)
+                    {
+                        int jumpedPieceRow = oldRow - 1;
+                        int jumpedPieceCol = (newCol - oldCol) / 2 + oldCol;
+                        Piece jumpedPiece = getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceCol).getPiece();
+                        if (jumpedPiece != null && jumpedPiece.getColor().equals("WHITE"))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            if (piece.getColor() == "WHITE")
+            {
+                if (oldRow - newRow == -1)
+                {
+                    if (oldCol - newCol == 1 || oldCol - newCol == -1)
+                    {
+                        return true;
+                    }
+                } else if (oldCol - newCol == 2 || oldCol - newCol == -2)
+                {
+                    if (oldRow - newRow == -2)
+                    {
+                        int jumpedPieceRow = oldRow + 1;
+                        int jumpedPieceCol = (newCol - oldCol) / 2 + oldCol;
+                        Piece jumpedPiece = getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceCol).getPiece();
+                        if (jumpedPiece != null && jumpedPiece.getColor().equals("RED"))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+        } else if (piece.getType() == "KING")
+
+        {
+
+        }
+
+        return false;
     }
 
 }

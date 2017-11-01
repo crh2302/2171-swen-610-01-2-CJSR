@@ -2,170 +2,78 @@ package com.webcheckers.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-/**
- *
- *  Class to implement the board's Rows
- *
- */
 public class Row implements Iterable<Space>
 {
-  //
-  // Attributes
-  //
-
-  private ArrayList<Space> spaces;
-  private int index;
-
-  //
-  // Constants
-  //
-
-  static final int ROW_AMMOUT = 8;
+  private int index = 0;
+  private List<Space> spaces;
 
   /**
-   * accessor for list of spaces
+   * Constructor for Row
    *
-   * @return
-   *    list of spaces
+   * @param index
    */
-  public ArrayList<Space> getSpaces()
+  public Row(int index)
+  {
+    this.index = index;
+    spaces = new ArrayList<Space>();
+    for (int i = 0; i <= 7; i++)
+    {
+      if (index == 0 && i % 2 == 1)
+      {
+        spaces.add(new Space(i, true, new Piece("SINGLE", "WHITE")));
+      } else if (index == 1 && i % 2 == 0)
+      {
+        spaces.add(new Space(i, true, new Piece("SINGLE", "WHITE")));
+      } else if (index == 2 && i % 2 == 1)
+      {
+        spaces.add(new Space(i, true, new Piece("SINGLE", "WHITE")));
+      } else if (index == 3 && i % 2 == 0)
+      {
+        spaces.add(new Space(i, false, null));
+
+      } else if (index == 4 && i % 2 == 1)
+      {
+        spaces.add(new Space(i, false, null));
+
+      } else if (index == 6 && i % 2 == 1)
+      {
+        spaces.add(new Space(i, true, new Piece("SINGLE", "RED")));
+      } else if (index == 7 && i % 2 == 0)
+      {
+        spaces.add(new Space(i, true, new Piece("SINGLE", "RED")));
+      } else if (index == 5 && i % 2 == 0)
+      {
+        spaces.add(new Space(i, true, new Piece("SINGLE", "RED")));
+      } else
+      {
+        spaces.add(new Space(i, false, null));
+      }
+    }
+
+  }
+
+  public List<Space> getSpaces()
   {
     return spaces;
-  }
-
-  /**
-   * mutator for list of spaces
-   *
-   * @param spaces
-   *
-   */
-  public void setSpaces(ArrayList<Space> spaces)
-  {
-    this.spaces = spaces;
-  }
-
-  /**
-   * accessor for index
-   *
-   * @return
-   *     index
-   */
-  public int getIndex()
-  {
-    return index;
-  }
-
-  /**
-   * mutator for index
-   *
-   * @param index
-   *
-   */
-  public void setIndex(int index)
-  {
-    this.index = index;
-  }
-
-  /**
-   * Constructor
-   *
-   *
-   * @param index
-   *
-   */
-  public Row(int index) {
-    this.index = index;
-    this.spaces = new ArrayList<Space>(ROW_AMMOUT);
-
-    //todo convert all of this into a loop
-    if (index == 0 || index == 2) {
-      spaces.add(new Space(0, false, null));
-      spaces.add(new Space(1, true, new Piece("SINGLE", "WHITE")));
-      spaces.add(new Space(2, false, null));
-      spaces.add(new Space(3, true, new Piece("SINGLE", "WHITE")));
-      spaces.add(new Space(4, false, null));
-      spaces.add(new Space(5, true, new Piece("SINGLE", "WHITE")));
-      spaces.add(new Space(6, false, null));
-      spaces.add(new Space(7, true, new Piece("SINGLE", "WHITE")));
-
-
-    }
-
-    if (index == 1) {
-      spaces.add(new Space(0, true, new Piece("SINGLE", "WHITE")));
-      spaces.add(new Space(1, false, null));
-      spaces.add(new Space(2, true, new Piece("SINGLE", "WHITE")));
-      spaces.add(new Space(3, false, null));
-      spaces.add(new Space(4, true, new Piece("SINGLE", "WHITE")));
-      spaces.add(new Space(5, false, null));
-      spaces.add(new Space(6, true, new Piece("SINGLE", "WHITE")));
-      spaces.add(new Space(7, false, null));
-    }
-
-    if (index == 5 || index == 7) {
-      spaces.add(new Space(0, true, new Piece("SINGLE", "RED")));
-      spaces.add(new Space(1, false, null));
-      spaces.add(new Space(2, true, new Piece("SINGLE", "RED")));
-      spaces.add(new Space(3, false, null));
-      spaces.add(new Space(4, true, new Piece("SINGLE", "RED")));
-      spaces.add(new Space(5, false, null));
-      spaces.add(new Space(6, true, new Piece("SINGLE", "RED")));
-      spaces.add(new Space(7, false, null));
-
-
-    }
-
-    if (index == 6) {
-      spaces.add(new Space(0, false, null));
-      spaces.add(new Space(1, true, new Piece("SINGLE", "RED")));
-      spaces.add(new Space(2, false, null));
-      spaces.add(new Space(3, true, new Piece("SINGLE", "RED")));
-      spaces.add(new Space(4, false, null));
-      spaces.add(new Space(5, true, new Piece("SINGLE", "RED")));
-      spaces.add(new Space(6, false, null));
-      spaces.add(new Space(7, true, new Piece("SINGLE", "RED")));
-    }
-  }
-
-  /**
-   * place piece
-   *
-   * @param index
-   * @param piece
-   *
-   */
-  public void placePiece(int index, Piece piece)
-  {
-    this.spaces.get(index).placePiece(piece);
   }
 
   @Override
   public Iterator<Space> iterator()
   {
-    return this.spaces.iterator();
+    return spaces.iterator();
   }
 
-  /**
-   * add space to lists of spaces
-   *
-   * @param space
-   *
-   */
-  public void add(Space space)
+  @Override
+  public int hashCode()
   {
-    this.spaces.add(space);
+    return spaces.hashCode();
   }
 
-  /**
-   * add index and space to list of spaces
-   *
-   * @param index
-   * @param space
-   *
-   */
-  public void add(int index, Space space)
+  public int getIndex()
   {
-    this.spaces.add(index,space);
+    return index;
   }
+
 }
