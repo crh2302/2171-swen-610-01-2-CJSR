@@ -1,14 +1,14 @@
-##Software Application Mining 2018
+# Software Application Mining 2018
 
 A web based paper submission application built in Java 8 and Spark. Used for the Software Application Mining conference of 2018.
 
-##Prerequisites
+## Prerequisites
 
 - Java 8 (can be downloaded from http://www.oracle.com/technetwork/articles/javase/index-jsp-138363.html)
 
 - Maven
 
-##Installing
+## Installing
 
 1. Clone the repository and go to the root directory. 
 
@@ -19,7 +19,7 @@ A web based paper submission application built in Java 8 and Spark. Used for the
 4. Start a game and begin playing.
 
 
-##Built With
+## Built With
 
 - Spark - The web framework used
 
@@ -27,7 +27,7 @@ A web based paper submission application built in Java 8 and Spark. Used for the
 
 - Java 8 
 
-##Authors
+## Authors
 
 Jeff Palmerino
 
