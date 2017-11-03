@@ -148,6 +148,8 @@ public class WebServer {
     // Post opponent selection
     post("/opponent", new PostOpponentRoute(checkersCenter), templateEngine);
 
+    post("/validateMove", new PostValidateMoveRoute(checkersCenter), JsonUtils.json());
+
   }
 
 }
