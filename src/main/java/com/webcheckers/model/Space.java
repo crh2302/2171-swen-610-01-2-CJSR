@@ -9,36 +9,6 @@ public class Space
   //
   // Constructor
   //
-
-  /**
-   * Is a place holder for a piece. Spaces form part of the rows and the board.
-   * @param position
-   *        Coordinates of the space.
-   * @param isBlack
-   *        True for a black space, false otherwise.
-   */
-  public Space(Position position, boolean isBlack)
-  {
-    this.position = position;
-    this.isBlack = isBlack;
-    this.piece = null;
-  }
-
-  /**
-  * Create a board space.
-  *
-  * @param cellIdx
-  *          Cell number from left to right.
-  * @param isBlack
-  *          Is true if the space is black.
-  */
-  public Space(int cellIdx, boolean isBlack)
-  {
-      this.cellIdx = cellIdx;
-      this.isBlack = isBlack;
-      this.piece = null;
-  }
-
   /**
    * Create a board space.
    * @param cellIdx
@@ -48,7 +18,7 @@ public class Space
    * @param piece
    *        The piece to be placed in the space.
    */
-  public Space(int cellIdx, boolean isBlack,Piece piece)
+  public Space(int cellIdx, boolean isBlack, Piece piece)
   {
     this.cellIdx = cellIdx;
     this.isBlack = isBlack;
