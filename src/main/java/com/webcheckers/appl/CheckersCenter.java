@@ -32,27 +32,6 @@ public class CheckersCenter {
 
 
     /**
-     * Get the {@linkplain CheckersGame game} for the current user
-     *
-     * @param session
-     *   The HTTP session
-     *
-     * @return
-     *   A existing or new {@link CheckersGame}
-     */
-    /*public CheckersGame get(final Session session) {
-        // validation
-        Objects.requireNonNull(session, "session must not be null");
-        CheckersGame game = session.attribute("checkGame");
-        if (game == null) {
-            // create new game
-            game = new CheckersGame();
-            session.attribute("checkGame", game);
-        }
-        return game;
-    }*/
-
-    /**
      * Ends the user's session, freeing up their name and logging them out
      *
      * @param session
@@ -72,17 +51,6 @@ public class CheckersCenter {
     }
 
     /**
-     * to check to see if allPlayers list is empty
-     *
-     * @return
-     *      boolean for if allPlayers list is empty
-     */
-    public boolean isPlayerListEmpty()
-    {
-        return allPlayers.isEmpty();
-    }
-
-    /**
      * Checking whether or not the name is valid
      *
      * @param playerName
@@ -99,39 +67,28 @@ public class CheckersCenter {
         }
     }
 
-    public boolean contains(String name){
-        if(inGamePlayers.contains(name)){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
 
     /**
      *
      * @return
      *      allPlayer's list
      */
-    public List<String> getAllPlayers()
-    {
+    public List<String> getAllPlayers() {
         return allPlayers;
     }
 
-    public List<String> getInGamePlayers()
-    {
+    public List<String> getInGamePlayers() {
         return inGamePlayers;
     }
 
-    public List<CheckersGame> getGamesList()
-    {
+    public List<CheckersGame> getGamesList() {
         return gameList;
     }
 
+
     public CheckersGame getGame(String p1){
         for (CheckersGame game: gameList) {
-            if(p1.equals("cool")){
+            if(game.hasPlayer(p1)){
                 return game;
             }
         }
