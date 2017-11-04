@@ -31,8 +31,7 @@ public class PostValidateMoveRoute implements Route
 	@Override
 	public Object handle(Request request, Response response)
 	{
-
-		game = checkersCenter.getGame(request.cookie("playerName")); //retrieve playerName to getGame
+		game = checkersCenter.getGame(request.cookie("playerName"));
 		board = game.getBoard();
 		System.out.println("===========================");
 

@@ -66,7 +66,6 @@ public class PostOpponentRoute implements TemplateViewRoute {
             halt();
         }
         else if(isSelf(playerName,opponent)){
-            request.attribute("playerName",playerName);
             response.redirect(String.format("/game-menu?playerName=%s&%s=selfPlay", playerName, ERROR_PATH_TYPE));
             halt();
         }
@@ -75,12 +74,13 @@ public class PostOpponentRoute implements TemplateViewRoute {
                 response.redirect(String.format("/game-menu?playerName=%s&%s=inGame", playerName, ERROR_PATH_TYPE));
                 halt();
             } else {
-                checkersCenter.getInGamePlayers().add(opponent);
                 checkersCenter.getInGamePlayers().add(playerName);
-                checkersCenter.getGamesList().add(new CheckersGame(playerName,opponent));
-               // set playerName to be retrieved in PostValidateMoveRoute
+                checkersCenter.getInGamePlayers().add(opponent);
+
                 response.cookie("playerName",playerName);
-                response.redirect(String.format("/game?opponent=%s&playerName=%s&myTurn=true", opponent, playerName));
+                response.cookie("opponentName",opponent);
+
+                response.redirect(String.format("/game?opponent=%s&playerName=%s", opponent, playerName));
                 halt();
             }
         }
