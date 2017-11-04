@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -109,6 +110,27 @@ public class Board implements Iterable<Row>
         }
 
         return false;
+    }
+
+    public boolean doMove(Move move)
+    {
+
+        int oldRow = move.getStart().getRow();
+        int oldCol = move.getStart().getCell();
+        int newRow = move.getEnd().getRow();
+        int newCol = move.getEnd().getCell();
+
+        try
+        {
+            Piece piece = getRows().get(oldRow).getSpaces().get(oldCol).popPiece();
+
+            getRows().get(newRow).getSpaces().get(newCol).setPiece(piece);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 
 }

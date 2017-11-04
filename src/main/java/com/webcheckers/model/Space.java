@@ -104,4 +104,18 @@ public class Space
     this.position = position;
   }
 
+  public Piece popPiece()
+  {
+    if(piece == null){
+      throw new NullPointerException();
+    }
+    Piece pi = piece;
+    piece = null;
+    return pi;
+  }
+
+  public void setPiece(Piece piece)
+  {
+    this.piece = piece;
+  }
 }

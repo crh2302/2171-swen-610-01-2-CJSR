@@ -20,7 +20,7 @@ public class Piece
   */
   public Piece(String color)
   {
-      this.color = "RED";
+      this.color = color;
       this.type = "SINGLE";
   }
 
