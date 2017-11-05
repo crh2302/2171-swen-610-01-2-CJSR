@@ -34,7 +34,7 @@ public class GetGameMenuRoute implements TemplateViewRoute {
         Map<String, Object> vm = new HashMap<>();
         String playerName = request.queryParams("playerName");
 
-        vm.put(HomeController.TITLE_ATTR,HomeController.TITLE_ATTR_MSG);
+        vm.put(Message.TITLE_ATTR,Message.TITLE_ATTR_MSG);
         vm.put("playerName", playerName);
         vm.put("playerNames", checkersCenter.getAllPlayers());
 
@@ -59,13 +59,13 @@ public class GetGameMenuRoute implements TemplateViewRoute {
         //determining which error to display
         switch(request.queryParams("errorPathType")){
             case "inGame":
-                vm.put("opponentError", PostOpponentRoute.OPPONENT_ERROR_MSG);
+                vm.put("opponentError", Message.OPPONENT_ERROR_MSG);
                 break;
             case "selfPlay":
-                vm.put("opponentError", PostOpponentRoute.SELF_PLAY_ERROR_MSG);
+                vm.put("opponentError", Message.SELF_PLAY_ERROR_MSG);
                 break;
             case "noExistence":
-                vm.put("opponentError", PostOpponentRoute.INVALID_OPP_MSG);
+                vm.put("opponentError", Message.INVALID_OPP_MSG);
                 break;
             case "leftGame":
                 this.checkersCenter.getInGamePlayers().remove(request.queryParams(("playerName")));

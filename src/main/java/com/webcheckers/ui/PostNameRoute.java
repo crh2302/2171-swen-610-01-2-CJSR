@@ -17,7 +17,7 @@ public class PostNameRoute implements TemplateViewRoute {
     // Attributes
     //
 
-    static final String ERROR_ATTR_MSG = "Username already taken. Please enter another.";
+
     static final String LOGIN_ATTR = "loginMessage";
     static final String ERROR_ATTR = "errorMessage";
 
@@ -98,9 +98,9 @@ public class PostNameRoute implements TemplateViewRoute {
     {
         final Map<String, Object> vm = new HashMap<>();
 
-        vm.put(HomeController.TITLE_ATTR, HomeController.TITLE_ATTR_MSG);
+        vm.put(Message.TITLE_ATTR, Message.TITLE_ATTR_MSG);
         vm.put(LOGIN_ATTR, GetSigninRoute.LOGIN_ATTR_MSG);
-        vm.put(ERROR_ATTR, ERROR_ATTR_MSG);
+        vm.put(ERROR_ATTR, Message.ERROR_ATTR_MSG);
 
         return new ModelAndView(vm, GetSigninRoute.VIEW_NAME);
     }

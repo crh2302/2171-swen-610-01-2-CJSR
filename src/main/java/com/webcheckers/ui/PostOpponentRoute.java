@@ -26,9 +26,7 @@ public class PostOpponentRoute implements TemplateViewRoute {
     //
 
     static final String ERROR_PATH_TYPE = "errorPathType";
-    static final String SELF_PLAY_ERROR_MSG = "Invalid Opponent. You can't play against yourself!";
-    static final String INVALID_OPP_MSG = "Entered opponent does not exist.";
-    static final String OPPONENT_ERROR_MSG = "Chosen opponent is already in a game. Please choose another.";
+
 
     //
     // attributes
@@ -56,7 +54,7 @@ public class PostOpponentRoute implements TemplateViewRoute {
     public ModelAndView handle(Request request, Response response) {
         // start building the View-Model
         final Map<String, Object> vm = new HashMap<>();
-        vm.put(HomeController.TITLE_ATTR, HomeController.TITLE_ATTR_MSG);
+        vm.put(Message.TITLE_ATTR, Message.TITLE_ATTR_MSG);
 
         String playerName = request.queryParams("playerName");
         String opponent = request.queryParams("opponent");

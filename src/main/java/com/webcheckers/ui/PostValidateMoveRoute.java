@@ -40,7 +40,7 @@ public class PostValidateMoveRoute implements Route
 		final String dataStr = request.body();
 		final Move move = JsonUtils.fromJson(dataStr, Move.class);
 
-		boolean goodMove = board.moveIsValid(move);
+		boolean goodMove = game.moveIsValid(move);
 		if (goodMove)
 		{
 			game.addMove(move);

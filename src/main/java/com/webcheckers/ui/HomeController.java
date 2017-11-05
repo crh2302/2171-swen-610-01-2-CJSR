@@ -22,8 +22,8 @@ public class HomeController implements TemplateViewRoute {
     // Constants
     //
 
-    static final String TITLE_ATTR_MSG = "Welcome!";
-    static final String TITLE_ATTR = "title";
+
+
     static final String VIEW_NAME = "home.ftl";
     private final CheckersCenter checkersCenter;
 
@@ -41,7 +41,7 @@ public class HomeController implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
-        vm.put(HomeController.TITLE_ATTR, TITLE_ATTR_MSG);
+        vm.put(Message.TITLE_ATTR, Message.TITLE_ATTR_MSG);
         final Session httpSession = request.session();
 
         if (httpSession.isNew()) {
@@ -55,7 +55,7 @@ public class HomeController implements TemplateViewRoute {
 
     private ModelAndView signout(final Map<String, Object> vm, final Session session, Request request){
         checkersCenter.end(session, request);
-        vm.put(TITLE_ATTR, TITLE_ATTR_MSG);
+        vm.put(Message.TITLE_ATTR, Message.TITLE_ATTR_MSG);
 
         return new ModelAndView(vm, VIEW_NAME);
     }

@@ -31,7 +31,7 @@ public class GetSigninRoute implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
-        vm.put(HomeController.TITLE_ATTR, HomeController.TITLE_ATTR_MSG);
+        vm.put(Message.TITLE_ATTR, Message.TITLE_ATTR_MSG);
         vm.put(PostNameRoute.LOGIN_ATTR, LOGIN_ATTR_MSG);
 
         return new ModelAndView(vm, VIEW_NAME);
