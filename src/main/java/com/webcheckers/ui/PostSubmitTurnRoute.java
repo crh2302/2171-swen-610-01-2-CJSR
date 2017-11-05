@@ -39,7 +39,6 @@ public class PostSubmitTurnRoute implements Route {
         else{
             response.redirect(String.format("/game?playerName=%s&opponent=%s",playerName,opponentName));
         }
-
         halt();
         return null;
     }
