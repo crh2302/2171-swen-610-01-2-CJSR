@@ -8,7 +8,6 @@ import java.util.List;
  */
 public class CheckersGame
 {
-    private String turnColor;
     private String player;
     private String opponent;
 
@@ -32,13 +31,6 @@ public class CheckersGame
 
     public void setBoard(Board board) {
         this.board = board;
-    }
-    public String getTurnColor() {
-        return turnColor;
-    }
-
-    public void setTurnColor(String turnColor) {
-        this.turnColor = turnColor;
     }
 
     public String getPlayer(){
@@ -64,7 +56,7 @@ public class CheckersGame
     public boolean processPlayerTurn(){
         try {
             while (!moves.isEmpty()) {
-                board.doMove(moves.remove());
+                doMove(moves.remove());
             }
             toggleTurn();
         }catch (Exception e){
@@ -96,5 +88,108 @@ public class CheckersGame
             turn = 1;
         }
         return turn;
+    }
+
+    public boolean moveIsValid(Move move)
+    {
+        int oldRow = move.getStart().getRow();
+        int oldColumn = move.getStart().getCell();
+        int newRow = move.getEnd().getRow();
+        int newColumn = move.getEnd().getCell();
+
+        Piece piece = board.getRows().get(oldRow).getSpaces().get(oldColumn).getPiece();
+
+        if (piece.getType().equals("SINGLE"))
+        {
+            if (piece.getColor().equals("RED"))
+            {
+                if (oldColumn - newColumn == 1 || oldColumn - newColumn == -1)
+                {
+                    if (oldRow - newRow == 1)
+                    {
+                        return true;
+                    }
+                }
+                else if (oldColumn - newColumn == 2 || oldColumn - newColumn == -2)
+                {
+                    if (oldRow - newRow == 2)
+                    {
+                        int jumpedPieceRow = oldRow - 1;
+                        int jumpedPieceColumn = (newColumn - oldColumn) / 2 + oldColumn;
+
+                        Piece jumpedPiece = board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
+                        if (jumpedPiece != null && jumpedPiece.getColor().equals("WHITE"))
+                        {
+                            board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            if (piece.getColor() == "WHITE")
+            {
+                if (oldRow - newRow == -1)
+                {
+                    if (oldColumn - newColumn == 1 || oldColumn - newColumn == -1)
+                    {
+                        return true;
+                    }
+                }
+                else if (oldColumn - newColumn == 2 || oldColumn - newColumn == -2)
+                {
+                    if (oldRow - newRow == -2)
+                    {
+                        int jumpedPieceRow = oldRow + 1;
+                        int jumpedPieceColumn = (newColumn - oldColumn) / 2 + oldColumn;
+
+                        Piece jumpedPiece = board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
+                        if (jumpedPiece != null && jumpedPiece.getColor().equals("RED"))
+                        {
+                            board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
+                            return true;
+                        }
+                    }
+                }
+            }
+
+        }
+        else if (piece.getType() == "KING") {
+
+        }
+
+        return false;
+    }
+
+    public boolean doMove(Move move)
+    {
+        int oldRow = move.getStart().getRow();
+        int oldColumn = move.getStart().getCell();
+        int newRow = move.getEnd().getRow();
+        int newColumn = move.getEnd().getCell();
+
+        Piece piece = board.getRows().get(oldRow).getSpaces().get(oldColumn).getPiece();
+
+        try
+        {
+            if((newRow == 0) || newRow == 7){
+                System.out.println("=========");
+                System.out.println("Last Row Entered, Piece Converted to King");
+                System.out.println("=========");
+
+                Piece kingPiece = board.getRows().get(oldRow).getSpaces().get(oldColumn).populateSpaceKing(piece.getColor());
+                board.getRows().get(newRow).getSpaces().get(newColumn).setPiece(kingPiece);
+
+            }
+            else{
+                Piece manPiece = board.getRows().get(oldRow).getSpaces().get(oldColumn).populateSpaceMan();
+                board.getRows().get(newRow).getSpaces().get(newColumn).setPiece(manPiece);
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 }
