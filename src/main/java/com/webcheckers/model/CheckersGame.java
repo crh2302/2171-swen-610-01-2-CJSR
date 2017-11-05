@@ -2,7 +2,6 @@ package com.webcheckers.model;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * An actual checkers game
@@ -12,8 +11,11 @@ public class CheckersGame
     private String turnColor;
     private String player;
     private String opponent;
+
     private Board board;
+
     private int turn;
+
     private LinkedList<Move> moves;
 
     public CheckersGame(final String player, final String opponent){
@@ -79,7 +81,8 @@ public class CheckersGame
         int test;
         if(this.player.equals(otherPlayer)){
             test = 0;
-        }else{
+        }
+        else{
             test = 1;
         }
         return test == turn;
@@ -88,7 +91,8 @@ public class CheckersGame
     public int toggleTurn(){
         if(turn == 1){
             turn = 0;
-        }else{
+        }
+        else{
             turn = 1;
         }
         return turn;
