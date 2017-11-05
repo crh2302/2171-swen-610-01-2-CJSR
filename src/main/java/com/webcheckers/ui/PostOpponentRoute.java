@@ -58,7 +58,7 @@ public class PostOpponentRoute implements TemplateViewRoute {
         final Map<String, Object> vm = new HashMap<>();
         vm.put(HomeController.TITLE_ATTR, HomeController.TITLE_ATTR_MSG);
 
-        String playerName = request.queryParams(("playerName"));
+        String playerName = request.queryParams("playerName");
         String opponent = request.queryParams("opponent");
 
         if(!isInList(opponent)){
@@ -77,8 +77,8 @@ public class PostOpponentRoute implements TemplateViewRoute {
                 checkersCenter.getInGamePlayers().add(playerName);
                 checkersCenter.getInGamePlayers().add(opponent);
 
-                response.cookie("playerName",playerName);
-                response.cookie("opponentName",opponent);
+                response.cookie("playerName", playerName);
+                response.cookie("opponentName", opponent);
 
                 response.redirect(String.format("/game?opponent=%s&playerName=%s", opponent, playerName));
                 halt();

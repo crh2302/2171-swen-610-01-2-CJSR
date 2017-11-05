@@ -33,7 +33,13 @@ public class PostSubmitTurnRoute implements Route {
         game.processPlayerTurn();
         game.clearMoves();
 
-        response.redirect(String.format("/game?playerName=%s&opponent=%s",playerName,opponentName));
+        if(game.isTurn(playerName)){
+            response.redirect(String.format("/game?playerName=%s&opponent=%s",opponentName,playerName));
+        }
+        else{
+            response.redirect(String.format("/game?playerName=%s&opponent=%s",playerName,opponentName));
+        }
+
         halt();
         return null;
     }

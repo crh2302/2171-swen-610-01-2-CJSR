@@ -50,7 +50,7 @@ public class GetGameMenuRoute implements TemplateViewRoute {
             for(int x = 0; x < opponentList.size(); x++){
                 if(opponentList.get(x).equals(playerName)){
                     String opponent = playerList.get(x);
-                    response.redirect(String.format("/game?opponent=%s&playerName=%s",opponent,playerName));
+                    response.redirect(String.format("/game?opponent=%s&playerName=%s&myTurn=false",opponent,playerName));
                     halt();
                 }
             }
