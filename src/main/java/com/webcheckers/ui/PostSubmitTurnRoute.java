@@ -11,9 +11,6 @@ import java.util.Objects;
 
 import static spark.Spark.halt;
 
-/**
- * Created by Nathaniel on 4/3/17.
- */
 public class PostSubmitTurnRoute implements Route {
     private final CheckersCenter checkersCenter;
 
