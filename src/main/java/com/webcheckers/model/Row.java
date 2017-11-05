@@ -31,11 +31,11 @@ public class Row implements Iterable<Space>
         spaces.add(new Space(i, true, new Piece("SINGLE", "WHITE")));
       } else if (index == 3 && i % 2 == 0)
       {
-        spaces.add(new Space(i, false, null));
+        spaces.add(new Space(i, true, null));
 
       } else if (index == 4 && i % 2 == 1)
       {
-        spaces.add(new Space(i, false, null));
+        spaces.add(new Space(i, true, null));
 
       } else if (index == 6 && i % 2 == 1)
       {

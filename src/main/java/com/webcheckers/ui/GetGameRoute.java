@@ -2,12 +2,12 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.CheckersCenter;
 import com.webcheckers.model.Board;
+import com.webcheckers.model.CheckersGame;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.TemplateViewRoute;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -38,33 +38,33 @@ public class GetGameRoute implements TemplateViewRoute {
         vm.put(HomeController.TITLE_ATTR, HomeController.TITLE_ATTR_MSG);
         final String player = request.queryParams("playerName");
         final String opponent = request.queryParams("opponent");
-        final String turn = request.queryParams("myTurn");
 
         vm.put("playerName", player);
         vm.put("opponentName", opponent);
 
-        setColor(vm, turn);
+        CheckersGame game = checkersCenter.getGame(player);
+        if(game == null){
+            game = new CheckersGame(player,opponent);
+            checkersCenter.getGamesList().add(game);
+            vm.put("board", new Board());
+        }
+        else {
+            vm.put("board", game.getBoard());
+        }
 
-        vm.put("isMyTurn", setTurn(turn));
 
-        //render the game board
-        vm.put("board", new Board());
-
-        return new ModelAndView(vm , VIEW_NAME);
-    }
-
-    private boolean setTurn(String turn){
-        return turn.equals("true");
-    }
-
-    private void setColor(Map<String, Object> vm, String turn){
-        if(turn.equals("true")){
+        if(game.getPlayer().equals(player)){
             vm.put("playerColor", "RED");
             vm.put("opponentColor", "WHITE");
         }
-        else{
+        else
+        {
             vm.put("playerColor", "WHITE");
             vm.put("opponentColor", "RED");
         }
+
+        vm.put("isMyTurn", game.isTurn(player));
+
+        return new ModelAndView(vm , VIEW_NAME);
     }
 }

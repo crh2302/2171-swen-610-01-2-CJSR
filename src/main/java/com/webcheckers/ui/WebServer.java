@@ -150,6 +150,8 @@ public class WebServer {
 
     post("/validateMove", new PostValidateMoveRoute(checkersCenter), JsonUtils.json());
 
+    post("/submitTurn", new PostSubmitTurnRoute(checkersCenter), JsonUtils.json());
+
   }
 
 }
