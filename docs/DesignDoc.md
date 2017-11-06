@@ -38,6 +38,8 @@ This section describes the application domain.
 ### Overview of Major Domain Areas
 We have implemented this domain model for our Web Checkers game implementation. The purpose of designing a domain model is to describe the abstractions in our proposed applications and to give a clear understanding of the system. The domain model proposed in sprint 1 has been updated to the domain model shown below. 
 
+<img src="https://image.prntscr.com/image/BQVgonBnSt_Trjw06kc8Aw.png" alt="hi" class="inline"/>
+
 ### Details of each Domain Area
 #### WebCheckersGame
 Game has is the core to being able to play the game. Game has a player and an opponenent that are playing a game . Also, the game is played on a Board that is made of squares and that can contain disc. 
@@ -52,21 +54,19 @@ This section describes the application architecture.
 ### Summary
 We are using Spark framework for our WebCheckers game implementation. Spark is a Java-based, web micro-framework which handles HTTP requests and delegates HTML generation to a template Engine. We are using FreeMarker template engine for this purpose. Some benefits of using FreeMarker is that it supports JSP tags, templates can be nested in it in run-time and it also supports JSON.
 
->Model of the architecture
+<img src="https://image.prntscr.com/image/3SKdG2QeR_Sd3JQidgpKMA.png" alt="hi" class="inline"/>
 
 The package diagram shows the dependencies that each layer has. The UI layer uses spark, freemarker, css and JS to generate and manipulate the views that are presented to the users. Furthermore, the UI uses the model and the application layer to manipulate the state of the of the system.
 
 ### UI Layer
 This layer has all the classes which govern the routing of the view for certain set of actions performed while playing the game.
-> UI state model.
+
 
 ### Model Layer
 This layer has classes defined in the domain, which define the behavior of the game (or the rules for the game) along with all the components used for playing the game like discs, board, etc.
-> UI state model.
 
 ### Application Layer
 This layer has the class which maintains the state of the game.
-> Application state model.
 
 ## Sub-system X
 TBD
@@ -80,8 +80,12 @@ TBD
 ### Dynamic models
 #### State-Chart Diagrams
 Begin game state-Chart
+<img src="https://image.prntscr.com/image/nbWnyXboQWyEfzTfUah6xQ.png" alt="hi" class="inline"/>
 
 Game Running state-Chart
+<img src="https://image.prntscr.com/image/y1dSp38lSiq-IW2IM9NRoA.png" alt="hi" class="inline"/>
 
 #### Sequence Diagram Diagrams
 Create checkers Game 
+<img src="https://image.prntscr.com/image/t1IZTkzuTKCcbJKSmEANBA.png" alt="hi" class="inline"/>
+
