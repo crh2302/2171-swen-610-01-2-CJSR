@@ -19,6 +19,7 @@ public class GetGameMenuRouteTest {
     Request request;
     Response response;
     ModelAndView mv;
+
     @Before
     public void setUp() throws Exception {
         checkersCenter=new CheckersCenter();
@@ -47,7 +48,6 @@ public class GetGameMenuRouteTest {
 
         when(mv.getViewName()).thenReturn("game-menu.ftl");
         assertEquals(mv.getViewName(),result.getViewName());
-
     }
 
 }

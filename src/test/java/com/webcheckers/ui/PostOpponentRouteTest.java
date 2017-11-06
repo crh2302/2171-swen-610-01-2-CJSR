@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.webcheckers.Application;
@@ -24,7 +25,7 @@ public class PostOpponentRouteTest {
     private PostOpponentRoute CuT = new PostOpponentRoute(new CheckersCenter());
     private final String OPPONENT_STR = "hello";
 	private final String OPPONENT_STR_2 = "dkslfk";
-    private ArrayList inGamePlayerAvailable;
+    private List inGamePlayerAvailable;
     private CheckersCenter checkersCenter;
 
     //attributes for holding mock objects
@@ -50,7 +51,7 @@ public class PostOpponentRouteTest {
     /**
      * test invalid opponent condition, i.e. opponent chosen is in game
      */
-    @Test
+    @Test (expected=spark.HaltException.class)
     public void invalid_opponent_not_in_game() {
         //Invoke test
         final ModelAndView result = CuT.handle(request, response);
@@ -63,11 +64,11 @@ public class PostOpponentRouteTest {
 
         assertEquals(inGamePlayerAvailable.contains(OPPONENT_STR_2), false);
 
-        assertEquals(HomeController.TITLE_ATTR_MSG, vm.get(HomeController.TITLE_ATTR));
+        assertEquals(Message.TITLE_ATTR_MSG, vm.get(Message.TITLE_ATTR));
         assertEquals(GetGameMenuRoute.VIEW_NAME, result.getViewName());
     }
 
-    @Test
+    @Test (expected=spark.HaltException.class)
     public void invalid_opponent_in_game() {
         //Invoke test
         final ModelAndView result = CuT.handle(request, response);
@@ -80,14 +81,14 @@ public class PostOpponentRouteTest {
 
         assertEquals(inGamePlayerAvailable.contains(OPPONENT_STR), true);
 
-        assertEquals(HomeController.TITLE_ATTR_MSG, vm.get(HomeController.TITLE_ATTR));
+        assertEquals(Message.TITLE_ATTR_MSG, vm.get(Message.TITLE_ATTR));
         assertEquals(GetGameMenuRoute.VIEW_NAME, result.getViewName());
     }
 
     /**
      * test opponent doesn't exist condition
      */
-    @Test
+    @Test (expected=spark.HaltException.class)
     public void invalid_opponent_does_not_exist(){
         //invoke test
         final ModelAndView result = CuT.handle(request, response);
@@ -100,14 +101,14 @@ public class PostOpponentRouteTest {
 
         assertEquals(CuT.isInList(OPPONENT_STR), false);
 
-        assertEquals(HomeController.TITLE_ATTR_MSG, vm.get(HomeController.TITLE_ATTR));
+        assertEquals(Message.TITLE_ATTR_MSG, vm.get(Message.TITLE_ATTR));
         assertEquals(GetGameMenuRoute.VIEW_NAME, result.getViewName());
     }
 
     /**
      * test opponent chosen is self condition
      */
-    @Test
+    @Test (expected=spark.HaltException.class)
     public void is_playing_self(){
         //invoke test
         final ModelAndView result = CuT.handle(request, response);
@@ -120,14 +121,14 @@ public class PostOpponentRouteTest {
 
         assertEquals(CuT.isSelf(OPPONENT_STR, OPPONENT_STR), true);
 
-        assertEquals(HomeController.TITLE_ATTR_MSG, vm.get(HomeController.TITLE_ATTR));
+        assertEquals(Message.TITLE_ATTR_MSG, vm.get(Message.TITLE_ATTR));
         assertEquals(GetGameMenuRoute.VIEW_NAME, result.getViewName());
     }
 
     /**
      * test opponent chosen is not self condition
      */
-    @Test
+    @Test (expected=spark.HaltException.class)
     public void is_not_playing_self(){
         //invoke test
         final ModelAndView result = CuT.handle(request, response);
@@ -140,7 +141,7 @@ public class PostOpponentRouteTest {
 
         assertEquals(CuT.isSelf(OPPONENT_STR, OPPONENT_STR_2), false);
 
-        assertEquals(HomeController.TITLE_ATTR_MSG, vm.get(HomeController.TITLE_ATTR));
+        assertEquals(Message.TITLE_ATTR_MSG, vm.get(Message.TITLE_ATTR));
         assertEquals(GetGameMenuRoute.VIEW_NAME, result.getViewName());
     }
 }

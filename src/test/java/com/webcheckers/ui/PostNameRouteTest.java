@@ -49,26 +49,22 @@ public class PostNameRouteTest
     {
     }
 
-    @Test
+    @Test (expected=spark.HaltException.class)
     public void testStoreName_playerListEmpty() //Verify
     {
         when(request.queryParams("playerName")).thenReturn(playerName);
-        when(checkersCenter.isPlayerListEmpty()).thenReturn(Boolean.TRUE);
         final ModelAndView result = CuT.handle(request,response);
         assertNull(result);
         verify(response).redirect(String.format("/game-menu?playerName=%s&%s=none", playerName, PostOpponentRoute.ERROR_PATH_TYPE));
     }
 
-    @Test
+    @Test (expected=spark.HaltException.class)
     public void testStoreName_nameAvailable()
     {
-
         when(request.queryParams("playerName")).thenReturn(playerName);
-        when(checkersCenter.isPlayerListEmpty()).thenReturn(Boolean.FALSE);
         when(checkersCenter.getAllPlayers()).thenReturn(allPlayerAvailable);
         final ModelAndView result = CuT.handle(request,response);
         assertNull(result);
-        assertFalse(checkersCenter.isPlayerListEmpty());
         verify(response).redirect(String.format("/game-menu?playerName=%s&%s=none", playerName, PostOpponentRoute.ERROR_PATH_TYPE));
     }
 
@@ -76,8 +72,7 @@ public class PostNameRouteTest
     public void testStoreName_nameNotAvailable()
     {
 
-        when(request.queryParams("playerName")).thenReturn(playerName); //
-        when(checkersCenter.isPlayerListEmpty()).thenReturn(Boolean.FALSE);
+        when(request.queryParams("playerName")).thenReturn(playerName);
         when(checkersCenter.getAllPlayers()).thenReturn(allPlayerNotAvailable);
         final ModelAndView result = CuT.handle(request,response);
         assertNotNull(result);
@@ -89,8 +84,7 @@ public class PostNameRouteTest
         //   * model contains all necessary View-Model data
         @SuppressWarnings("unchecked")
         final Map<String, Object> vm = (Map<String, Object>) model;
-        assertEquals(HomeController.TITLE_ATTR_MSG,vm.get("title"));
+        assertEquals(Message.TITLE_ATTR_MSG,vm.get("title"));
         assertEquals(GetSigninRoute.LOGIN_ATTR_MSG,vm.get("loginMessage"));
-        assertEquals(PostNameRoute.ERROR_ATTR_MSG,vm.get("errorMessage"));
     }
 }
