@@ -1,78 +1,87 @@
 # PROJECT Design Documentation
 
-> The following template provides the headings for your Design Documentation.  As you edit each section make sure you remove these commentary 'blockquotes'; the lines that start with a > character.
-
 ## Executive Summary
 
-This is a summary of the project.
+The WebCheckers project is a web application for people to play checkers online. A person can sign-in with any username of their choosing, so long as it is not already in use, and select an opponent from the list of players available to play a game of checkers against. All checkers games played are governed by the American rules.
 
 ### Purpose
-> Provide a very brief statement about the project and most important user group and user goals.
-
-### Glossary and Acronyms
-> Provide a table of terms and acronyms.
-
-| Term | Definition |
-|------|------------|
-| VO | Value Object |
-
+This documentation gives the general idea of the product being developed and the technologies, models being used to implement the product. It contains every detail that’s being added to the product in order to let a non-team member to understand what’s being implemented and why.
 
 ## Requirements
 
 This section describes the features of the application.
 
-> In this section you do not need to be exhaustive and list every story.  Focus on top-level features from the Vision document and maybe Epics and critical Stories.
-
 ### Definition of MVP
-> Provide a simple description of the Minimum Viable Product.
+The MVP of this project is to:
+- Have a player sign-in with a username before he/she begins the game.
+- Let two players play a game of checkers on web based on the American rules.
+- Allow a player to resign from a game whenever he/she wants.
 
 ### MVP Features
-> Provide a list of top-level Epics and/or Stories of the MVP.
+
+#### Sign-in
+The player sign-in is one feature of MVP where the player is able to sign-in with a username of his/her choice. The system validates whether or not the username is in use, and notifies the player if they need to choose a different username. If the username chosen is not in use, the system redirects the player to the game menu where the player can see a list of all players signed in.
+
+#### Game View
+The game view feature displays the 8x8 checkers board with the initial setup of pieces. Each player is given 12 discs, in either red or white color, and they are placed only on black squares.
+
+#### Resignation
+A player can sign-out from the application whenever he/she wants. Once the player signs out the username used by him/her is released and anyone can use that name. When a player signs-out during a game, the game is cancelled, and the opponent is notified. 
 
 ### Roadmap of Enhancements
-> Provide a list of top-level features in order you plan to consider them.
-
+TBD
 
 ## Application Domain
 
 This section describes the application domain.
 
 ### Overview of Major Domain Areas
-> Provide a high-level overview of the 
+We have implemented this domain model for our Web Checkers game implementation. The purpose of designing a domain model is to describe the abstractions in our proposed applications and to give a clear understanding of the system. The domain model proposed in sprint 1 has been updated to the domain model shown below. 
 
 ### Details of each Domain Area
-> If necessary, high-light certain areas of the Domain model that have a focused purpose.  Create textual narrative that describes the purpose and how that relates to the associated domain model.
+#### WebCheckersGame
+Game has is the core to being able to play the game. Game has a player and an opponenent that are playing a game . Also, the game is played on a Board that is made of squares and that can contain disc. 
 
-
+#### Pieces
+Discs are moved by players and can be located on Squares. These discs will be draged and droped and can be turned into kings.
 
 ## Architecture
 
 This section describes the application architecture.
 
 ### Summary
-> Provide a brief summary of the architecture.  Also provide one or two models (diagrams) that describe the architecture.  Hint: review the Architecture lecture slides for ideas.
+We are using Spark framework for our WebCheckers game implementation. Spark is a Java-based, web micro-framework which handles HTTP requests and delegates HTML generation to a template Engine. We are using FreeMarker template engine for this purpose. Some benefits of using FreeMarker is that it supports JSP tags, templates can be nested in it in run-time and it also supports JSON.
 
-### Overview of User Interface
-> Provide a summary of the application's user interface.
-> This includes the UI state model.
+>Model of the architecture
 
-### Tier X
-> Provide a summary of each tier of your architecture.  Thus replicate this heading for each tier.
-> In each section describe the types of components in the tier and describe their responsibilities.
+The package diagram shows the dependencies that each layer has. The UI layer uses spark, freemarker, css and JS to generate and manipulate the views that are presented to the users. Furthermore, the UI uses the model and the application layer to manipulate the state of the of the system.
 
+### UI Layer
+This layer has all the classes which govern the routing of the view for certain set of actions performed while playing the game.
+> UI state model.
+
+### Model Layer
+This layer has classes defined in the domain, which define the behavior of the game (or the rules for the game) along with all the components used for playing the game like discs, board, etc.
+> UI state model.
+
+### Application Layer
+This layer has the class which maintains the state of the game.
+> Application state model.
 
 ## Sub-system X
-> Provide a section for each major sub-system within the tiers of the architecture.  Replace 'X' with the name of the sub-system.
-> A sub-system would exist within one of the application tiers and is a group of components cooperating on a significant purpose within the application.  For example, in WebCheckers all of the UI Controller components for the Game view would be its own sub-system.
-
-This section describes the detail design of sub-system X.
+TBD
 
 ### Purpose of the sub-system
-> Provide a summary of the purpose of this sub-system.
+TBD
 
 ### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.  If the sub-system is large (over 10 classes) then consider decomposing into multiple, smaller, more focused diagrams.
+TBD
 
 ### Dynamic models
-> Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
-> For example, in WebCheckers you might create a sequence diagram of the `POST /validateMove` HTTP request processing or you might use a state diagram if the Game component uses a state machine to manage the game.
+#### State-Chart Diagrams
+Begin game state-Chart
+
+Game Running state-Chart
+
+#### Sequence Diagram Diagrams
+Create checkers Game 
