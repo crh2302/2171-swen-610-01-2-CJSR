@@ -21,9 +21,6 @@ public class HomeController implements TemplateViewRoute {
     //
     // Constants
     //
-
-
-
     static final String VIEW_NAME = "home.ftl";
     private final CheckersCenter checkersCenter;
 

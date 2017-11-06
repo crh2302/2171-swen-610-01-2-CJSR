@@ -33,16 +33,12 @@ public class PostValidateMoveRoute implements Route
 	{
 		game = checkersCenter.getGame(request.cookie("playerName"));
 		board = game.getBoard();
-		System.out.println("===========================");
-
-		System.out.println("Move attempt made");
 
 		final String dataStr = request.body();
 		final Move move = JsonUtils.fromJson(dataStr, Move.class);
 
 		boolean goodMove = game.moveIsValid(move);
-		if (goodMove)
-		{
+		if (goodMove) {
 			game.addMove(move);
 			return new Message("Valid Move");
 		}

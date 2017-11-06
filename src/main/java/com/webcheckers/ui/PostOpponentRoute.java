@@ -26,7 +26,9 @@ public class PostOpponentRoute implements TemplateViewRoute {
     //
 
     static final String ERROR_PATH_TYPE = "errorPathType";
-
+    static final String SELF_PLAY_ERROR_MSG = "Invalid Opponent. You can't play against yourself!";
+    static final String INVALID_OPP_MSG = "Entered opponent does not exist.";
+    static final String OPPONENT_ERROR_MSG = "Chosen opponent is already in a game. Please choose another.";
 
     //
     // attributes

@@ -16,8 +16,6 @@ public class PostNameRoute implements TemplateViewRoute {
     //
     // Attributes
     //
-
-
     static final String LOGIN_ATTR = "loginMessage";
     static final String ERROR_ATTR = "errorMessage";
 

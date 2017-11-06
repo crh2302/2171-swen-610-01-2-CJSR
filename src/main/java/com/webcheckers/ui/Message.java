@@ -14,7 +14,6 @@ public class Message
 	static final String TITLE_ATTR = "title";
 	static final String ERROR_ATTR_MSG = "Username already taken. Please enter another.";
 
-
 	public Message(String text)
 	{
 		this.text = text;

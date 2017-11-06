@@ -12,8 +12,8 @@ import java.util.Objects;
 import static spark.Spark.halt;
 
 public class PostSubmitTurnRoute implements Route {
-    private final CheckersCenter checkersCenter;
 
+    private final CheckersCenter checkersCenter;
     private CheckersGame game;
 
     PostSubmitTurnRoute(final CheckersCenter checkersCenter){
@@ -23,6 +23,9 @@ public class PostSubmitTurnRoute implements Route {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ModelAndView handle(Request request, Response response) {
 
@@ -30,10 +33,10 @@ public class PostSubmitTurnRoute implements Route {
         String opponentName = request.cookie("opponentName");
 
         game = checkersCenter.getGame(request.cookie("playerName"));
-        game.processPlayerTurn();
+        game.processTurn();
         game.clearMoves();
 
-        if(game.isTurn(playerName)){
+        if(game.isPlayerTurn(playerName)){
             response.redirect(String.format("/game?playerName=%s&opponent=%s",opponentName,playerName));
         }
         else{

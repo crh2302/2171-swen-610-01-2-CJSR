@@ -63,7 +63,7 @@ public class GetGameRoute implements TemplateViewRoute {
             vm.put("opponentColor", "RED");
         }
 
-        vm.put("isMyTurn", game.isTurn(player));
+        vm.put("isMyTurn", game.isPlayerTurn(player));
 
         return new ModelAndView(vm , VIEW_NAME);
     }
