@@ -40,6 +40,4 @@ public class Board implements Iterable<Row>
         return rows.iterator();
     }
 
-
-
 }

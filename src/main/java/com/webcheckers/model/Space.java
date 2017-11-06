@@ -25,21 +25,16 @@ public class Space
     this.piece = piece;
   }
 
-  /**
-   * Return the cell number of a space.
-   * @return
-   *      The cell number.
-   */
   public int getCellIdx()
   {
-        return cellIdx;
+    return cellIdx;
   }
 
-  /**
-   *Return the piece place on a space.
-   * @return
-   *      The piece placed on the space.
-   */
+  public void setPiece(Piece piece)
+  {
+    this.piece = piece;
+  }
+
   public Piece getPiece()
   {
     return piece;
@@ -50,12 +45,17 @@ public class Space
    * @return
    *    Return true if a piece can be placed in that space.
    */
-
   public boolean isValid()
   {
     return ((this.piece == null) && isBlack);
   }
 
+
+  /**
+   * populate space with a MAN piece
+   * @return
+   *     the piece
+   */
   public Piece populateSpaceMan()
   {
     Piece pi = piece;
@@ -63,14 +63,17 @@ public class Space
     return pi;
   }
 
+
+  /**
+   * populate space with a KING piece
+   * @param
+   *      color
+   * @return
+   *      KING piece of necessary color
+   */
   public Piece populateSpaceKing(String color)
   {
     piece = null;
     return new Piece("KING",color);
-  }
-
-  public void setPiece(Piece piece)
-  {
-    this.piece = piece;
   }
 }
