@@ -15,7 +15,7 @@ public class CheckersGameTest
     @Before
     public void setUp() throws Exception
     {
-        checkersGame = new CheckersGame();
+        checkersGame = new CheckersGame("hey", "cool");
         checkersGame.setTurnColor(COLOR_RED);
     }
 

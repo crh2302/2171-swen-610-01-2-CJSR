@@ -12,7 +12,6 @@ public class PositionTest {
     private int cell;
     private Position CuT = new Position(row, cell);
 
-
     @Test
     public void get_row(){
         assertEquals(CuT.getRow(), this.row);

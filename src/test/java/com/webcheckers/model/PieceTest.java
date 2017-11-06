@@ -10,7 +10,7 @@ public class PieceTest {
     Piece piece;
     @Before
     public void setUp() throws Exception {
-      piece = new Piece("Red");
+      piece = new Piece("SINGLE","RED");
     }
 
     @After
@@ -24,7 +24,7 @@ public class PieceTest {
 
     @Test
     public void getColor() throws Exception {
-        assertEquals("Red",piece.getColor());
+        assertEquals("RED",piece.getColor());
     }
 
     @Test
