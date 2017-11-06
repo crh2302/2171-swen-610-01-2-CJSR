@@ -11,17 +11,13 @@ import com.webcheckers.model.Space;
 
 public class SpaceTest {
 
+    Space CuT = new Space(0, true, new Piece("KING","RED"));
     Space sp = new Space(5,true,new Piece("SINGLE","RED"));
     Space spNULL = new Space(5,true,null);
+    Space spFALSE = new Space(5, false, null);
 
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
+    Piece newP = new Piece("KING", "RED");
+    Piece newP2 = new Piece("KING", "RED");
 
     @Test
     public void getCellIdx() throws Exception {
@@ -34,7 +30,25 @@ public class SpaceTest {
     }
 
     @Test
+    public void setPiece() throws Exception {
+        CuT.setPiece(new Piece("SINGLE","RED"));
+    }
+
+    @Test
     public void isValid() throws Exception {
         assertTrue(spNULL.isValid());
+        assertFalse(spFALSE.isValid());
+        assertFalse(CuT.isValid());
+    }
+
+    @Test
+    public void populateManPiece() throws Exception {
+
+    }
+
+    @Test
+    public void populateKingPiece() throws Exception {
+        CuT.populateSpaceKing("RED");
+        assertEquals("KING",newP.getType());
     }
 }
