@@ -142,16 +142,25 @@ public class WebServer {
     //get game page
     get(GAME_URL, new GetGameRoute(checkersCenter), templateEngine);
 
-    // Post name
+    //get game-over page
+    get("/game-over", new GetGameOverRoute(checkersCenter), templateEngine);
+
+    //Post backup move
+    get("/resignGame", new GetResignRoute(checkersCenter), JsonUtils.json());
+
+    //Post name
     post("/name", new PostNameRoute(checkersCenter), templateEngine);
 
-    // Post opponent selection
+    //Post opponent selection
     post("/opponent", new PostOpponentRoute(checkersCenter), templateEngine);
 
+    //Post validate move
     post("/validateMove", new PostValidateMoveRoute(checkersCenter), JsonUtils.json());
 
+    //Post resign turn
     post("/submitTurn", new PostSubmitTurnRoute(checkersCenter), JsonUtils.json());
 
+    //Post backup move
+    post("/backupMove", new PostBackUpMoveRoute(checkersCenter), JsonUtils.json());
   }
-
 }
