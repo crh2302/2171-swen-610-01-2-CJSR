@@ -162,10 +162,10 @@ public class CheckersGame
                         int jumpedPieceRow = oldRow + 1;
                         int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
+
                         Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
                         if (isNotNullAndRed(jumpedPiece))
                         {
-
                             redPiecesLeft--;
 
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);

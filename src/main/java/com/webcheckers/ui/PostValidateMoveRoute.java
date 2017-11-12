@@ -32,17 +32,17 @@ public class PostValidateMoveRoute implements Route
 	public Object handle(Request request, Response response)
 	{
 		game = checkersCenter.getGame(request.cookie("playerName"));
-		board = game.getBoard();
 
 		final String dataStr = request.body();
 		final Move move = JsonUtils.fromJson(dataStr, Move.class);
 
-		boolean goodMove = game.moveIsValid(move);
-		if (goodMove) {
+		if (game.moveIsValid(move)) {
 			game.addMove(move);
 			return new Message("Valid Move");
 		}
-		return new Message("Invalid Move");
+		else {
+			return new Message("Invalid Move");
+		}
 	}
 
 }
