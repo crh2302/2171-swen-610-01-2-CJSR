@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.CheckersCenter;
-import com.webcheckers.model.CheckersGame;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -11,6 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * The {@code GET /resignGame} route handler.
+ *
+ * Class used when player decides to resign from a game
+ */
 public class GetGameOverRoute implements TemplateViewRoute {
 
     private CheckersCenter checkersCenter;

@@ -12,6 +12,11 @@ import static spark.Spark.halt;
 
 import java.util.Objects;
 
+/**
+ * The {@code POST /submitTurn} route handler
+ *
+ * Called when the player submits a turn to the server
+ */
 public class PostSubmitTurnRoute implements Route {
 
     private final CheckersCenter checkersCenter;
