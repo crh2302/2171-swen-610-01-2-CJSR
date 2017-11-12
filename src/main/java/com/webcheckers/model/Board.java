@@ -31,6 +31,12 @@ public class Board implements Iterable<Row>
         }
     }
 
+    public Piece getPiece(Move move){
+        Space ya = this.getRows().get(move.getEnd().getRow()).getSpaces().get(move.getEnd().getRow());
+        Piece pi = this.getRows().get(move.getEnd().getRow()).getSpaces().get(move.getEnd().getRow()).getPiece();
+        return pi;
+    }
+
     public List<Row> getRows() {
         return rows;
     }
