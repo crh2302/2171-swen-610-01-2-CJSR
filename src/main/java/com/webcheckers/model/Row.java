@@ -51,7 +51,6 @@ public class Row implements Iterable<Space>
         spaces.add(new Space(i, false, null));
       }
     }
-
   }
 
   public List<Space> getSpaces()

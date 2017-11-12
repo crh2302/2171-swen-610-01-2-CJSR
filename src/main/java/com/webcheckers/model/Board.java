@@ -3,8 +3,6 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -31,12 +29,6 @@ public class Board implements Iterable<Row>
         }
     }
 
-    public Piece getPiece(Move move){
-        Space ya = this.getRows().get(move.getEnd().getRow()).getSpaces().get(move.getEnd().getRow());
-        Piece pi = this.getRows().get(move.getEnd().getRow()).getSpaces().get(move.getEnd().getRow()).getPiece();
-        return pi;
-    }
-
     public List<Row> getRows() {
         return rows;
     }
@@ -45,5 +37,4 @@ public class Board implements Iterable<Row>
     public Iterator<Row> iterator() {
         return rows.iterator();
     }
-
 }
