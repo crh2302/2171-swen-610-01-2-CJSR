@@ -248,16 +248,4 @@ public class CheckersGame
         }
         return true;
     }
-
-    public void backUpMove()
-    {
-        int size = moves.size();
-        Move move = moves.removeLast();
-        //Figures out which piece has been moved
-        Piece piece = board.getPiece(move);
-
-        //Sets the piece back where it started, and removes is from the place it was at.
-        board.getRows().get(move.getStart().getRow()).getSpaces().get(move.getStart().getCell()).setPiece(piece);
-        board.getRows().get(move.getEnd().getRow()).getSpaces().get(move.getEnd().getCell()).populateSpaceMan();
-    }
 }
