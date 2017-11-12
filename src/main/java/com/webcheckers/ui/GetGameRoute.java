@@ -43,13 +43,7 @@ public class GetGameRoute implements TemplateViewRoute {
         vm.put("opponentName", opponent);
 
         CheckersGame game = checkersCenter.getGame(player);
-        if(!checkersCenter.getInGamePlayers().contains(player) && game != null){
-            removeGame(game);
-            response.redirect(String.format("/game-over?playerName=%s&opponentName=%s&message=forfeit",player,opponent));
-        }
-        else if(!checkersCenter.getInGamePlayers().contains(player) && game == null){
-            response.redirect(String.format("/game-over?playerName=%s&opponentName=%s&message=lost",player,opponent));
-        }
+        checkGameOver(game,response,player,opponent);
 
         if(game == null){
             game = new CheckersGame(player,opponent);
@@ -75,7 +69,17 @@ public class GetGameRoute implements TemplateViewRoute {
         return new ModelAndView(vm , VIEW_NAME);
     }
 
+    private void checkGameOver(CheckersGame game, Response response, String player, String opponent) {
+        if (!checkersCenter.getInGamePlayers().contains(player) && game != null) {
+            removeGame(game);
+            response.redirect(String.format("/game-over?playerName=%s&opponentName=%s&message=forfeit", player, opponent));
+        } else if (!checkersCenter.getInGamePlayers().contains(player) && game == null) {
+            response.redirect(String.format("/game-over?playerName=%s&opponentName=%s&message=lost", player, opponent));
+        }
+    }
+
     private void removeGame(CheckersGame game) {
         checkersCenter.getGamesList().remove(game);
     }
+
 }

@@ -55,7 +55,12 @@ public class GetGameMenuRoute implements TemplateViewRoute {
                 break;
             default:
         }
+        navigatePlayer(playerName,response);
 
+        return new ModelAndView(vm, VIEW_NAME);
+    }
+
+    private void navigatePlayer(String playerName, Response response){
         opponentList = checkersCenter.getGamesList().stream()
                 .map(CheckersGame::getOpponent)
                 .collect(Collectors.toList());
@@ -63,24 +68,13 @@ public class GetGameMenuRoute implements TemplateViewRoute {
                 .map(CheckersGame::getPlayer)
                 .collect(Collectors.toList());
 
-        System.out.println("-----");
-        System.out.println("Player list: " + playerList);
-        System.out.println("Opponent list: " + opponentList);
-        System.out.println("Game list size: " + checkersCenter.getGamesList().size());
-        System.out.println("-----");
-
         if(opponentList.contains(playerName)){
             for(int x = 0; x < opponentList.size(); x++){
                 if(opponentList.get(x).equals(playerName)){
                     String opponent = playerList.get(x);
-                    System.out.println("some how got here");
                     response.redirect(String.format("/game?opponent=%s&playerName=%s&myTurn=false",opponent,playerName));
                 }
             }
         }
-        else{
-            System.out.println("Skipped IF statement");
-        }
-        return new ModelAndView(vm, VIEW_NAME);
     }
 }
