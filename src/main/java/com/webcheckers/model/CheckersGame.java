@@ -34,14 +34,6 @@ public class CheckersGame
         this.board = board;
     }
 
-    public String getTurnColor() {
-        return turnColor;
-    }
-
-    public void setTurnColor(String turnColor) {
-        this.turnColor = turnColor;
-    }
-
     public String getPlayer(){
         return player;
     }
@@ -132,15 +124,15 @@ public class CheckersGame
         int newColumn = move.getEnd().getCell();
 
         Piece piece = board.getRows().get(oldRow).getSpaces().get(oldColumn).getPiece();
-
-        if (piece.getType().equals("SINGLE"))
+        if (piece.getType().equals("SINGLE") || pieceIsKing(piece))
         {
-            if (piece.getColor().equals("RED") || piece.getColor().equals("WHITE"))
-            {
                 if (oldColumn-newColumn == 1 || oldColumn-newColumn == -1)
                 {
-                    if (oldRow-newRow == 1 || oldRow-newRow == -1)
+                    if ((oldRow-newRow == 1 && pieceIsRed(piece)) || (oldRow-newRow == -1 && pieceIsWhite(piece)))
                     {
+                        return true;
+                    }
+                    else if((oldRow-newRow == 1 || oldRow-newRow == -1) && pieceIsKing(piece)){
                         return true;
                     }
                 }
@@ -149,36 +141,70 @@ public class CheckersGame
                     if (oldRow-newRow == 2)
                     {
                         int jumpedPieceRow = oldRow - 1;
-                        int jumpedPieceColumn = (newColumn - oldColumn) / 2 + oldColumn;
+                        int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
-                        Piece jumpedPiece = board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
-                        if (jumpedPiece != null && jumpedPiece.getColor().equals("WHITE"))
+                        Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
+                        if (isNotNullAndWhite(jumpedPiece))
                         {
-                            board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
-                            return true;
+                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                        }
+                        else if((isNotNullAndRed(jumpedPiece)) && pieceIsKing(piece))
+                        {
+                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                     }
                     else if(oldRow-newRow == -2)
                     {
                         int jumpedPieceRow = oldRow + 1;
-                        int jumpedPieceColumn = (newColumn - oldColumn) / 2 + oldColumn;
+                        int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
-                        Piece jumpedPiece = board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
-                        if (jumpedPiece != null && jumpedPiece.getColor().equals("RED"))
+                        Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
+                        if (isNotNullAndRed(jumpedPiece))
                         {
-                            board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
-                            return true;
+                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                        }
+                        else if((isNotNullAndWhite(jumpedPiece)) && pieceIsKing(piece))
+                        {
+                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                     }
                 }
-            }
-        }
-        else if (piece.getType() == "KING") {
-            //do king move here
         }
         return false;
     }
 
+    public Piece jumpedPiece(int jumpedPieceRow, int jumpedPieceColumn){
+        return board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
+    }
+
+    public int jumpedPieceColumn(int newColumn, int oldColumn){
+        return (newColumn - oldColumn) / 2 + oldColumn;
+    }
+
+    public boolean populateJumpedSpace(int jumpedPieceRow, int jumpedPieceColumn){
+        board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
+        return true;
+    }
+
+    public boolean pieceIsKing(Piece piece){
+        return piece.getType().equals("KING");
+    }
+
+    public boolean pieceIsRed(Piece piece){
+        return piece.getColor().equals("RED");
+    }
+
+    public boolean pieceIsWhite(Piece piece){
+        return piece.getColor().equals("WHITE");
+    }
+
+    public boolean isNotNullAndWhite(Piece jumpedPiece){
+        return (jumpedPiece != null && pieceIsWhite(jumpedPiece));
+    }
+
+    public boolean isNotNullAndRed(Piece jumpedPiece){
+        return (jumpedPiece != null && pieceIsRed(jumpedPiece));
+    }
 
     /**
      * make a move
