@@ -8,13 +8,13 @@ import java.util.List;
  */
 public class CheckersGame
 {
-    private String turnColor;
     private String player;
     private String opponent;
-
     private Board board;
 
     private int turn;
+    private int redPiecesLeft;
+    private int whitePiecesLeft;
 
     private LinkedList<Move> moves;
 
@@ -22,6 +22,8 @@ public class CheckersGame
         this.player = player;
         this.opponent = opponent;
         this.turn = 0;
+        this.redPiecesLeft = 1;
+        this.whitePiecesLeft = 1;
         setBoard(new Board());
         moves = new LinkedList<>();
     }
@@ -32,14 +34,6 @@ public class CheckersGame
 
     public void setBoard(Board board) {
         this.board = board;
-    }
-
-    public String getTurnColor() {
-        return turnColor;
-    }
-
-    public void setTurnColor(String turnColor) {
-        this.turnColor = turnColor;
     }
 
     public String getPlayer(){
@@ -132,15 +126,15 @@ public class CheckersGame
         int newColumn = move.getEnd().getCell();
 
         Piece piece = board.getRows().get(oldRow).getSpaces().get(oldColumn).getPiece();
-
-        if (piece.getType().equals("SINGLE"))
+        if (piece.getType().equals("SINGLE") || pieceIsKing(piece))
         {
-            if (piece.getColor().equals("RED") || piece.getColor().equals("WHITE"))
-            {
                 if (oldColumn-newColumn == 1 || oldColumn-newColumn == -1)
                 {
-                    if (oldRow-newRow == 1 || oldRow-newRow == -1)
+                    if ((oldRow-newRow == 1 && pieceIsRed(piece)) || (oldRow-newRow == -1 && pieceIsWhite(piece)))
                     {
+                        return true;
+                    }
+                    else if((oldRow-newRow == 1 || oldRow-newRow == -1) && pieceIsKing(piece)){
                         return true;
                     }
                 }
@@ -149,36 +143,80 @@ public class CheckersGame
                     if (oldRow-newRow == 2)
                     {
                         int jumpedPieceRow = oldRow - 1;
-                        int jumpedPieceColumn = (newColumn - oldColumn) / 2 + oldColumn;
+                        int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
-                        Piece jumpedPiece = board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
-                        if (jumpedPiece != null && jumpedPiece.getColor().equals("WHITE"))
-                        {
-                            board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
-                            return true;
+                        Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
+                        if (isNotNullAndWhite(jumpedPiece)) {
+                            whitePiecesLeft--;
+                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                        }
+                        else if((isNotNullAndRed(jumpedPiece)) && pieceIsKing(piece)) {
+                            redPiecesLeft--;
+                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                     }
                     else if(oldRow-newRow == -2)
                     {
                         int jumpedPieceRow = oldRow + 1;
-                        int jumpedPieceColumn = (newColumn - oldColumn) / 2 + oldColumn;
+                        int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
-                        Piece jumpedPiece = board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
-                        if (jumpedPiece != null && jumpedPiece.getColor().equals("RED"))
+                        Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
+                        if (isNotNullAndRed(jumpedPiece))
                         {
-                            board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
-                            return true;
+                            redPiecesLeft--;
+                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                        }
+                        else if((isNotNullAndWhite(jumpedPiece)) && pieceIsKing(piece))
+                        {
+                            whitePiecesLeft--;
+                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                     }
                 }
-            }
-        }
-        else if (piece.getType() == "KING") {
-            //do king move here
         }
         return false;
     }
 
+    public Piece jumpedPiece(int jumpedPieceRow, int jumpedPieceColumn){
+        return board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
+    }
+
+    public int jumpedPieceColumn(int newColumn, int oldColumn){
+        return (newColumn - oldColumn) / 2 + oldColumn;
+    }
+
+    public boolean populateJumpedSpace(int jumpedPieceRow, int jumpedPieceColumn){
+        board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
+        return true;
+    }
+
+    public boolean pieceIsKing(Piece piece){
+        return piece.getType().equals("KING");
+    }
+
+    public boolean pieceIsRed(Piece piece){
+        return piece.getColor().equals("RED");
+    }
+
+    public boolean pieceIsWhite(Piece piece){
+        return piece.getColor().equals("WHITE");
+    }
+
+    public boolean isNotNullAndWhite(Piece jumpedPiece){
+        return (jumpedPiece != null && pieceIsWhite(jumpedPiece));
+    }
+
+    public boolean isNotNullAndRed(Piece jumpedPiece){
+        return (jumpedPiece != null && pieceIsRed(jumpedPiece));
+    }
+
+    public int getWhitePiecesLeft(){
+        return whitePiecesLeft;
+    }
+
+    public int getRedPiecesLeft(){
+        return whitePiecesLeft;
+    }
 
     /**
      * make a move
@@ -209,5 +247,17 @@ public class CheckersGame
             board.getRows().get(newRow).getSpaces().get(newColumn).setPiece(manPiece);
         }
         return true;
+    }
+
+    public void backUpMove()
+    {
+        int size = moves.size();
+        Move move = moves.removeLast();
+        //Figures out which piece has been moved
+        Piece piece = board.getPiece(move);
+
+        //Sets the piece back where it started, and removes is from the place it was at.
+        board.getRows().get(move.getStart().getRow()).getSpaces().get(move.getStart().getCell()).setPiece(piece);
+        board.getRows().get(move.getEnd().getRow()).getSpaces().get(move.getEnd().getCell()).populateSpaceMan();
     }
 }
