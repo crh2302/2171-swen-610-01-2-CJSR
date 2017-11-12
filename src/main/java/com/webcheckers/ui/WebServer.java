@@ -159,8 +159,5 @@ public class WebServer {
 
     //Post resign turn
     post("/submitTurn", new PostSubmitTurnRoute(checkersCenter), JsonUtils.json());
-
-    //Post backup move
-    post("/backupMove", new PostBackUpMoveRoute(checkersCenter), JsonUtils.json());
   }
 }
