@@ -8,13 +8,13 @@ import java.util.List;
  */
 public class CheckersGame
 {
-    private String turnColor;
     private String player;
     private String opponent;
-
     private Board board;
 
     private int turn;
+    private int redPiecesLeft;
+    private int whitePiecesLeft;
 
     private LinkedList<Move> moves;
 
@@ -22,6 +22,8 @@ public class CheckersGame
         this.player = player;
         this.opponent = opponent;
         this.turn = 0;
+        this.redPiecesLeft = 1;
+        this.whitePiecesLeft = 1;
         setBoard(new Board());
         moves = new LinkedList<>();
     }
@@ -144,12 +146,14 @@ public class CheckersGame
                         int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
                         Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
-                        if (isNotNullAndWhite(jumpedPiece))
-                        {
+
+                        if (isNotNullAndWhite(jumpedPiece)) {
+                            whitePiecesLeft--;
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
-                        else if((isNotNullAndRed(jumpedPiece)) && pieceIsKing(piece))
-                        {
+                        else if((isNotNullAndRed(jumpedPiece)) && pieceIsKing(piece)) {
+                            redPiecesLeft--;
+
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                     }
@@ -161,10 +165,16 @@ public class CheckersGame
                         Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
                         if (isNotNullAndRed(jumpedPiece))
                         {
+
+                            redPiecesLeft--;
+
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                         else if((isNotNullAndWhite(jumpedPiece)) && pieceIsKing(piece))
                         {
+
+                            whitePiecesLeft--;
+
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                     }
@@ -204,6 +214,14 @@ public class CheckersGame
 
     public boolean isNotNullAndRed(Piece jumpedPiece){
         return (jumpedPiece != null && pieceIsRed(jumpedPiece));
+    }
+
+    public int getWhitePiecesLeft(){
+        return whitePiecesLeft;
+    }
+
+    public int getRedPiecesLeft(){
+        return whitePiecesLeft;
     }
 
     /**
