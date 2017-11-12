@@ -1,10 +1,7 @@
 package com.webcheckers.ui;
-
 import com.webcheckers.appl.CheckersCenter;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.internal.matchers.Null;
-import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.TemplateEngine;
@@ -13,27 +10,29 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 public class WebServerTest {
-    TemplateEngine templateEngine;
-    CheckersCenter checkersCenter;
 
-    TemplateEngine templateEngineTest;
-    CheckersCenter checkersCenterTest;
+
+    TemplateEngine templateEngineMock;
+    CheckersCenter checkersCenterMock;
 
     WebServer CuT;
-    WebServer webServerTest;
-
     Request request;
     Response response;
 
     @Before
     public void setUp() throws Exception {
-        checkersCenter = new CheckersCenter();
-        checkersCenterTest = mock(CheckersCenter.class);
-
+        checkersCenterMock = mock(CheckersCenter.class);
+        templateEngineMock = mock(TemplateEngine.class);
         request = mock(Request.class);
         response = mock(Response.class);
+        CuT = new WebServer(checkersCenterMock, templateEngineMock);
+    }
 
-        CuT = new WebServer(checkersCenter, templateEngine);
-        webServerTest = new WebServer(checkersCenterTest, templateEngineTest);
+    @Test
+    public void test_initialize()
+    {
+        assertNotNull(CuT);
+        CuT.initialize();
+        assertNotNull(CuT);
     }
 }
