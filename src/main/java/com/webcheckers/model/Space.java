@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+/**
+ * Represents a space on the checkers board
+ */
 public class Space
 {
     private int cellIdx;
