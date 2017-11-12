@@ -54,16 +54,16 @@ public class CheckersGame
 
     /**
      * perform moves in 'moves' list for the turn
-     * @return
-     *      true when all moves completed
+
+
      */
-    public boolean processTurn(){
+    public void processTurn(){
         while (!moves.isEmpty()) {
             doMove(moves.remove());
         }
         switchTurn();
 
-        return true;
+
     }
 
 
