@@ -146,14 +146,12 @@ public class CheckersGame
                         int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
                         Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
-
                         if (isNotNullAndWhite(jumpedPiece)) {
                             whitePiecesLeft--;
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                         else if((isNotNullAndRed(jumpedPiece)) && pieceIsKing(piece)) {
                             redPiecesLeft--;
-
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                     }
@@ -162,19 +160,15 @@ public class CheckersGame
                         int jumpedPieceRow = oldRow + 1;
                         int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
-
                         Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
                         if (isNotNullAndRed(jumpedPiece))
                         {
                             redPiecesLeft--;
-
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                         else if((isNotNullAndWhite(jumpedPiece)) && pieceIsKing(piece))
                         {
-
                             whitePiecesLeft--;
-
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                     }
@@ -188,7 +182,7 @@ public class CheckersGame
     }
 
     public int jumpedPieceColumn(int newColumn, int oldColumn){
-        return (newColumn - oldColumn) / 2 + oldColumn;
+        return (newColumn - oldColumn)/2 + oldColumn;
     }
 
     public boolean populateJumpedSpace(int jumpedPieceRow, int jumpedPieceColumn){
@@ -221,7 +215,7 @@ public class CheckersGame
     }
 
     public int getRedPiecesLeft(){
-        return whitePiecesLeft;
+        return redPiecesLeft;
     }
 
     /**
