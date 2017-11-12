@@ -2,14 +2,15 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.CheckersCenter;
 import com.webcheckers.model.CheckersGame;
+
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.Objects;
-
 import static spark.Spark.halt;
+
+import java.util.Objects;
 
 public class PostSubmitTurnRoute implements Route {
 
@@ -36,6 +37,11 @@ public class PostSubmitTurnRoute implements Route {
         game.processTurn();
         game.clearMoves();
 
+        if(game.getWhitePiecesLeft() == 0 || game.getRedPiecesLeft() == 0){
+            removePlayers(playerName,opponentName);
+            removeGame(game);
+            response.redirect(String.format("/game-over?playerName=%s&opponentName=%s&message=won",playerName,opponentName));
+        }
         if(game.isPlayerTurn(playerName)){
             response.redirect(String.format("/game?playerName=%s&opponent=%s",opponentName,playerName));
         }
@@ -44,5 +50,13 @@ public class PostSubmitTurnRoute implements Route {
         }
         halt();
         return null;
+    }
+
+    private void removePlayers(String playerName, String opponentName){
+        checkersCenter.getInGamePlayers().remove(playerName);
+        checkersCenter.getInGamePlayers().remove(opponentName);
+    }
+    private void removeGame(CheckersGame game) {
+        checkersCenter.getGamesList().remove(game);
     }
 }
