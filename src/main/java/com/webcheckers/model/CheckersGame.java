@@ -146,12 +146,14 @@ public class CheckersGame
                         int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
                         Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
+
                         if (isNotNullAndWhite(jumpedPiece)) {
                             whitePiecesLeft--;
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                         else if((isNotNullAndRed(jumpedPiece)) && pieceIsKing(piece)) {
                             redPiecesLeft--;
+
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                     }
@@ -163,12 +165,16 @@ public class CheckersGame
                         Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
                         if (isNotNullAndRed(jumpedPiece))
                         {
+
                             redPiecesLeft--;
+
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                         else if((isNotNullAndWhite(jumpedPiece)) && pieceIsKing(piece))
                         {
+
                             whitePiecesLeft--;
+
                             return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                         }
                     }
