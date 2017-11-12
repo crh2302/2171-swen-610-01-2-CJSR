@@ -59,12 +59,7 @@ public class CheckersCenter {
      *      boolean to determine whether or not the allPlayers list contains the playerName
      */
     public boolean add(String playerName) {
-        if (allPlayers.contains(playerName)) {
-            return  false;
-        }
-        else {
-            return allPlayers.add(playerName);
-        }
+        return allPlayers.add(playerName);
     }
 
 
