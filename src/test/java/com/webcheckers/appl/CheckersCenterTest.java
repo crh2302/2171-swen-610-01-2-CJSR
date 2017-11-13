@@ -1,10 +1,6 @@
 package com.webcheckers.appl;
 
-import com.sun.tools.javac.comp.Check;
 import com.webcheckers.model.CheckersGame;
-import com.webcheckers.model.Move;
-import com.webcheckers.model.Piece;
-import com.webcheckers.model.Position;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,7 +8,6 @@ import spark.Request;
 import spark.Session;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -22,7 +17,6 @@ public class CheckersCenterTest {
 
     CheckersCenter checkersCenter;
     CheckersCenter CuT;
-    CheckersGame game;
 
     Session session;
     Request request;
@@ -59,5 +53,4 @@ public class CheckersCenterTest {
         assertEquals(null,CuT.getGame("cool"));
         assertEquals(checkersCenter.getGame("hey"), CuT.getGame("hey"));
     }
-
 }
