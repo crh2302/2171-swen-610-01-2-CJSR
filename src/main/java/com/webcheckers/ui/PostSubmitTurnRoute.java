@@ -38,7 +38,7 @@ public class PostSubmitTurnRoute implements Route {
         String playerName = request.cookie("playerName");
         String opponentName = request.cookie("opponentName");
 
-        game = checkersCenter.getGame(request.cookie("playerName"));
+        game = checkersCenter.getGame(playerName);
         game.processTurn();
         game.clearMoves();
 
