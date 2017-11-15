@@ -66,13 +66,23 @@ public class GetGameRoute implements TemplateViewRoute {
         }
 
         vm.put("isMyTurn", game.isPlayerTurn(player));
-        if(game.isPlayerTurn(player) == true){
-            boolean movesAvailable = availableMoves(game);
-            if(movesAvailable == true){
+
+        Board board = game.getBoard();
+        if(game.isPlayerTurn(player) && game.getPlayer().equals(player)){
+            if(board.availableMoves(game,board,"RED")){
                 vm.put("movesAvailable", "Moves are available");
             }
             else{
-                vm.put("movesAvailable", "Moves are not available");
+                response.redirect(String.format("/game-over?playerName=%s&opponentName=%s&message=noMoves", player, opponent));
+            }
+        }
+        else if(game.isPlayerTurn(player) && !game.getPlayer().equals(player)){
+            if(board.availableMoves(game,board,"WHITE")){
+                vm.put("movesAvailable", "Moves are available");
+            }
+            else{
+                game.removeGame(game,checkersCenter);
+                response.redirect(String.format("/game-over?playerName=%s&opponentName=%s&message=noMoves", player, opponent));
             }
         }
 
@@ -81,37 +91,11 @@ public class GetGameRoute implements TemplateViewRoute {
 
     private void checkGameOver(CheckersGame game, Response response, String player, String opponent) {
         if (!checkersCenter.getInGamePlayers().contains(player) && game != null) {
-            removeGame(game);
+            game.removeGame(game,checkersCenter);
             response.redirect(String.format("/game-over?playerName=%s&opponentName=%s&message=forfeit", player, opponent));
-        } else if (!checkersCenter.getInGamePlayers().contains(player) && game == null) {
+        }
+        else if (!checkersCenter.getInGamePlayers().contains(player) && game == null) {
             response.redirect(String.format("/game-over?playerName=%s&opponentName=%s&message=lost", player, opponent));
         }
-    }
-
-    private void removeGame(CheckersGame game) {
-        checkersCenter.getGamesList().remove(game);
-    }
-
-    private boolean availableMoves(CheckersGame game){
-        Board board = game.getBoard();
-
-        for(int row = 0; row < 7; row++){
-            for(int column = 0; column < 7; column++){
-                Space space = board.getRows().get(row).getSpaces().get(column);
-                if(space.isBlack() && !space.isValid()){
-                    if(space.getPiece().getType().equals("SINGLE") && space.getPiece().getColor().equals("RED")){
-                        if(space.getOtherSpace(row,column,board,"RED")){
-                            return true;
-                        }
-                    }
-                    else if(space.getPiece().getType().equals("SINGLE") && space.getPiece().getColor().equals("WHITE")){
-                        if(space.getOtherSpace(row,column,board,"WHITE")){
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
     }
 }

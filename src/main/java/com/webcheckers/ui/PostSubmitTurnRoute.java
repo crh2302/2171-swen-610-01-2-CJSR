@@ -43,8 +43,8 @@ public class PostSubmitTurnRoute implements Route {
         game.clearMoves();
 
         if(game.getWhitePiecesLeft() == 0 || game.getRedPiecesLeft() == 0){
-            removePlayers(playerName,opponentName);
-            removeGame(game);
+            checkersCenter.removePlayers(playerName,opponentName);
+            game.removeGame(game,checkersCenter);
             response.redirect(String.format("/game-over?playerName=%s&opponentName=%s&message=won",playerName,opponentName));
         }
         if(game.isPlayerTurn(playerName)){
@@ -55,13 +55,5 @@ public class PostSubmitTurnRoute implements Route {
         }
         halt();
         return null;
-    }
-
-    private void removePlayers(String playerName, String opponentName){
-        checkersCenter.getInGamePlayers().remove(playerName);
-        checkersCenter.getInGamePlayers().remove(opponentName);
-    }
-    private void removeGame(CheckersGame game) {
-        checkersCenter.getGamesList().remove(game);
     }
 }

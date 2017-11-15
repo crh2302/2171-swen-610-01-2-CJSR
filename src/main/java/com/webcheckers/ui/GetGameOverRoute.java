@@ -51,6 +51,9 @@ public class GetGameOverRoute implements TemplateViewRoute {
                 vm.put("messageTitle", "Well look at that!");
                 vm.put("message", "Your opponent resigned from the game, that means you win!");
                 break;
+            case "noMoves":
+                vm.put("messageTitle", "Blocked!");
+                vm.put("message", "All your pieces have been blocked from moving, you have lost the game :(");
         }
         return new ModelAndView(vm, "game-over.ftl");
     }
