@@ -43,6 +43,10 @@
                 and you will be informed when it is your turn.
             </#if>
             </p>
+            <br /><br />
+            <#if movesAvailable??>
+                ${movesAvailable}
+            </#if>
 
             <div>
                 <div id="game-controls">
