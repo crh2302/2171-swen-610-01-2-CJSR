@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-
 import com.webcheckers.appl.CheckersCenter;
 import com.webcheckers.model.CheckersGame;
 import spark.*;
@@ -18,6 +17,11 @@ import static spark.Spark.halt;
 public class GetGameMenuRoute implements TemplateViewRoute {
 
     private final CheckersCenter checkersCenter;
+
+    static List<String> playerList;
+    static List<String> opponentList;
+    private CheckersGame game;
+
     static final String VIEW_NAME = "game-menu.ftl";
 
     public GetGameMenuRoute(final CheckersCenter checkersCenter){
@@ -38,24 +42,6 @@ public class GetGameMenuRoute implements TemplateViewRoute {
         vm.put("playerName", playerName);
         vm.put("playerNames", checkersCenter.getAllPlayers());
 
-
-        List<String> opponentList = checkersCenter.getGamesList().stream()
-                .map(CheckersGame::getOpponent)
-                .collect(Collectors.toList());
-        List<String> playerList = checkersCenter.getGamesList().stream()
-                .map(CheckersGame::getPlayer)
-                .collect(Collectors.toList());
-
-        if(opponentList.contains(playerName)){
-            for(int x = 0; x < opponentList.size(); x++){
-                if(opponentList.get(x).equals(playerName)){
-                    String opponent = playerList.get(x);
-                    response.redirect(String.format("/game?opponent=%s&playerName=%s&myTurn=false",opponent,playerName));
-                    halt();
-                }
-            }
-        }
-
         //determining which error to display
         switch(request.queryParams("errorPathType")){
             case "inGame":
@@ -67,26 +53,31 @@ public class GetGameMenuRoute implements TemplateViewRoute {
             case "noExistence":
                 vm.put("opponentError", PostOpponentRoute.INVALID_OPP_MSG);
                 break;
-            case "leftGame":
-                this.checkersCenter.getInGamePlayers().remove(request.queryParams(("playerName")));
-                this.checkersCenter.getInGamePlayers().remove(request.queryParams(("opponent")));
-                break;
             default:
         }
+        navigatePlayer(playerName,response);
 
         return new ModelAndView(vm, VIEW_NAME);
     }
 
-    /**
-     *
-     * @param request
-     *
-     *
-     * @return
-     *      the value of playerName in URL parameters
-     */
-    public static String getPlayerNameString(Request request){
-        return request.queryParams("playerName");
-    }
+    private void navigatePlayer(String playerName, Response response){
+        opponentList = checkersCenter.getGamesList().stream()
+                .map(CheckersGame::getOpponent)
+                .collect(Collectors.toList());
+        playerList = checkersCenter.getGamesList().stream()
+                .map(CheckersGame::getPlayer)
+                .collect(Collectors.toList());
 
+        System.out.println("Playerlist: " + playerList);
+        System.out.println("Opponentlist: " + opponentList);
+
+        if(opponentList.contains(playerName)){
+            for(int x = 0; x < opponentList.size(); x++){
+                if(opponentList.get(x).equals(playerName)){
+                    String opponent = playerList.get(x);
+                    response.redirect(String.format("/game?opponent=%s&playerName=%s&myTurn=false",opponent,playerName));
+                }
+            }
+        }
+    }
 }

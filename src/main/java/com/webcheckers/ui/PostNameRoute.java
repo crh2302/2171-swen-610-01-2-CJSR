@@ -60,8 +60,7 @@ public class PostNameRoute implements TemplateViewRoute {
      * @return
      *      returns whether or not an entered name is available
      */
-    public boolean nameAvailable(List<String> playerNames, String name)
-    {
+    public boolean nameAvailable(List<String> playerNames, String name) {
         return playerNames.contains(name);
     }
 
