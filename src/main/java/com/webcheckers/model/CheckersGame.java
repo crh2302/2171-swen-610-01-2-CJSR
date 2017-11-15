@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.CheckersCenter;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,6 +12,8 @@ public class CheckersGame
 {
     private String player;
     private String opponent;
+    public String capturedColor = null;
+
     private Board board;
 
     private int turn;
@@ -22,8 +26,8 @@ public class CheckersGame
         this.player = player;
         this.opponent = opponent;
         this.turn = 0;
-        this.redPiecesLeft = 1;
-        this.whitePiecesLeft = 1;
+        this.redPiecesLeft = 12;
+        this.whitePiecesLeft = 12;
         setBoard(new Board());
         moves = new LinkedList<>();
     }
@@ -52,18 +56,28 @@ public class CheckersGame
         return player.equals(name) || opponent.equals(name);
     }
 
+    public int getWhitePiecesLeft(){
+        return whitePiecesLeft;
+    }
+
+    public int getRedPiecesLeft(){
+        return redPiecesLeft;
+    }
+
+    public void removeGame(CheckersGame game, CheckersCenter checkersCenter) {
+        checkersCenter.getGamesList().remove(game);
+    }
+
     /**
      * perform moves in 'moves' list for the turn
      * @return
      *      true when all moves completed
      */
-    public boolean processTurn(){
+    public void processTurn(){
         while (!moves.isEmpty()) {
             doMove(moves.remove());
         }
         switchTurn();
-
-        return true;
     }
 
 
@@ -126,15 +140,14 @@ public class CheckersGame
         int newColumn = move.getEnd().getCell();
 
         Piece piece = board.getRows().get(oldRow).getSpaces().get(oldColumn).getPiece();
-        if (piece.getType().equals("SINGLE") || pieceIsKing(piece))
+        if (piece.isSingle(piece) || piece.isKing(piece))
         {
                 if (oldColumn-newColumn == 1 || oldColumn-newColumn == -1)
                 {
-                    if ((oldRow-newRow == 1 && pieceIsRed(piece)) || (oldRow-newRow == -1 && pieceIsWhite(piece)))
-                    {
+                    if ((oldRow-newRow == 1 && piece.isRed(piece)) || (oldRow-newRow == -1 && piece.isWhite(piece))) {
                         return true;
                     }
-                    else if((oldRow-newRow == 1 || oldRow-newRow == -1) && pieceIsKing(piece)){
+                    else if((oldRow-newRow == 1 || oldRow-newRow == -1) && piece.isKing(piece)){
                         return true;
                     }
                 }
@@ -145,14 +158,16 @@ public class CheckersGame
                         int jumpedPieceRow = oldRow - 1;
                         int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
-                        Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
+                        Piece jumpedPiece = board.returnJumpedPiece(jumpedPieceRow,jumpedPieceColumn);
                         if (isNotNullAndWhite(jumpedPiece)) {
-                            whitePiecesLeft--;
-                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                            capturedColor = "white";
+                            board.populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                            return true;
                         }
-                        else if((isNotNullAndRed(jumpedPiece)) && pieceIsKing(piece)) {
-                            redPiecesLeft--;
-                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                        else if((isNotNullAndRed(jumpedPiece)) && piece.isKing(piece)) {
+                            capturedColor = "red";
+                            board.populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                            return true;
                         }
                     }
                     else if(oldRow-newRow == -2)
@@ -160,16 +175,16 @@ public class CheckersGame
                         int jumpedPieceRow = oldRow + 1;
                         int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
-                        Piece jumpedPiece = jumpedPiece(jumpedPieceRow,jumpedPieceColumn);
-                        if (isNotNullAndRed(jumpedPiece))
-                        {
-                            redPiecesLeft--;
-                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                        Piece jumpedPiece = board.returnJumpedPiece(jumpedPieceRow,jumpedPieceColumn);
+                        if (isNotNullAndRed(jumpedPiece)) {
+                            capturedColor = "red";
+                            board.populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                            return true;
                         }
-                        else if((isNotNullAndWhite(jumpedPiece)) && pieceIsKing(piece))
-                        {
-                            whitePiecesLeft--;
-                            return populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                        else if((isNotNullAndWhite(jumpedPiece)) && piece.isKing(piece)) {
+                            capturedColor = "white";
+                            board.populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                            return true;
                         }
                     }
                 }
@@ -177,45 +192,16 @@ public class CheckersGame
         return false;
     }
 
-    public Piece jumpedPiece(int jumpedPieceRow, int jumpedPieceColumn){
-        return board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
-    }
-
     public int jumpedPieceColumn(int newColumn, int oldColumn){
         return (newColumn - oldColumn)/2 + oldColumn;
     }
 
-    public boolean populateJumpedSpace(int jumpedPieceRow, int jumpedPieceColumn){
-        board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
-        return true;
-    }
-
-    public boolean pieceIsKing(Piece piece){
-        return piece.getType().equals("KING");
-    }
-
-    public boolean pieceIsRed(Piece piece){
-        return piece.getColor().equals("RED");
-    }
-
-    public boolean pieceIsWhite(Piece piece){
-        return piece.getColor().equals("WHITE");
-    }
-
     public boolean isNotNullAndWhite(Piece jumpedPiece){
-        return (jumpedPiece != null && pieceIsWhite(jumpedPiece));
+        return (jumpedPiece != null && jumpedPiece.isWhite(jumpedPiece));
     }
 
     public boolean isNotNullAndRed(Piece jumpedPiece){
-        return (jumpedPiece != null && pieceIsRed(jumpedPiece));
-    }
-
-    public int getWhitePiecesLeft(){
-        return whitePiecesLeft;
-    }
-
-    public int getRedPiecesLeft(){
-        return redPiecesLeft;
+        return (jumpedPiece != null && jumpedPiece.isRed(jumpedPiece));
     }
 
     /**
@@ -239,13 +225,26 @@ public class CheckersGame
             System.out.println("Last Row Entered, Piece Converted to King");
             System.out.println("=========");
 
+            removePiece();
             Piece kingPiece = board.getRows().get(oldRow).getSpaces().get(oldColumn).populateSpaceKing(piece.getColor());
             board.getRows().get(newRow).getSpaces().get(newColumn).setPiece(kingPiece);
         }
         else{
+            removePiece();
             Piece manPiece = board.getRows().get(oldRow).getSpaces().get(oldColumn).populateSpaceMan();
             board.getRows().get(newRow).getSpaces().get(newColumn).setPiece(manPiece);
         }
         return true;
+    }
+
+    private void removePiece(){
+        if(capturedColor != null && capturedColor.equals("white")){
+            whitePiecesLeft--;
+            this.capturedColor = null;
+        }
+        else if(capturedColor != null && capturedColor.equals("red")){
+            redPiecesLeft--;
+            this.capturedColor = null;
+        }
     }
 }
