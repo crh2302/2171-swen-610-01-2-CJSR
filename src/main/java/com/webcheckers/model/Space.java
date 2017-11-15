@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import static spark.Spark.halt;
+
 /**
  * Represents a space on the checkers board
  */
@@ -81,8 +83,8 @@ public class Space
 
   public boolean getOtherSpace(int row, int column, Board board, String color) {
     if (color.equals("RED")) {
-      if(column - 1 < 0 || column + 1 > 7){
-          //do nothing
+      if(column - 1 < 0 || column + 1 > 7 || column + 2 > 7 || column - 2 < 0){
+          //do nothing because those columns don't exist
       }
       else{
           Space space = board.getRows().get(row - 1).getSpaces().get(column + 1);
@@ -91,13 +93,20 @@ public class Space
             return true;
           }
           else {
-            return false;
+            Space space3 = board.getRows().get(row - 2).getSpaces().get(column + 2);
+            Space space4 = board.getRows().get(row - 2).getSpaces().get(column - 2);
+            if (space3.isValid() || space4.isValid()){
+              return true;
+            }
+            else{
+              return false;
+            }
           }
       }
     }
     else if (color.equals("WHITE")){
-      if(column - 1 < 0 || column + 1 > 7){
-        //do nothing
+      if(column - 1 < 0 || column + 1 > 7 || column + 2 > 7 || column - 2 < 0){
+        //do nothing because those columns don't exist
       }
       else{
         Space space = board.getRows().get(row + 1).getSpaces().get(column + 1);
@@ -106,10 +115,17 @@ public class Space
           return true;
         }
         else {
-          return false;
+          Space space3 = board.getRows().get(row + 2).getSpaces().get(column + 2);
+          Space space4 = board.getRows().get(row + 2).getSpaces().get(column - 2);
+          if (space3.isValid() || space4.isValid()) {
+            return true;
+          }
+          else{
+            return false;
+          }
         }
       }
     }
-    return false;
+    return true;
   }
 }

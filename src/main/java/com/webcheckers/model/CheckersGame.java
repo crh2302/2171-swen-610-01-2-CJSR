@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.CheckersCenter;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,6 +62,10 @@ public class CheckersGame
 
     public int getRedPiecesLeft(){
         return redPiecesLeft;
+    }
+
+    public void removeGame(CheckersGame game, CheckersCenter checkersCenter) {
+        checkersCenter.getGamesList().remove(game);
     }
 
     /**
