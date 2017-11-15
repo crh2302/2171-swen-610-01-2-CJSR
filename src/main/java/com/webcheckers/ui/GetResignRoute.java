@@ -8,6 +8,11 @@ import java.util.Objects;
 
 import static spark.Spark.halt;
 
+/**
+ * The {@code GET /resignGame} route handler.
+ *
+ * Class used when player resigns from the game he/she is in
+ */
 public class GetResignRoute implements Route {
 
     private final CheckersCenter checkersCenter;

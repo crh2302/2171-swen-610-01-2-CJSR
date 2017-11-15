@@ -11,9 +11,9 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * The {@code GET /resignGame} route handler.
+ * The {@code GET /gameOver} route handler.
  *
- * Class used when player decides to resign from a game
+ * Class used when player wins a game
  */
 public class GetGameOverRoute implements TemplateViewRoute {
 
@@ -51,6 +51,9 @@ public class GetGameOverRoute implements TemplateViewRoute {
                 vm.put("messageTitle", "Well look at that!");
                 vm.put("message", "Your opponent resigned from the game, that means you win!");
                 break;
+            case "noMoves":
+                vm.put("messageTitle", "Blocked!");
+                vm.put("message", "All your pieces have been blocked from moving, you have lost the game :(");
         }
         return new ModelAndView(vm, "game-over.ftl");
     }
