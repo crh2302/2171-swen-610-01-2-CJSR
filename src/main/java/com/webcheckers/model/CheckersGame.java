@@ -246,7 +246,5 @@ public class CheckersGame
             redPiecesLeft--;
             this.capturedColor = null;
         }
-        System.out.println("White pieces left: " + whitePiecesLeft);
-        System.out.println("Red pieces left: " + redPiecesLeft);
     }
 }
