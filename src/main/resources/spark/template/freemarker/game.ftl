@@ -33,7 +33,6 @@
 
     <div class="body">
         <form id="gameForm" action="/submitTurn" method="POST">
-
             <p>
                 You are playing a game of checkers with ${opponentName}.
             <#if isMyTurn>
@@ -44,6 +43,10 @@
                 and you will be informed when it is your turn.
             </#if>
             </p>
+            <br /><br />
+            <#if movesAvailable??>
+                ${movesAvailable}
+            </#if>
 
             <div>
                 <div id="game-controls">
@@ -90,7 +93,7 @@
                                title="Commit your current turn to the server.">
                                 Submit turn
                             </a>
-                            <a href="#" id="resignLink" disabled=disabled
+                            <a href="/resignGame" id="resignLink"
                                title="End the game by resigning.">
                                 Resign from game
                             </a>
@@ -125,7 +128,6 @@
                     </table>
                 </div>
             </div>
-
         </form>
     </div>
 </div>
