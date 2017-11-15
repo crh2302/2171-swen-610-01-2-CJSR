@@ -68,9 +68,6 @@ public class GetGameMenuRoute implements TemplateViewRoute {
                 .map(CheckersGame::getPlayer)
                 .collect(Collectors.toList());
 
-        System.out.println("Playerlist: " + playerList);
-        System.out.println("Opponentlist: " + opponentList);
-
         if(opponentList.contains(playerName)){
             for(int x = 0; x < opponentList.size(); x++){
                 if(opponentList.get(x).equals(playerName)){
