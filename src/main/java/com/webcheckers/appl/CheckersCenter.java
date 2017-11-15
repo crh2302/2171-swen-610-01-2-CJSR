@@ -80,7 +80,6 @@ public class CheckersCenter {
         return gameList;
     }
 
-
     public CheckersGame getGame(String p1){
         for (CheckersGame game: gameList) {
             if(game.hasPlayer(p1)){
@@ -88,5 +87,10 @@ public class CheckersCenter {
             }
         }
         return null;
+    }
+
+    public void removePlayers(String playerName, String opponentName){
+        getInGamePlayers().remove(playerName);
+        getInGamePlayers().remove(opponentName);
     }
 }
