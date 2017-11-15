@@ -8,13 +8,15 @@ import java.util.List;
  */
 public class CheckersGame
 {
-    private String turnColor;
     private String player;
     private String opponent;
+    public String capturedColor = null;
 
     private Board board;
 
     private int turn;
+    private int redPiecesLeft;
+    private int whitePiecesLeft;
 
     private LinkedList<Move> moves;
 
@@ -22,6 +24,8 @@ public class CheckersGame
         this.player = player;
         this.opponent = opponent;
         this.turn = 0;
+        this.redPiecesLeft = 12;
+        this.whitePiecesLeft = 12;
         setBoard(new Board());
         moves = new LinkedList<>();
     }
@@ -32,14 +36,6 @@ public class CheckersGame
 
     public void setBoard(Board board) {
         this.board = board;
-    }
-
-    public String getTurnColor() {
-        return turnColor;
-    }
-
-    public void setTurnColor(String turnColor) {
-        this.turnColor = turnColor;
     }
 
     public String getPlayer(){
@@ -58,18 +54,24 @@ public class CheckersGame
         return player.equals(name) || opponent.equals(name);
     }
 
+    public int getWhitePiecesLeft(){
+        return whitePiecesLeft;
+    }
+
+    public int getRedPiecesLeft(){
+        return redPiecesLeft;
+    }
+
     /**
      * perform moves in 'moves' list for the turn
      * @return
      *      true when all moves completed
      */
-    public boolean processTurn(){
+    public void processTurn(){
         while (!moves.isEmpty()) {
             doMove(moves.remove());
         }
         switchTurn();
-
-        return true;
     }
 
 
@@ -132,15 +134,14 @@ public class CheckersGame
         int newColumn = move.getEnd().getCell();
 
         Piece piece = board.getRows().get(oldRow).getSpaces().get(oldColumn).getPiece();
-
-        if (piece.getType().equals("SINGLE"))
+        if (piece.isSingle(piece) || piece.isKing(piece))
         {
-            if (piece.getColor().equals("RED") || piece.getColor().equals("WHITE"))
-            {
                 if (oldColumn-newColumn == 1 || oldColumn-newColumn == -1)
                 {
-                    if (oldRow-newRow == 1 || oldRow-newRow == -1)
-                    {
+                    if ((oldRow-newRow == 1 && piece.isRed(piece)) || (oldRow-newRow == -1 && piece.isWhite(piece))) {
+                        return true;
+                    }
+                    else if((oldRow-newRow == 1 || oldRow-newRow == -1) && piece.isKing(piece)){
                         return true;
                     }
                 }
@@ -149,36 +150,53 @@ public class CheckersGame
                     if (oldRow-newRow == 2)
                     {
                         int jumpedPieceRow = oldRow - 1;
-                        int jumpedPieceColumn = (newColumn - oldColumn) / 2 + oldColumn;
+                        int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
-                        Piece jumpedPiece = board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
-                        if (jumpedPiece != null && jumpedPiece.getColor().equals("WHITE"))
-                        {
-                            board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
+                        Piece jumpedPiece = board.returnJumpedPiece(jumpedPieceRow,jumpedPieceColumn);
+                        if (isNotNullAndWhite(jumpedPiece)) {
+                            capturedColor = "white";
+                            board.populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                            return true;
+                        }
+                        else if((isNotNullAndRed(jumpedPiece)) && piece.isKing(piece)) {
+                            capturedColor = "red";
+                            board.populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                             return true;
                         }
                     }
                     else if(oldRow-newRow == -2)
                     {
                         int jumpedPieceRow = oldRow + 1;
-                        int jumpedPieceColumn = (newColumn - oldColumn) / 2 + oldColumn;
+                        int jumpedPieceColumn = jumpedPieceColumn(newColumn,oldColumn);
 
-                        Piece jumpedPiece = board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
-                        if (jumpedPiece != null && jumpedPiece.getColor().equals("RED"))
-                        {
-                            board.getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
+                        Piece jumpedPiece = board.returnJumpedPiece(jumpedPieceRow,jumpedPieceColumn);
+                        if (isNotNullAndRed(jumpedPiece)) {
+                            capturedColor = "red";
+                            board.populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
+                            return true;
+                        }
+                        else if((isNotNullAndWhite(jumpedPiece)) && piece.isKing(piece)) {
+                            capturedColor = "white";
+                            board.populateJumpedSpace(jumpedPieceRow,jumpedPieceColumn);
                             return true;
                         }
                     }
                 }
-            }
-        }
-        else if (piece.getType() == "KING") {
-            //do king move here
         }
         return false;
     }
 
+    public int jumpedPieceColumn(int newColumn, int oldColumn){
+        return (newColumn - oldColumn)/2 + oldColumn;
+    }
+
+    public boolean isNotNullAndWhite(Piece jumpedPiece){
+        return (jumpedPiece != null && jumpedPiece.isWhite(jumpedPiece));
+    }
+
+    public boolean isNotNullAndRed(Piece jumpedPiece){
+        return (jumpedPiece != null && jumpedPiece.isRed(jumpedPiece));
+    }
 
     /**
      * make a move
@@ -201,13 +219,28 @@ public class CheckersGame
             System.out.println("Last Row Entered, Piece Converted to King");
             System.out.println("=========");
 
+            removePiece();
             Piece kingPiece = board.getRows().get(oldRow).getSpaces().get(oldColumn).populateSpaceKing(piece.getColor());
             board.getRows().get(newRow).getSpaces().get(newColumn).setPiece(kingPiece);
         }
         else{
+            removePiece();
             Piece manPiece = board.getRows().get(oldRow).getSpaces().get(oldColumn).populateSpaceMan();
             board.getRows().get(newRow).getSpaces().get(newColumn).setPiece(manPiece);
         }
         return true;
+    }
+
+    private void removePiece(){
+        if(capturedColor != null && capturedColor.equals("white")){
+            whitePiecesLeft--;
+            this.capturedColor = null;
+        }
+        else if(capturedColor != null && capturedColor.equals("red")){
+            redPiecesLeft--;
+            this.capturedColor = null;
+        }
+        System.out.println("White pieces left: " + whitePiecesLeft);
+        System.out.println("Red pieces left: " + redPiecesLeft);
     }
 }

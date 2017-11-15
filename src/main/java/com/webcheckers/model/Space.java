@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+/**
+ * Represents a space on the checkers board
+ */
 public class Space
 {
     private int cellIdx;
@@ -25,18 +28,15 @@ public class Space
     this.piece = piece;
   }
 
-  public int getCellIdx()
-  {
+  public int getCellIdx() {
     return cellIdx;
   }
 
-  public void setPiece(Piece piece)
-  {
+  public void setPiece(Piece piece) {
     this.piece = piece;
   }
 
-  public Piece getPiece()
-  {
+  public Piece getPiece() {
     return piece;
   }
 
@@ -45,8 +45,7 @@ public class Space
    * @return
    *    Return true if a piece can be placed in that space.
    */
-  public boolean isValid()
-  {
+  public boolean isValid() {
     return ((this.piece == null) && isBlack);
   }
 
@@ -71,9 +70,46 @@ public class Space
    * @return
    *      KING piece of necessary color
    */
-  public Piece populateSpaceKing(String color)
-  {
+  public Piece populateSpaceKing(String color) {
     piece = null;
     return new Piece("KING",color);
+  }
+
+  public boolean isBlack(){
+    return isBlack;
+  }
+
+  public boolean getOtherSpace(int row, int column, Board board, String color) {
+    if (color.equals("RED")) {
+      if(column - 1 < 0 || column + 1 > 7){
+          //do nothing
+      }
+      else{
+          Space space = board.getRows().get(row - 1).getSpaces().get(column + 1);
+          Space space2 = board.getRows().get(row - 1).getSpaces().get(column - 1);
+          if (space.isValid() || space2.isValid()) {
+            return true;
+          }
+          else {
+            return false;
+          }
+      }
+    }
+    else if (color.equals("WHITE")){
+      if(column - 1 < 0 || column + 1 > 7){
+        //do nothing
+      }
+      else{
+        Space space = board.getRows().get(row + 1).getSpaces().get(column + 1);
+        Space space2 = board.getRows().get(row + 1).getSpaces().get(column - 1);
+        if (space.isValid() || space2.isValid()) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+    }
+    return false;
   }
 }

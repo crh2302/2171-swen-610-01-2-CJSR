@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Represents a row on the checkers board
+ */
 public class Row implements Iterable<Space>
 {
   private int index = 0;
@@ -51,7 +54,6 @@ public class Row implements Iterable<Space>
         spaces.add(new Space(i, false, null));
       }
     }
-
   }
 
   public List<Space> getSpaces()
@@ -63,12 +65,6 @@ public class Row implements Iterable<Space>
   public Iterator<Space> iterator()
   {
     return spaces.iterator();
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return spaces.hashCode();
   }
 
   public int getIndex()

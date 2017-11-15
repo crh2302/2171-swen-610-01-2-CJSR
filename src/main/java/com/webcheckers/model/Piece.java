@@ -41,8 +41,7 @@ public class Piece
   * @return
    *    type of piece.
   */
-  public String getType()
-  {
+  public String getType(){
       return type;
   }
 
@@ -51,16 +50,30 @@ public class Piece
   * @return
    *    color of disc.
   */
-  public String getColor()
-  {
+  public String getColor(){
       return color;
   }
 
   /**
   * change disc from MAN to KING.
   */
-  public void crownPiece()
-  {
+  public void crownPiece() {
       this.type = "KING";
+  }
+
+  public boolean isKing(Piece piece){
+      return piece.getType().equals("KING");
+  }
+
+  public boolean isSingle(Piece piece){
+    return piece.getType().equals("SINGLE");
+  }
+
+  public boolean isRed(Piece piece){
+    return piece.getColor().equals("RED");
+  }
+
+  public boolean isWhite(Piece piece){
+    return piece.getColor().equals("WHITE");
   }
 }
