@@ -37,4 +37,29 @@ public class Board implements Iterable<Row>
     public Iterator<Row> iterator() {
         return rows.iterator();
     }
+
+    public Piece returnJumpedPiece(int jumpedPieceRow, int jumpedPieceColumn){
+        return getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).getPiece();
+    }
+
+    public void populateJumpedSpace(int jumpedPieceRow, int jumpedPieceColumn){
+        getRows().get(jumpedPieceRow).getSpaces().get(jumpedPieceColumn).populateSpaceMan();
+    }
+
+    public boolean availableMoves(CheckersGame game, Board board, String turnColor){
+        for(int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                Space space = board.getRows().get(row).getSpaces().get(column);
+                if (space.isBlack() && !space.isValid()) {
+                    if (space.getPiece().getType().equals("SINGLE") && space.getPiece().getColor().equals(turnColor)) {
+                        if (space.getOtherSpace(row, column, board, turnColor)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
+

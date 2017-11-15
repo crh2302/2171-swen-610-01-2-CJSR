@@ -67,12 +67,6 @@ public class Row implements Iterable<Space>
     return spaces.iterator();
   }
 
-  @Override
-  public int hashCode()
-  {
-    return spaces.hashCode();
-  }
-
   public int getIndex()
   {
     return index;
