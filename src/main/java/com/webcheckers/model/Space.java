@@ -83,8 +83,7 @@ public class Space
 
   public boolean getOtherSpace(int row, int column, Board board, String color) {
     if (color.equals("RED")) {
-      if(column - 1 < 0 || column + 1 > 7 || column + 2 > 7 || column - 2 < 0
-              || row + 2 > 7 || row - 2 < 0 || row + 1 > 7 || row + 1 > 7){
+      if(column - 1 < 0 || column + 1 > 7 || column + 2 > 7 || column - 2 < 0){
           //do nothing because those columns don't exist
       }
       else{
@@ -106,8 +105,7 @@ public class Space
       }
     }
     else if (color.equals("WHITE")){
-      if(column - 1 < 0 || column + 1 > 7 || column + 2 > 7 || column - 2 < 0
-              || row + 2 > 7 || row - 2 < 0 || row + 1 > 7 || row + 1 > 7){
+      if(column - 1 < 0 || column + 1 > 7 || column + 2 > 7 || column - 2 < 0){
         //do nothing because those columns don't exist
       }
       else{
