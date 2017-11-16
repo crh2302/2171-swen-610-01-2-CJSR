@@ -68,7 +68,7 @@ This layer has the class which maintains the state of the game.
 ### Static models
 ### Class Diagram
 The Class diagram gives the higher level view of our WebCheckers game.
-<img src="<img width="428" alt="class diagram" src="https://user-images.githubusercontent.com/32232788/32869370-9942ba8a-ca44-11e7-80c3-5a9a34b2ab6b.PNG" />
+<img width="428" alt="class diagram" src="https://user-images.githubusercontent.com/32232788/32869370-9942ba8a-ca44-11e7-80c3-5a9a34b2ab6b.PNG" />
 
 ### Dynamic models
 #### State-Chart Diagrams
