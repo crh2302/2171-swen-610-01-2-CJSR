@@ -28,9 +28,6 @@ The game view feature displays the 8x8 checkers board with the initial setup of 
 #### Resignation
 A player can sign-out from the application whenever he/she wants. Once the player signs out the username used by him/her is released and anyone can use that name. When a player signs-out during a game, the game is cancelled, and the opponent is notified. 
 
-### Roadmap of Enhancements
-TBD
-
 ## Application Domain
 
 This section describes the application domain.
@@ -68,14 +65,10 @@ This layer has classes defined in the domain, which define the behavior of the g
 ### Application Layer
 This layer has the class which maintains the state of the game.
 
-## Sub-system X
-TBD
-
-### Purpose of the sub-system
-TBD
-
 ### Static models
-TBD
+### Class Diagram
+The Class diagram gives the higher level view of our WebCheckers game.
+<img src="http://tinypic.com/view.php?pic=2ywttlj&s=9#.WgzkImiPI2w" alt="hi" class="inline"/>
 
 ### Dynamic models
 #### State-Chart Diagrams
