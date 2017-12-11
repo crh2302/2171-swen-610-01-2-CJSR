@@ -31,7 +31,13 @@ A player can sign-out from the application whenever he/she wants. Once the playe
 #### Limitations
 Our application did encounter some bugs/limitations that were unable to be fixed. The following are the bugs our group was not able to correct:
   1. If a player submits an illegal move, the application still changes turn even though the piece is replaced back in its original location.
-  2. Upon a page refresh, if the player has not submitted their move, the disc disappears from the board. 
+  2. Upon a page refresh, if the player has not submitted their move, the disc disappears from the board.
+  3. If player 1 continually submits illegal moves, player 2 becomes unable to make a move.
+	
+Possible solutions to these issues could have been:
+  1. Increasing the automatic refresh time, or getting rid of it completely.
+  2. Adding a validation to check the state of the move (or making submit button turn inactive if the move is illegal) before it can be   officially submitted. This handles the illegal move, but still switching turns problem. This would also solve the third issue listed,   that player 2 can’t make a move when player 1 submits illegal moves continuously. 
+
 
 ## Application Domain
 
