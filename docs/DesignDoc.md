@@ -28,6 +28,11 @@ The game view feature displays the 8x8 checkers board with the initial setup of 
 #### Resignation
 A player can sign-out from the application whenever he/she wants. Once the player signs out the username used by him/her is released and anyone can use that name. When a player signs-out during a game, the game is cancelled, and the opponent is notified. 
 
+#### Limitations
+Our application did encounter some bugs/limitations that were unable to be fixed. The following are the bugs our group was not able to correct:
+  1. If a player submits an illegal move, the application still changes turn even though the piece is replaced back in its original location.
+  2. Upon a page refresh, if the player has not submitted their move, the disc disappears from the board. 
+
 ## Application Domain
 
 This section describes the application domain.
